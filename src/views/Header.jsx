@@ -79,7 +79,7 @@ function Header(props) {
 						onClick={handleDrawerToggle}
 						sx={{
 							mr: 2,
-							display: { sm: 'none' },
+							display: { lg: 'none' },
 							position: 'relative',
 							zIndex: 2,
 						}}>
@@ -109,11 +109,19 @@ function Header(props) {
 							}}
 						/>
 					</Box>
-					<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+					<Box sx={{ display: { xs: 'none', lg: 'block' } }}>
 						{navItems.map((item) => (
 							<Button
 								key={item}
-								sx={{ color: '#fff' }}>
+								variant="outlined"
+								sx={{
+									color: 'negro.main',
+									justifyContent: 'center',
+									margin: '5px',
+									fontFamily: 'Lato',
+									fontWeight: 700,
+									fontSize: '14px',
+								}}>
 								{item}
 							</Button>
 						))}
@@ -130,7 +138,7 @@ function Header(props) {
 						keepMounted: true, // Better open performance on mobile.
 					}}
 					sx={{
-						display: { xs: 'block', sm: 'none' },
+						display: { xs: 'block', lg: 'none' },
 						'& .MuiDrawer-paper': {
 							boxSizing: 'border-box',
 							width: drawerWidth,
