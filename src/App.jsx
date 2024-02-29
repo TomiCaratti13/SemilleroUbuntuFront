@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './assets/styles/App.css'
+import CardMicroemprendimiento from './components/CardMicroemprendimiento';
+import data from '../src/utils/mocks/Microemprendimientos.json';
+import { Button } from '@mui/material';
 
 function App() {
-  const [count, setCount] = useState(0)
+	console.log(data.imgs);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Ubuntu</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	return (
+		<>
+			<h1>Ubuntu</h1>
+			<Button
+				variant="contained"
+				sx={{ bgcolor: 'gestion.exito' }}>
+				Hola soy un bton
+			</Button>
+			<CardMicroemprendimiento
+				title={data.title}
+				date={data.date}
+				img0={data.img0}
+				img1={data.img1}
+				img2={data.img2}
+				description={data.description}
+			/>
+		</>
+	);
 }
 
-export default App
+export default App;
