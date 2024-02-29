@@ -1,15 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App.jsx';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from './theme/theme';
 import './assets/styles/index.css';
+import { LandingPage } from './views/LandingPage.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<ThemeProvider theme={theme}>
-			<App />
-		</ThemeProvider>
+		<BrowserRouter>
+			<Routes>
+				<Route
+					path="/"
+					element={<App />}>
+					<Route
+						index
+						element={<LandingPage />}
+					/>
+				</Route>
+				<Route
+					path="*"
+					element={
+						<Navigate
+							replace
+							to="/"
+						/>
+					}
+				/>
+			</Routes>
+		</BrowserRouter>
 	</React.StrictMode>
 );
