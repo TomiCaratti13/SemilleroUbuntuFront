@@ -27,7 +27,6 @@ function Header(props) {
 
 	const drawer = (
 		<Box
-			onClick={handleDrawerToggle}
 			sx={{
 				bgcolor: 'azul.main',
 				width: '100%',
