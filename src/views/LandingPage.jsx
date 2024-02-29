@@ -6,11 +6,11 @@ import Box from '@mui/material/Box';
 import { CONST_HEADER_HEIGHT } from './Header';
 
 export const LandingPage = () => {
-	console.log('CONST_HEADER_HEIGHT', CONST_HEADER_HEIGHT);
 	return (
 		<Box
+            id='inicio'
 			sx={{
-				marginTop: CONST_HEADER_HEIGHT,
+                // marginTop: CONST_HEADER_HEIGHT,
 				width: '100%',
 				bgcolor: 'gris.medio',
 				display: 'flex',
@@ -20,6 +20,7 @@ export const LandingPage = () => {
 				justifyContent: 'center',
 				alignItems: 'center',
 			}}>
+            <h1>INICIO</h1>
 			<CardMicroemprendimiento
 				title={data.title}
 				date={data.date}
@@ -36,6 +37,7 @@ export const LandingPage = () => {
 				img2={data.img2}
 				description={data.description}
 			/>
+            <div id='microemprendimientos'>Microemprendimientos</div>
 			<CardMicroemprendimiento
 				title={data.title}
 				date={data.date}
@@ -52,6 +54,7 @@ export const LandingPage = () => {
 				img2={data.img2}
 				description={data.description}
 			/>
+<div id='publicaciones'>Publicaciones</div>
 		</Box>
 	);
 };

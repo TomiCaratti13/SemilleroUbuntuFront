@@ -39,6 +39,8 @@ function Header(props) {
 						key={item}
 						disablePadding>
 						<ListItemButton
+							//Referencia a la ruta dentro de la web agregar IDS a cada elemento representativo
+							href={`#${item.toLowerCase()}`}
 							sx={{
 								textTransform: 'none',
 								textAlign: 'start',
@@ -59,7 +61,7 @@ function Header(props) {
 		window !== undefined ? () => window().document.body : undefined;
 
 	return (
-		<Box sx={{ display: 'flex' }}>
+		<Box sx={{ display: 'flex',position:"relative" }}>
 			<CssBaseline />
 			<AppBar
 				component="nav"
@@ -111,22 +113,24 @@ function Header(props) {
 					<Box sx={{ display: { xs: 'none', lg: 'block' } }}>
 						{navItems.map((item) => (
 							<Button
-								key={item}
-								variant="outlined"
-								sx={{
-									color: 'negro.main',
-									justifyContent: 'center',
-									margin: '5px',
-									fontFamily: 'Lato',
-									fontWeight: 700,
-									fontSize: '14px',
-								}}>
+							key={item}
+							variant="outlined"
+							sx={{
+								color: 'negro.main',
+								justifyContent: 'center',
+								margin: '5px',
+								fontFamily: 'Lato',
+								fontWeight: 700,
+								fontSize: '14px',
+							}}>
 								{item}
 							</Button>
 						))}
 					</Box>
 				</Toolbar>
 			</AppBar>
+			{/* Fix flow navbar, !!!!!IMPORTANT */}
+			<Box sx={{display:"block",height:"56px"}}/>
 			<nav>
 				<Drawer
 					container={container}
