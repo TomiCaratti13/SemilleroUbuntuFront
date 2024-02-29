@@ -14,14 +14,14 @@ import { SliderCard } from './SliderCard';
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
 	return <Button {...other} />;
-})(({ theme, expand }) => ({
+})(({ theme }) => ({
 	margin: 'auto',
 	transition: theme.transitions.create('transform', {
 		duration: theme.transitions.duration.shortest,
 	}),
 }));
 
-export default function CardMicroemprendimiento({
+export default function CardPublicacion({
 	title,
 	date,
 	img0,

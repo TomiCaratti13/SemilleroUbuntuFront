@@ -1,5 +1,5 @@
 import React from 'react';
-import CardMicroemprendimiento from '../components/CardMicroemprendimiento';
+import CardPublicacion from '../components/CardPublicacion';
 import { Button } from '@mui/material';
 import data from '../utils/mocks/Microemprendimientos.json';
 import Box from '@mui/material/Box';
@@ -21,7 +21,7 @@ export const LandingPage = () => {
 				alignItems: 'center',
 			}}>
             <h1>INICIO</h1>
-			<CardMicroemprendimiento
+			<CardPublicacion
 				title={data.title}
 				date={data.date}
 				img0={data.img0}
@@ -29,7 +29,7 @@ export const LandingPage = () => {
 				img2={data.img2}
 				description={data.description}
 			/>
-			<CardMicroemprendimiento
+			<CardPublicacion
 				title={data.title}
 				date={data.date}
 				img0={data.img0}
@@ -37,8 +37,8 @@ export const LandingPage = () => {
 				img2={data.img2}
 				description={data.description}
 			/>
-            <div id='microemprendimientos'>Microemprendimientos</div>
-			<CardMicroemprendimiento
+            <div id='microemprendimientos'>microemprendimientos</div>
+			<CardPublicacion
 				title={data.title}
 				date={data.date}
 				img0={data.img0}
@@ -46,7 +46,7 @@ export const LandingPage = () => {
 				img2={data.img2}
 				description={data.description}
 			/>
-			<CardMicroemprendimiento
+			<CardPublicacion
 				title={data.title}
 				date={data.date}
 				img0={data.img0}
