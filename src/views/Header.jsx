@@ -9,12 +9,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 
 const drawerWidth = 240;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones'];
-const CONST_HEADER_HEIGHT = '56px';
+export const CONST_HEADER_HEIGHT = '56px';
 
 function Header(props) {
 	const { window } = props;
@@ -82,7 +83,7 @@ function Header(props) {
 							position: 'relative',
 							zIndex: 2,
 						}}>
-						<MenuIcon />
+						{mobileOpen ? <CloseIcon /> : <MenuIcon />}
 					</IconButton>
 					<Box
 						sx={{
