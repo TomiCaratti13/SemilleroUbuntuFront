@@ -25,6 +25,11 @@ const theme = createTheme({
       error: '#bc1111'
     },
   },
+  typography: {
+    fontFamily: [
+      'Lato'
+    ]
+  }
 });
 
 export default theme;
