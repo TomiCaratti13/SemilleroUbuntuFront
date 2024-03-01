@@ -1,16 +1,16 @@
 import React from 'react';
 import CardPublicacion from '../components/CardPublicacion';
-import { Button } from '@mui/material';
-import data from '../utils/mocks/Microemprendimientos.json';
+import microemprendimientos from '../utils/mocks/Microemprendimientos.json';
+import publicaciones from '../utils/mocks/Publicaciones.json';
 import Box from '@mui/material/Box';
-import { CONST_HEADER_HEIGHT } from './Header';
+import CardMicroemprendimiento from '../components/CardMicroemprendimiento';
 
 export const LandingPage = () => {
 	return (
 		<Box
-            id='inicio'
+			id="inicio"
 			sx={{
-                // marginTop: CONST_HEADER_HEIGHT,
+				// marginTop: CONST_HEADER_HEIGHT,
 				width: '100%',
 				bgcolor: 'gris.medio',
 				display: 'flex',
@@ -20,41 +20,28 @@ export const LandingPage = () => {
 				justifyContent: 'center',
 				alignItems: 'center',
 			}}>
-            <h1>INICIO</h1>
+			<h1>INICIO</h1>
 			<CardPublicacion
-				title={data.title}
-				date={data.date}
-				img0={data.img0}
-				img1={data.img1}
-				img2={data.img2}
-				description={data.description}
+				title={publicaciones.title}
+				date={publicaciones.date}
+				img0={publicaciones.img0}
+				img1={publicaciones.img1}
+				img2={publicaciones.img2}
+				description={publicaciones.description}
 			/>
-			<CardPublicacion
-				title={data.title}
-				date={data.date}
-				img0={data.img0}
-				img1={data.img1}
-				img2={data.img2}
-				description={data.description}
+			<CardMicroemprendimiento
+				title={microemprendimientos.title}
+				category={microemprendimientos.category}
+				subcategory={microemprendimientos.subcategory}
+				ubication={microemprendimientos.ubication}
+				img0={microemprendimientos.img0}
+				img1={microemprendimientos.img1}
+				img2={microemprendimientos.img2}
+				description={microemprendimientos.description}
+				moreinfo={microemprendimientos.moreinfo}
 			/>
-            <div id='microemprendimientos'>microemprendimientos</div>
-			<CardPublicacion
-				title={data.title}
-				date={data.date}
-				img0={data.img0}
-				img1={data.img1}
-				img2={data.img2}
-				description={data.description}
-			/>
-			<CardPublicacion
-				title={data.title}
-				date={data.date}
-				img0={data.img0}
-				img1={data.img1}
-				img2={data.img2}
-				description={data.description}
-			/>
-<div id='publicaciones'>Publicaciones</div>
+			<div id="microemprendimientos">microemprendimientos</div>
+			<div id="publicaciones">Publicaciones</div>
 		</Box>
 	);
 };
