@@ -4,6 +4,7 @@ import microemprendimientos from '../utils/mocks/Microemprendimientos.json';
 import publicaciones from '../utils/mocks/Publicaciones.json';
 import Box from '@mui/material/Box';
 import CardMicroemprendimiento from '../components/CardMicroemprendimiento';
+import { Publicaciones } from './Publicaciones';
 
 export const LandingPage = () => {
 	return (
@@ -12,7 +13,7 @@ export const LandingPage = () => {
 			sx={{
 				// marginTop: CONST_HEADER_HEIGHT,
 				width: '100%',
-				bgcolor: 'gris.medio',
+				bgcolor: 'blanco.main',
 				display: 'flex',
 				gap: '16px',
 				padding: '16px 0px',
@@ -21,14 +22,7 @@ export const LandingPage = () => {
 				alignItems: 'center',
 			}}>
 			<h1>INICIO</h1>
-			<CardPublicacion
-				title={publicaciones.title}
-				date={publicaciones.date}
-				img0={publicaciones.img0}
-				img1={publicaciones.img1}
-				img2={publicaciones.img2}
-				description={publicaciones.description}
-			/>
+			<Publicaciones publicaciones={publicaciones}/>
 			<CardMicroemprendimiento
 				title={microemprendimientos.title}
 				category={microemprendimientos.category}
