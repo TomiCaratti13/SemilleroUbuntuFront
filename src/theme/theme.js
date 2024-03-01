@@ -25,6 +25,14 @@ const theme = createTheme({
       error: '#bc1111'
     },
   },
+  typography: {
+    fontFamily:'Lato',
+    fontSize:14,
+    fontWeightLight:100,
+    fontWeightRegular:300,
+    fontWeightMedium:400,
+    fontWeightBold:700,
+  },
 });
 
 export default theme;
