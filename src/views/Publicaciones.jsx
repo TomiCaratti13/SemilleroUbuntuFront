@@ -14,6 +14,7 @@ export const Publicaciones = ({ publicaciones }) => {
 				alignItems: 'center',
 				flexDirection: 'column',
 				gap: '16px',
+				paddingTop:"56px"
 			}}>
 			<Container
 				sx={{

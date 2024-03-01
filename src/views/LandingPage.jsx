@@ -16,7 +16,7 @@ export const LandingPage = () => {
 				bgcolor: 'blanco.main',
 				display: 'flex',
 				gap: '16px',
-				padding: '16px 0px',
+				padding: '16px 0px 16px 0px',
 				flexWrap: 'wrap',
 				justifyContent: 'center',
 				alignItems: 'center',
@@ -34,9 +34,9 @@ export const LandingPage = () => {
 				description={microemprendimientos.description}
 				moreinfo={microemprendimientos.moreinfo}
 			/>
-			<div id="microemprendimientos">microemprendimientos</div>
+			<div style={{paddingTop:"56px"}} id="microemprendimientos">microemprendimientos</div>
 			<Publicaciones publicaciones={publicaciones}/>
-			<div id="publicaciones">Publicaciones</div>
+			<div style={{paddingTop:"56px"}} id="publicaciones">Publicaciones</div>
 			<Publicaciones publicaciones={publicaciones}/>
 		</Box>
 	);
