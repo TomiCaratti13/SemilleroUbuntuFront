@@ -35,7 +35,9 @@ export const LandingPage = () => {
 				moreinfo={microemprendimientos.moreinfo}
 			/>
 			<div id="microemprendimientos">microemprendimientos</div>
+			<Publicaciones publicaciones={publicaciones}/>
 			<div id="publicaciones">Publicaciones</div>
+			<Publicaciones publicaciones={publicaciones}/>
 		</Box>
 	);
 };
