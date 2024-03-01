@@ -75,7 +75,7 @@ export default function CardMicroemprendimiento({
 				<Typography
 					paragraph
 					sx={{
-						fontSize: '14px',
+						fontSize: '13px',
 						fontFamily: 'Lato',
 						fontWeight: 400,
 						lineHeight: '18px',
