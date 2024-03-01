@@ -97,7 +97,7 @@ function Header(props) {
 					bgcolor: 'blanco.main',
 					color: 'negro.main',
 					boxShadow: 'none',
-					height: { CONST_HEADER_HEIGHT },
+					height:  CONST_HEADER_HEIGHT ,
 				}}>
 				<Toolbar sx={{ display: 'flex' }}>
 					<IconButton
