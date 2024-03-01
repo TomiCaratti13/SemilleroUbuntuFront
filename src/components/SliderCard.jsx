@@ -24,17 +24,17 @@ export const SliderCard = ({ imgs }) => {
 
 	const scrollToImage = (direction) => {
 		if (direction === 'prev') {
-			setCurrentIndex((curr) => {
-				const isFirstSlide = currentIndex === 0;
-				return isFirstSlide ? 0 : curr - 1;
-			});
+		  setCurrentIndex((curr) => {
+			const isFirstSlide = curr === 0;
+			return isFirstSlide ? imgs.length - 1 : curr - 1;
+		  });
 		} else {
-			const isLastSlide = currentIndex === imgs.length - 1;
-			if (!isLastSlide) {
-				setCurrentIndex((curr) => curr + 1);
-			}
+		  setCurrentIndex((curr) => {
+			const isLastSlide = curr === imgs.length - 1;
+			return isLastSlide ? 0 : curr + 1;
+		  });
 		}
-	};
+	  };
 
 	const goToSlide = (slideIndex) => {
 		setCurrentIndex(slideIndex);
