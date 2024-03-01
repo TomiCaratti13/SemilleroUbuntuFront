@@ -32,13 +32,25 @@ function Header(props) {
 				width: '100%',
 				height: '100%',
 				marginTop: CONST_HEADER_HEIGHT,
+				display: 'flex',
 			}}>
-			<List>
-				{navItems.map((item) => (
-					<ListItem
-						key={item}
-						disablePadding>
+			<List
+				sx={{
+					height: '100%',
+					width: '100%',
+					padding: '0',
+				}}>
+				<ListItem
+					disablePadding
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						height: '100%',
+						width: '100%',
+					}}>
+					{navItems.map((item) => (
 						<ListItemButton
+							key={item}
 							href={`#${item.toLowerCase()}`}
 							sx={{
 								textTransform: 'none',
@@ -47,11 +59,27 @@ function Header(props) {
 								fontFamily: 'Lato',
 								fontWeight: 700,
 								fontSize: '24px',
+								width: '100%',
+								alignItems: 'flex-start',
+								flexGrow: 0,
 							}}>
 							<ListItemText primary={item} />
 						</ListItemButton>
-					</ListItem>
-				))}
+					))}
+					<ListItemButton
+						sx={{
+							textTransform: 'none',
+							textAlign: 'start',
+							color: 'blanco.main',
+							fontFamily: 'Lato',
+							fontWeight: 700,
+							fontSize: '24px',
+							width: '100%',
+							alignItems: 'flex-end',
+						}}>
+						<ListItemText primary="Administrador" />
+					</ListItemButton>
+				</ListItem>
 			</List>
 		</Box>
 	);
