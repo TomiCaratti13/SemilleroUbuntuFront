@@ -17,24 +17,24 @@ export const SliderCard = ({ imgs }) => {
 			imgNode.scrollIntoView({
 				behavior: 'smooth',
 				block: 'nearest',
-				inline: "center"
+				inline: 'center',
 			});
 		}
 	}, [currentIndex]);
 
 	const scrollToImage = (direction) => {
 		if (direction === 'prev') {
-		  setCurrentIndex((curr) => {
-			const isFirstSlide = curr === 0;
-			return isFirstSlide ? imgs.length - 1 : curr - 1;
-		  });
+			setCurrentIndex((curr) => {
+				const isFirstSlide = curr === 0;
+				return isFirstSlide ? imgs.length - 1 : curr - 1;
+			});
 		} else {
-		  setCurrentIndex((curr) => {
-			const isLastSlide = curr === imgs.length - 1;
-			return isLastSlide ? 0 : curr + 1;
-		  });
+			setCurrentIndex((curr) => {
+				const isLastSlide = curr === imgs.length - 1;
+				return isLastSlide ? 0 : curr + 1;
+			});
 		}
-	  };
+	};
 
 	const goToSlide = (slideIndex) => {
 		setCurrentIndex(slideIndex);
