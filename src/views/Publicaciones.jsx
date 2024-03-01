@@ -7,6 +7,7 @@ export const Publicaciones = ({ publicaciones }) => {
 	console.log('publicaciones', publicaciones);
 	return (
 		<Container
+			component="section"
 			sx={{
 				display: 'flex',
 				justifyContent: 'center',
@@ -34,7 +35,7 @@ export const Publicaciones = ({ publicaciones }) => {
 				</Typography>
 			</Container>
 			{publicaciones
-                //Convertimos Date a fechas para poder ordenarlas
+				//Convertimos Date a fechas para poder ordenarlas
 				.sort((a, b) => {
 					const dateA = new Date(a.date.split('/').reverse().join('-'));
 					const dateB = new Date(b.date.split('/').reverse().join('-'));
