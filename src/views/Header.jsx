@@ -12,6 +12,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
+import { Link, useLocation } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const drawerWidth = 240;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones'];
@@ -20,6 +22,7 @@ export const CONST_HEADER_HEIGHT = '56px';
 function Header(props) {
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
+	const location = useLocation();
 
 	const handleDrawerToggle = () => {
 		setMobileOpen((prevState) => !prevState);
@@ -27,6 +30,7 @@ function Header(props) {
 
 	const drawer = (
 		<Box
+			onClick={handleDrawerToggle}
 			sx={{
 				bgcolor: 'azul.main',
 				width: '100%',
@@ -77,7 +81,11 @@ function Header(props) {
 							width: '100%',
 							alignItems: 'flex-end',
 						}}>
-						<ListItemText primary="Administrador" />
+						<Link
+							to="/login"
+							style={{ textDecoration: 'none', color: 'inherit' }}>
+							<ListItemText primary="Administrador" />
+						</Link>
 					</ListItemButton>
 				</ListItem>
 			</List>
@@ -92,27 +100,52 @@ function Header(props) {
 			<CssBaseline />
 			<AppBar
 				component="nav"
-				//No se si tiene boxShadow el header, preguntar a diseño
 				sx={{
 					bgcolor: 'blanco.main',
 					color: 'negro.main',
 					boxShadow: 'none',
-					height:  CONST_HEADER_HEIGHT ,
+					height: CONST_HEADER_HEIGHT,
+					height: '60px',
 				}}>
 				<Toolbar sx={{ display: 'flex' }}>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="start"
-						onClick={handleDrawerToggle}
-						sx={{
-							mr: 2,
-							display: { lg: 'none' },
-							position: 'relative',
-							zIndex: 2,
-						}}>
-						{mobileOpen ? <CloseIcon /> : <MenuIcon />}
-					</IconButton>
+					{location.pathname === '/login' ? (
+						<Link
+							to="/"
+							style={{
+								textDecoration: 'none',
+								color: 'inherit',
+								justifyContent: 'flex-end',
+								display: 'flex',
+								flexGrow: 1,
+							}}>
+							<IconButton
+								color="inherit"
+								aria-label="open drawer"
+								edge="start"
+								onClick={handleDrawerToggle}
+								sx={{
+									mr: 0,
+									position: 'relative',
+									zIndex: 2,
+								}}>
+								<ArrowBackIcon />
+							</IconButton>
+						</Link>
+					) : (
+						<IconButton
+							color="inherit"
+							aria-label="open drawer"
+							edge="start"
+							onClick={handleDrawerToggle}
+							sx={{
+								mr: 2,
+								display: { lg: 'none' },
+								position: 'relative',
+								zIndex: 2,
+							}}>
+							{mobileOpen ? <CloseIcon /> : <MenuIcon />}
+						</IconButton>
+					)}
 					<Box
 						sx={{
 							flexGrow: 1,
@@ -132,52 +165,84 @@ function Header(props) {
 							style={{
 								height: '100%',
 								width: '100%',
-								padding: '5px',
+								padding: '10px',
 								objectFit: 'contain',
 							}}
 						/>
 					</Box>
-					<Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-						{navItems.map((item) => (
-							<Button
-								key={item}
-								variant="outlined"
-								sx={{
-									color: 'negro.main',
-									justifyContent: 'center',
-									margin: '5px',
-									fontFamily: 'Lato',
-									fontWeight: 700,
-									fontSize: '14px',
+					{location.pathname === '/login' ? null : (
+						<Box
+							sx={{
+								display: { xs: 'none', lg: 'flex' },
+								width: '100%',
+								alignItems: 'center',
+							}}>
+							{navItems.map((item) => (
+								<Button
+									key={item}
+									variant="text"
+									sx={{
+										color: 'negro.main',
+										justifyContent: 'center',
+										margin: '5px',
+										fontFamily: 'Lato',
+										fontWeight: 700,
+										fontSize: '14px',
+										alignItems: 'flex-start',
+									}}>
+									{item}
+								</Button>
+							))}
+							<Link
+								to="/login"
+								style={{
+									textDecoration: 'none',
+									color: 'inherit',
+									justifyContent: 'flex-end',
+									display: 'flex',
+									flexGrow: 1,
 								}}>
-								{item}
-							</Button>
-						))}
-					</Box>
+								<Button
+									variant="text"
+									sx={{
+										color: 'azul.main',
+										justifyContent: 'center',
+										margin: '5px',
+										fontFamily: 'Lato',
+										fontWeight: 700,
+										fontSize: '14px',
+										alignItems: 'flex-start',
+									}}>
+									Administrador
+								</Button>
+							</Link>
+						</Box>
+					)}
 				</Toolbar>
 			</AppBar>
-			{/* Fix flow navbar, !!!!!IMPORTANT */}
 			<Box sx={{ display: 'block', height: '56px' }} />
-			<nav>
-				<Drawer
-					container={container}
-					variant="temporary"
-					open={mobileOpen}
-					onClose={handleDrawerToggle}
-					ModalProps={{
-						keepMounted: true, // Better open performance on mobile.
-					}}
-					sx={{
-						display: { xs: 'block', lg: 'none' },
-						'& .MuiDrawer-paper': {
-							boxSizing: 'border-box',
-							width: drawerWidth,
-						},
-						zIndex: 1,
-					}}>
-					{drawer}
-				</Drawer>
-			</nav>
+			{location.pathname === '/login' ? null : (
+				<nav>
+					<Drawer
+						container={container}
+						variant="temporary"
+						open={mobileOpen}
+						onClose={handleDrawerToggle}
+						ModalProps={{
+							keepMounted: true,
+						}}
+						sx={{
+							display: { xs: 'block', lg: 'none' },
+							'& .MuiDrawer-paper': {
+								boxSizing: 'border-box',
+								width: drawerWidth,
+							},
+							zIndex: 1,
+						}}>
+						{drawer}
+					</Drawer>
+				</nav>
+			)}
 		</Box>
 	);
 }

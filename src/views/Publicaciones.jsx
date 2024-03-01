@@ -11,9 +11,9 @@ export const Publicaciones = ({ publicaciones }) => {
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-				flexDirection: 'column',
+				flexWrap: 'wrap',
 				gap: '16px',
-				paddingTop:"56px"
+				paddingTop: '56px',
 			}}>
 			<Container
 				sx={{

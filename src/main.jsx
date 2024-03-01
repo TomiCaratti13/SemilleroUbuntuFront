@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App.jsx';
 import './assets/styles/index.css';
 import { LandingPage } from './views/LandingPage.jsx';
+import { LoginPrueba } from './views/LoginPrueba.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
@@ -15,6 +16,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 					<Route
 						index
 						element={<LandingPage />}
+					/>
+					<Route
+						path="login"
+						element={<LoginPrueba />}
 					/>
 				</Route>
 				<Route
