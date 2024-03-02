@@ -5,6 +5,8 @@ import publicaciones from '../utils/mocks/Publicaciones.json';
 import Box from '@mui/material/Box';
 import CardMicroemprendimiento from '../components/CardMicroemprendimiento';
 import { Publicaciones } from './Publicaciones';
+import { fontSize } from '@mui/system';
+
 
 export const LandingPage = () => {
 	return (
@@ -18,9 +20,44 @@ export const LandingPage = () => {
 				alignItems: 'center',
 			}}>
 			<div
-				style={{ paddingTop: '60px' }}
+				style={{ 
+					backgroundImage: "url(/landing-page-background.jpeg)", 
+					backgroundSize: "cover",
+					backgroundPosition: "center",
+					backgroundRepeat: "no-repeat",
+					bgcolor: '#090909B2',  
+					width: '415px', 
+					height: '500px',
+					paddingTop: '60px' }}
 				id="inicio">
-				INICIO
+					<p
+					style={{
+						fontSize:'18px',
+						paddingLeft:'16px', 
+						paddingTop: '40px',
+						color:'#FDFDFE',
+						lineHeight:'24px',
+						width:'328px',
+						height:'24px',
+					}}
+					>
+						FINANCIAMIENTO SOSTENIBLE
+					</p>
+					<p
+					style={{
+						fontSize:'28px',
+						paddingLeft:'16px',
+						paddingTop: '8px', 
+						color:'#FDFDFE',
+						lineHeight:'33px',
+						width:'250px',
+						height:'264px',
+						fontWeight:'500'
+					}}
+					>
+					Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible
+					</p>
+
 			</div>
 			<Publicaciones publicaciones={publicaciones} />
 			<CardMicroemprendimiento
