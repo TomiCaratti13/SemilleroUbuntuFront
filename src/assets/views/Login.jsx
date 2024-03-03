@@ -1,13 +1,11 @@
 
-import { Avatar, Box, Chip, Grid, Paper, Typography } from '@mui/material'
-import backgroundImage from '../images/fondoLogin.jpeg'
-import avatarGoogle from '../images/avatarGoogle.png'
-import logoLogin from '../images/logoLogin.png'
-import theme from '../../theme/theme';
+import { Box, Grid, Paper, Typography } from '@mui/material'
+import backgroundImage from '../../../public/fondoLogin.jpeg'
+import logoLogin from '../../../public/logoLogin.png'
+import avatarGoogle from '../../../public/avatarGoogle.png'
+import LoginButton from '../components/LoginButton';
 
 function Login() {
-
-  const googleLogin = () => { }
 
   return (
     <Box
@@ -78,43 +76,7 @@ function Login() {
             pb: '32px'
           }}
         >
-          <Chip
-            component='button'
-            onClick={googleLogin}
-            sx={{
-              color: theme.palette.blanco.main,
-              backgroundColor: theme.palette.azul.main,
-              width: '200px',
-              height: '40px',
-              borderRadius: '100px',
-              mt:'-20px'
-            }}
-            avatar={
-              <Avatar
-                src={avatarGoogle}
-                sx={{
-                  backgroundColor: theme.palette.blanco.main,
-                  '& img': {
-                    width: '16px',
-                    height: '16px',
-                  },
-                }}
-              />
-            }
-            label={
-              <Typography
-              sx={{
-                fontWeight: '700',
-                fontSize: '16px',
-                lineHeight: '30px',
-                textAlign: 'center',
-                letterSpacing: '-0.02em',
-              }}
-              >
-                Continuá con Google
-              </Typography>
-            }
-          />
+        <LoginButton name='Continuá con Google' avatar={avatarGoogle}/>
         </Grid>
       </Paper>
     </Box>
