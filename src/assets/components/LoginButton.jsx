@@ -1,43 +1,43 @@
-import { Avatar, Chip, Typography } from "@mui/material"
+import { Avatar, Button, Chip, Typography } from "@mui/material"
 
 function LoginButton(props) {
   return (
-    <Chip
-      component='button'
+    <Button
       sx={{
+        textTransform: 'none',
         color: 'blanco.main',
         backgroundColor: 'azul.main',
         width: '200px',
         height: '40px',
         borderRadius: '100px',
-        mt: '-20px'
+        mt: '-20px',
+        justifyContent: 'space-evenly'
       }}
-      avatar={
-        <Avatar
+    >
+      <Avatar
           src={props.avatar}
           sx={{
             backgroundColor: 'blanco.main',
+            width: '24px',
+              height: '24px',
             '& img': {
               width: '16px',
               height: '16px',
             },
           }}
         />
-      }
-      label={
         <Typography
           sx={{
             fontWeight: '700',
             fontSize: '16px',
             lineHeight: '30px',
             textAlign: 'center',
-            letterSpacing: '-0.02em',
+            // letterSpacing: '-0.02em',
           }}
         >
           {props.name}
         </Typography>
-      }
-    />
+    </Button>
   )
 }
 
