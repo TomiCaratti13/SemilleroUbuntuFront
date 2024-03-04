@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../assets/styles/sliderCard.css';
 import CardMedia from '@mui/material/CardMedia';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Block } from '@mui/icons-material';
 
 export const SliderCard = ({ imgs }) => {
 	const listRef = useRef();
@@ -69,8 +68,7 @@ export const SliderCard = ({ imgs }) => {
 								<img
 									className="imgSliderCard"
 									src={img}
-									width={500}
-									height={280}
+									style={{objectFit: 'cover'}}
 								/>
 							</li>
 						);

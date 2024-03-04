@@ -4,14 +4,14 @@ import theme from './theme/theme';
 import Header from './views/Header';
 
 function App() {
-	return (
-		<ThemeProvider theme={theme}>
-			<Header />
-			<main>
-				<Outlet />
-			</main>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider theme={theme}>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </ThemeProvider>
+  );
 }
 
 export default App;

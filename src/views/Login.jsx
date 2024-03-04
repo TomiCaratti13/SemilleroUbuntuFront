@@ -1,11 +1,11 @@
 
 import { Box, Grid, Paper, Typography } from '@mui/material'
-import backgroundImage from '../../../public/fondoLogin.jpeg'
-import logoLogin from '../../../public/logoLogin.png'
-import avatarGoogle from '../../../public/avatarGoogle.png'
+import backgroundImage from '/fondoLogin.jpeg'
+import logoLogin from '/logoLogin.png'
+import avatarGoogle from '/avatarGoogle.png'
 import LoginButton from '../components/LoginButton';
 
-function Login() {
+export default function Login() {
 
   return (
     <Box
@@ -85,4 +85,4 @@ function Login() {
   );
 }
 
-export default Login
+// export default Login
