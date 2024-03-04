@@ -11,7 +11,10 @@ function LoginButton(props) {
         height: '40px',
         borderRadius: '100px',
         mt: '-20px',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        '&:hover': {
+          backgroundColor: '#004055',
+        }
       }}
     >
       <Avatar
@@ -19,7 +22,8 @@ function LoginButton(props) {
           sx={{
             backgroundColor: 'blanco.main',
             width: '24px',
-              height: '24px',
+            height: '24px',
+            // mr:'8px',
             '& img': {
               width: '16px',
               height: '16px',
