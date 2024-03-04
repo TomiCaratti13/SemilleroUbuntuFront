@@ -26,10 +26,13 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: [
-      'Lato'
-    ]
-  }
+    fontFamily:'Lato',
+    fontSize:14,
+    fontWeightLight:100,
+    fontWeightRegular:300,
+    fontWeightMedium:400,
+    fontWeightBold:700,
+  },
 });
 
 export default theme;
