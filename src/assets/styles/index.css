@@ -7,10 +7,21 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-.MuiCardHeader-title {
-    font-size: 18px;
-}
-
 html {
     scroll-behavior: smooth;
+}
+
+.notistack-MuiContent-success {
+    background-color: #1d9129;
+    /*gestion.exito*/
+}
+
+.notistack-MuiContent-error {
+    background-color: #bc1111;
+    /*gestion.error*/
+}
+
+.notistack-MuiContent-warning {
+    background-color: #b86b11;
+    /*gestion.nogestionada*/
 }

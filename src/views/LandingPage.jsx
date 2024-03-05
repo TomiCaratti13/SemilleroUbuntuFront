@@ -3,8 +3,16 @@ import publicaciones from '../utils/mocks/Publicaciones.json';
 import Box from '@mui/material/Box';
 import CardMicroemprendimiento from '../components/CardMicroemprendimiento';
 import { Publicaciones } from './Publicaciones';
+import { useSnackbar } from 'notistack';
 
 export const LandingPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const handleAlert = () => {
+    enqueueSnackbar('Probando alertasssss', {
+      variant: 'warning',
+    });
+  };
+
   return (
     <Box
       sx={{
@@ -20,6 +28,7 @@ export const LandingPage = () => {
         id="inicio">
         INICIO
       </div>
+      <button onClick={handleAlert}>LANZAR ALERTA</button>
       <Publicaciones publicaciones={publicaciones} />
       <CardMicroemprendimiento
         title={microemprendimientos.title}
