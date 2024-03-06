@@ -180,7 +180,7 @@ function Header(props) {
               style={{
                 height: '100%',
                 width: '100%',
-                padding: '10px',
+                padding: '2px',
                 objectFit: 'contain',
               }}
             />
