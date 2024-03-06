@@ -1,4 +1,4 @@
-import { Avatar, Button, Chip, Typography } from "@mui/material"
+import { Avatar, Button, Typography } from "@mui/material"
 
 function LoginButton(props) {
   return (
