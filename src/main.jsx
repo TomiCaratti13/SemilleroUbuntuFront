@@ -5,6 +5,8 @@ import App from './App.jsx';
 import './assets/styles/index.css';
 import { LandingPage } from './views/LandingPage.jsx';
 import Login from './views/Login.jsx';
+import { SectionPublicaciones } from './views/SectionPublicaciones.jsx';
+import { SectionMicroemprendmientos } from './views/SectionMicroemprendimientos.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -20,6 +22,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route
             path="login"
             element={<Login />}
+          />
+          <Route
+            path="microemprendimientos"
+            element={<SectionMicroemprendmientos />}
+          />
+          <Route
+            path="publicaciones"
+            element={<SectionPublicaciones />}
           />
         </Route>
         <Route

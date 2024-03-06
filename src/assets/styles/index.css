@@ -25,3 +25,20 @@ html {
     background-color: #b86b11;
     /*gestion.nogestionada*/
 }
+
+.searchBar input {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.searchBar input::placeholder {
+    color: #090909b0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.searchBar input:focus {
+    outline: none;
+}

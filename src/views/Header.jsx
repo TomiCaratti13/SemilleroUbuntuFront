@@ -43,7 +43,7 @@ function Header(props) {
         sx={{
           height: '100%',
           width: '100%',
-          padding: '0',
+          padding: '20px 0',
         }}>
         <ListItem
           disablePadding
@@ -54,22 +54,34 @@ function Header(props) {
             width: '100%',
           }}>
           {navItems.map(item => (
-            <ListItemButton
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              sx={{
-                textTransform: 'none',
-                textAlign: 'start',
-                color: 'blanco.main',
-                fontFamily: 'Lato',
-                fontWeight: 700,
-                fontSize: '24px',
+            <Link
+              to={item === 'Inicio' ? '/' : `/${item.toLowerCase()}`}
+              style={{
                 width: '100%',
                 alignItems: 'flex-start',
                 flexGrow: 0,
               }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
+              <ListItemButton
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                sx={{
+                  textTransform: 'none',
+                  textAlign: 'start',
+                  color: 'blanco.main',
+                  fontFamily: 'Lato',
+                  fontWeight: 700,
+                  fontSize: '18px',
+                  lineHeight: '20px',
+                  width: '100%',
+                  alignItems: 'flex-start',
+                  flexGrow: 0,
+                }}>
+                <ListItemText
+                  primaryTypographyProps={{ variant: 'none' }}
+                  primary={item}
+                />
+              </ListItemButton>
+            </Link>
           ))}
           <ListItemButton
             sx={{
@@ -78,14 +90,18 @@ function Header(props) {
               color: 'blanco.main',
               fontFamily: 'Lato',
               fontWeight: 700,
-              fontSize: '24px',
+              fontSize: '18px',
+              lineHeight: '20px',
               width: '100%',
               alignItems: 'flex-end',
             }}>
             <Link
               to="/login"
               style={{ textDecoration: 'none', color: 'inherit' }}>
-              <ListItemText primary="Administrador" />
+              <ListItemText
+                primaryTypographyProps={{ variant: 'none' }}
+                primary="Administrador"
+              />
             </Link>
           </ListItemButton>
         </ListItem>
