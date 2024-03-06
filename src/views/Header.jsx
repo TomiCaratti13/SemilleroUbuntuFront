@@ -17,7 +17,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const drawerWidth = 240;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones'];
-export const CONST_HEADER_HEIGHT = '56px';
+export const CONST_HEADER_HEIGHT = '60px';
 
 function Header(props) {
   // eslint-disable-next-line react/prop-types
@@ -34,7 +34,6 @@ function Header(props) {
       onClick={handleDrawerToggle}
       sx={{
         bgcolor: 'azul.main',
-        width: '100%',
         height: '100%',
         marginTop: CONST_HEADER_HEIGHT,
         display: 'flex',
@@ -52,58 +51,58 @@ function Header(props) {
             flexDirection: 'column',
             height: '100%',
             width: '100%',
+            justifyContent: 'space-between',
           }}>
-          {navItems.map(item => (
-            <Link
-              to={item === 'Inicio' ? '/' : `/${item.toLowerCase()}`}
-              style={{
-                width: '100%',
-                alignItems: 'flex-start',
-                flexGrow: 0,
-              }}>
-              <ListItemButton
+          <Box
+            sx={{
+              width: '100%',
+              padding: 0,
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+            }}>
+            {navItems.map(item => (
+              <Link
                 key={item}
-                href={`#${item.toLowerCase()}`}
-                sx={{
-                  textTransform: 'none',
-                  textAlign: 'start',
-                  color: 'blanco.main',
-                  fontFamily: 'Lato',
-                  fontWeight: 700,
-                  fontSize: '18px',
-                  lineHeight: '20px',
-                  width: '100%',
-                  alignItems: 'flex-start',
-                  flexGrow: 0,
-                }}>
+                to={item === 'Inicio' ? '/' : `/${item.toLowerCase()}`}
+                style={{ textDecoration: 'none' }}>
                 <ListItemText
+                  sx={{
+                    color: 'blanco.main',
+                    fontFamily: 'Lato',
+                    fontWeight: 700,
+                    fontSize: '18px',
+                    lineHeight: '20px',
+                    width: '100%',
+                    flexGrow: 0,
+                    padding: '0 16px',
+                  }}
                   primaryTypographyProps={{ variant: 'none' }}
                   primary={item}
                 />
-              </ListItemButton>
-            </Link>
-          ))}
-          <ListItemButton
-            sx={{
-              textTransform: 'none',
-              textAlign: 'start',
-              color: 'blanco.main',
-              fontFamily: 'Lato',
-              fontWeight: 700,
-              fontSize: '18px',
-              lineHeight: '20px',
+              </Link>
+            ))}
+          </Box>
+          <Link
+            to="/login"
+            style={{
               width: '100%',
-              alignItems: 'flex-end',
+              textDecoration: 'none',
             }}>
-            <Link
-              to="/login"
-              style={{ textDecoration: 'none', color: 'inherit' }}>
-              <ListItemText
-                primaryTypographyProps={{ variant: 'none' }}
-                primary="Administrador"
-              />
-            </Link>
-          </ListItemButton>
+            <ListItemText
+              sx={{
+                color: 'blanco.main',
+                fontFamily: 'Lato',
+                fontWeight: 700,
+                fontSize: '18px',
+                lineHeight: '20px',
+                padding: '0px 16px',
+              }}
+              primaryTypographyProps={{ variant: 'none' }}
+              primary="Administrador"
+            />
+          </Link>
         </ListItem>
       </List>
     </Box>
