@@ -1,79 +1,26 @@
 .ulSliderCard,
 .liSliderCard {
-    list-style: none;
-    white-space: nowrap;
-}
-
-.liSliderCard {
-    display: inline;
+    width: 100%;
+    height: 100%;
 }
 
 .imgSliderCard {
     object-fit: cover;
-    margin-top: -16px;
-    height: 128px;
-    width: 304px;
-}
-
-/* Main container */
-
-.main-container {
-    width: 500px;
-    height: 280px;
-    margin: 0 auto;
-}
-
-/* Slider container */
-.slider-container {
-    position: relative;
-    height: 100%
-}
-
-/* dots carrusel */
-.dots-container {
-    display: flex;
-    justify-content: center;
-}
-
-.dot-container-item {
-    margin: 0px 3px;
-    cursor: pointer;
-    font-size: 20px;
-    text-align: center;
-    color: white;
-}
-
-/* Arrows */
-.leftArrow {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    left: 3px;
-    color: #fff;
-    z-index: 1;
-    cursor: pointer;
-}
-
-.rightArrow {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    right: 3px;
-    color: #fff;
-    z-index: 1;
-    cursor: pointer;
+    width: 100%;
+    height: 85%;
 }
 
 .container-images {
     width: 100%;
     height: 100%;
-    border-radius: 20px;
-    border: 1px solid #eee;
     overflow: hidden;
 }
 
-.dot-container-item.active {
-    color: black;
-    font-size: 20px;
-    border-radius: 50%;
+.swiper-pagination {
+    translate: 0 10px;
+    /* Ajusta este valor según tus necesidades */
+}
+
+body .swiper-pagination-bullet-active {
+    background-color: #fff;
 }
