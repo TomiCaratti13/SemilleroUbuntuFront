@@ -3,7 +3,6 @@ import publicaciones from '../utils/mocks/Publicaciones.json';
 import Box from '@mui/material/Box';
 import CardMicroemprendimiento from '../components/CardMicroemprendimiento';
 import { Publicaciones } from './Publicaciones';
-import { fontSize } from '@mui/system';
 
 
 export const LandingPage = () => {
