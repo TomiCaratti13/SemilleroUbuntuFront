@@ -3,6 +3,8 @@ import { MapPublicaciones } from './MapPublicaciones';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
 import { Container, Typography, Box } from '@mui/material';
+import Objetivos from '../components/Objetivos';
+import CardCategoria from '../components/CardCategoria';
 
 
 export const LandingPage = () => {
@@ -34,6 +36,8 @@ export const LandingPage = () => {
         title={landingPage.title}
         img={landingPage.img}
       />
+      <Objetivos />
+      <CardCategoria />
       <Container
         sx={{
           display: 'flex',

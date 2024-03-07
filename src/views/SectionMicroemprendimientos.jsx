@@ -69,7 +69,7 @@ export const SectionMicroemprendmientos = () => {
               textAlign: 'center',
               textWrap: 'pretty',
             }}>
-            Agroecología/Orgánicos/Alimentación saludable
+            Agroecología/Orgánicos/ Alimentación saludable
           </Typography>
           <Typography
             variant="h4"
