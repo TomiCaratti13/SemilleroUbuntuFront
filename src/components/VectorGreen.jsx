@@ -8,7 +8,7 @@ export const VectorGreen = ({ text }) => {
         position: 'absolute',
         zIndex: '-1',
         width: '100%',
-        top: text ? '130px' : '0px',
+        top: text ? '160px' : '0px',
       }}>
       <svg
         style={{ position: 'absolute', overflow: 'hidden' }}

@@ -30,18 +30,27 @@ export const SectionMicroemprendmientos = () => {
         description={sectionPublicaiones.description}
         img={sectionPublicaiones.img}
       />
-      <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          gap: '24px',
+          display: 'flex',
+          flexWrap: 'wrap',
+        }}>
         <Container
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            gap: '4px',
+            gap: '10px',
+            width: '100%',
           }}>
           <Typography
             variant="h4"
-            sx={{ fontSize: '24px', lineHeight: '25px', fontWeight: 600 }}>
+            sx={{ fontSize: '24px', lineHeight: '25px', fontWeight: 600, padding:"15px" }}>
             Categorías
           </Typography>
           <Typography
@@ -57,7 +66,7 @@ export const SectionMicroemprendmientos = () => {
             Agroecología / Orgánicos / Alimentación saludable
           </Typography>
           <Typography
-            variant="h3"
+            variant="h4"
             sx={{
               fontSize: '16px',
               lineHeight: '25px',
