@@ -39,6 +39,17 @@ export const SectionMicroemprendmientos = () => {
           display: 'flex',
           flexWrap: 'wrap',
         }}>
+        <Typography
+          variant="h4"
+          sx={{
+            fontSize: '24px',
+            lineHeight: '25px',
+            fontWeight: 600,
+            textAlign: 'center',
+            width: '100%',
+          }}>
+          Categorías
+        </Typography>
         <Container
           sx={{
             display: 'flex',
@@ -49,11 +60,6 @@ export const SectionMicroemprendmientos = () => {
             width: '100%',
           }}>
           <Typography
-            variant="h4"
-            sx={{ fontSize: '24px', lineHeight: '25px', fontWeight: 600, padding:"15px" }}>
-            Categorías
-          </Typography>
-          <Typography
             variant="h3"
             sx={{
               fontSize: '20px',
@@ -63,7 +69,7 @@ export const SectionMicroemprendmientos = () => {
               textAlign: 'center',
               textWrap: 'pretty',
             }}>
-            Agroecología / Orgánicos / Alimentación saludable
+            Agroecología/Orgánicos/Alimentación saludable
           </Typography>
           <Typography
             variant="h4"
@@ -77,9 +83,11 @@ export const SectionMicroemprendmientos = () => {
             priorizan la salud, a través de prácticas agrícolas limpias y
             alimentos nutritivos.
           </Typography>
+          <VectorGreen text={true} />
+          <MapMicroemprendimientos
+            microemprendimientos={microemprendimientos}
+          />
         </Container>
-        <VectorGreen text={true} />
-        <MapMicroemprendimientos microemprendimientos={microemprendimientos} />
       </Box>
     </Box>
   );
