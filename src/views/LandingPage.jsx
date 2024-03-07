@@ -11,8 +11,7 @@ export const LandingPage = () => {
 
   const landingPage = {
     category: 'FINANCIAMIENTO SOSTENIBLE',
-    title:
-      'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
+    title: 'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
     img: '/webp/backgroundLandingPage.webp',
   };
 
@@ -38,25 +37,6 @@ export const LandingPage = () => {
       />
       <Objetivos />
       <CardCategoria />
-      <Container
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: '4px',
-        }}>
-        <Typography
-          variant="h4"
-          sx={{ fontSize: '16px', lineHeight: '25px', fontWeight: 600 }}>
-          Publicaciones
-        </Typography>
-        <Typography
-          variant="h3"
-          sx={{ fontSize: '22px', lineHeight: '25px', fontWeight: 600 }}>
-          Finanzas con impacto
-        </Typography>
-      </Container>
       <MapPublicaciones publicaciones={publicaciones} />
     </Box>
   );

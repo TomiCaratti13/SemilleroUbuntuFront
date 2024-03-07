@@ -8,8 +8,7 @@ export const SectionPublicaciones = () => {
   const sectionPublicaiones = {
     category: 'PUBLICACIONES',
     title: 'Explorando finanzas de impacto',
-    description:
-      'Conocé cómo decisiones financieras pueden impactar positivamente en la sociedad y el medio ambiente',
+    description: 'Conocé cómo decisiones financieras pueden impactar positivamente en la sociedad y el medio ambiente',
     img: '/webp/backgroundPublicacion.webp',
   };
 

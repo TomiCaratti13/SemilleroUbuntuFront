@@ -8,8 +8,7 @@ export const SectionMicroemprendmientos = () => {
   const sectionPublicaiones = {
     category: 'MICROEMPRENDIMIENTOS',
     title: 'Invertí sostenible',
-    description:
-      'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
+    description: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
     img: '/webp/backgroundMicroemprendimiento.webp',
   };
 
