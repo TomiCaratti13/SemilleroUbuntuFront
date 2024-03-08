@@ -23,7 +23,6 @@ function LoginButton(props) {
             backgroundColor: 'blanco.main',
             width: '24px',
             height: '24px',
-            // mr:'8px',
             '& img': {
               width: '16px',
               height: '16px',
@@ -36,7 +35,6 @@ function LoginButton(props) {
             fontSize: '16px',
             lineHeight: '30px',
             textAlign: 'center',
-            // letterSpacing: '-0.02em',
           }}
         >
           {props.name}

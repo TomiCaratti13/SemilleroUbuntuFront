@@ -1,10 +1,11 @@
 import publicaciones from '../utils/mocks/Publicaciones.json';
-import { MapPublicaciones } from './MapPublicaciones';
+import categorias from '../utils/mocks/Categorias.json';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
-import { Container, Typography, Box } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import Objetivos from '../components/Objetivos';
-import CardCategoria from '../components/CardCategoria';
+import { MapPublicaciones } from '../components/MapPublicaciones';
+import { MapCategorias } from '../components/MapCategorias';
 
 
 export const LandingPage = () => {
@@ -36,7 +37,26 @@ export const LandingPage = () => {
         img={landingPage.img}
       />
       <Objetivos />
-      <CardCategoria />
+      <MapCategorias categorias={categorias} />
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          gap: '4px',
+        }}>
+        <Typography
+          variant="h4"
+          sx={{ fontSize: '16px', lineHeight: '25px', fontWeight: 600 }}>
+          Publicaciones
+        </Typography>
+        <Typography
+          variant="h3"
+          sx={{ fontSize: '22px', lineHeight: '25px', fontWeight: 600 }}>
+          Finanzas con impacto
+        </Typography>
+      </Container>
       <MapPublicaciones publicaciones={publicaciones} />
     </Box>
   );

@@ -1,5 +1,5 @@
 import publicaciones from '../utils/mocks/Publicaciones.json';
-import { MapPublicaciones } from './MapPublicaciones';
+import { MapPublicaciones } from '../components/MapPublicaciones';
 import { SectionHero } from '../components/SectionHero';
 import { Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';

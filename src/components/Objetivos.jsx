@@ -11,7 +11,6 @@ function Objetivos() {
     "Ofrecer a potenciales inversores la oportunidad de participar en proyectos con impacto significativo."
   ];
 
-
   return (
     <Box
       sx={{
@@ -47,11 +46,7 @@ function Objetivos() {
           Objetivos de Ubuntu
         </Typography>
       </Box>
-      <List
-        sx={{
-          pb: 0,
-        }}
-      >
+      <List sx={{pb: 0}}>
         {textos.map((texto, index) => (
           <ListItem
             key={index}

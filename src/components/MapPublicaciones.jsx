@@ -1,4 +1,5 @@
-import CardPublicacion from '../components/CardPublicacion';
+
+import CardPublicaciones from './CardPublicacion';
 import { Container } from '@mui/material';
 
 // eslint-disable-next-line react/prop-types
@@ -21,7 +22,7 @@ export const MapPublicaciones = ({ publicaciones }) => (
         return dateB - dateA;
       })
       .map((publicacion, index) => (
-        <CardPublicacion
+        <CardPublicaciones
           key={index}
           title={publicacion.title}
           date={publicacion.date}
