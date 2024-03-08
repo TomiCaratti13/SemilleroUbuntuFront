@@ -1,14 +1,18 @@
 import publicaciones from '../utils/mocks/Publicaciones.json';
-import { MapPublicaciones } from './MapPublicaciones';
+import categorias from '../utils/mocks/Categorias.json';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
-import { Container, Typography, Box } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
+import Objetivos from '../components/Objetivos';
+import { MapPublicaciones } from '../components/MapPublicaciones';
+import { MapCategorias } from '../components/MapCategorias';
+
 
 export const LandingPage = () => {
+
   const landingPage = {
     category: 'FINANCIAMIENTO SOSTENIBLE',
-    title:
-      'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
+    title: 'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
     img: '/webp/backgroundLandingPage.webp',
   };
 
@@ -32,6 +36,8 @@ export const LandingPage = () => {
         title={landingPage.title}
         img={landingPage.img}
       />
+      <Objetivos />
+      <MapCategorias categorias={categorias} />
       <Container
         sx={{
           display: 'flex',

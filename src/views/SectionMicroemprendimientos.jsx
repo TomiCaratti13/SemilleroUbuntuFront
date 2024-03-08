@@ -8,8 +8,7 @@ export const SectionMicroemprendmientos = () => {
   const sectionPublicaiones = {
     category: 'MICROEMPRENDIMIENTOS',
     title: 'Invertí sostenible',
-    description:
-      'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
+    description: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
     img: '/webp/backgroundMicroemprendimiento.webp',
   };
 
@@ -69,7 +68,7 @@ export const SectionMicroemprendmientos = () => {
               textAlign: 'center',
               textWrap: 'pretty',
             }}>
-            Agroecología/Orgánicos/Alimentación saludable
+            Agroecología/Orgánicos/ Alimentación saludable
           </Typography>
           <Typography
             variant="h4"
