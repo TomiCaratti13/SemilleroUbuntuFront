@@ -129,9 +129,6 @@ function Header(props) {
               style={{
                 textDecoration: 'none',
                 color: 'inherit',
-                // justifyContent: 'flex-end',
-                // display: 'flex',
-                // flexGrow: 1,
               }}>
               <IconButton
                 color="inherit"

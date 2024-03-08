@@ -3,12 +3,15 @@ import { Container, Typography, Box } from '@mui/material';
 import microemprendimientos from '../utils/mocks/Microemprendimientos.json';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
 import { VectorGreen } from '../components/VectorGreen';
+import { MapCategorias } from '../components/MapCategorias';
+import  Categorias  from '../utils/mocks/Categorias';
 
 export const SectionMicroemprendmientos = () => {
   const sectionPublicaiones = {
     category: 'MICROEMPRENDIMIENTOS',
     title: 'Invertí sostenible',
-    description: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
+    description:
+      'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
     img: '/webp/backgroundMicroemprendimiento.webp',
   };
 
@@ -38,6 +41,7 @@ export const SectionMicroemprendmientos = () => {
           display: 'flex',
           flexWrap: 'wrap',
         }}>
+        <MapCategorias categorias={Categorias} />
         <Typography
           variant="h4"
           sx={{

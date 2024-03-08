@@ -1,6 +1,6 @@
-
-import CardCategoria from './CardCategoria'
-import { Container, Box, Typography, Button } from '@mui/material'
+import CardCategoria from './CardCategoria';
+import { Container, Box, Typography, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const MapCategorias = ({ categorias }) => (
   <Container
@@ -10,16 +10,14 @@ export const MapCategorias = ({ categorias }) => (
       alignItems: 'center',
       flexDirection: 'column',
       gap: '4px',
-    }}
-  >
+    }}>
     <Typography
       variant="h3"
       sx={{
         fontSize: '16px',
         lineHeight: '25px',
-        fontWeight: 600
-      }}
-    >
+        fontWeight: 600,
+      }}>
       Microemprendimientos Ubuntu
     </Typography>
     <Typography
@@ -28,9 +26,8 @@ export const MapCategorias = ({ categorias }) => (
         fontSize: '22px',
         lineHeight: '25px',
         fontWeight: 600,
-        mb: '12px'
-      }}
-    >
+        mb: '12px',
+      }}>
       Categorias
     </Typography>
     <Box>
@@ -42,32 +39,31 @@ export const MapCategorias = ({ categorias }) => (
         />
       ))}
     </Box>
-    <Button
-      sx={{
-        width: '200px',
-        height: '40px',
-        my: '10px',
-        justifyContent: 'space-evenly',
-        borderRadius: '100px',
-        textTransform: 'none',
-        color: 'blanco.main',
-        backgroundColor: 'azul.main',
-        '&:hover': {
-          backgroundColor: 'azul.main',
-        }
-      }}
-    >
-      <Typography
+    <Link to="/microemprendimientos">
+      <Button
         sx={{
-          fontWeight: '700',
-          fontSize: '16px',
-          lineHeight: '30px',
-          textAlign: 'center',
-        }}
-      >
-        Ver más Categorias
-      </Typography>
-    </Button>
+          width: '200px',
+          height: '40px',
+          my: '10px',
+          justifyContent: 'space-evenly',
+          borderRadius: '100px',
+          textTransform: 'none',
+          color: 'blanco.main',
+          backgroundColor: 'azul.main',
+          '&:hover': {
+            backgroundColor: 'azul.main',
+          },
+        }}>
+        <Typography
+          sx={{
+            fontWeight: '700',
+            fontSize: '16px',
+            lineHeight: '30px',
+            textAlign: 'center',
+          }}>
+          Ver más Categorias
+        </Typography>
+      </Button>
+    </Link>
   </Container>
-)
-
+);

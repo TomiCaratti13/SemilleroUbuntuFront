@@ -6,7 +6,6 @@ import avatarGoogle from '/avatarGoogle.png'
 import LoginButton from '../components/LoginButton';
 
 export default function Login() {
-
   return (
     <Box
       sx={{
