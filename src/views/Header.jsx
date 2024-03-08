@@ -174,6 +174,20 @@ function Header(props) {
               top: 0,
               zIndex: '0',
             }}>
+              <Link
+              to="/"
+              style={{
+                flexGrow: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                left: 0,
+                top: 0,
+                zIndex: '0',
+              }}>
             <img
               src="/UBUNTU.png"
               alt="UBUNTU Financiamiento Sostenible"
@@ -184,6 +198,7 @@ function Header(props) {
                 objectFit: 'contain',
               }}
             />
+          </Link>
           </Box>
           {location.pathname === '/login' ? null : (
             <Box
