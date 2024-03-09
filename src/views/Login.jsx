@@ -1,8 +1,7 @@
-
-import { Box, Grid, Paper, Typography } from '@mui/material'
-import backgroundImage from '/fondoLogin.jpeg'
-import logoLogin from '/logoLogin.png'
-import avatarGoogle from '/avatarGoogle.png'
+import { Box, Grid, Paper, Typography } from '@mui/material';
+import backgroundImage from '/fondoLogin.webp';
+import logoLogin from '/logoLogin.png';
+import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
 
 export default function Login() {
@@ -10,15 +9,15 @@ export default function Login() {
     <Box
       sx={{
         width: '100%',
-        height: '100vh',
+        height: 'calc(100vh - 56px)',
+        overflowY: 'hidden',
         backgroundImage: `linear-gradient(rgba(34, 34, 34, 0.5), rgba(34, 34, 34, 0.5)), url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       <Paper
         elevation={10}
         sx={{
@@ -30,8 +29,7 @@ export default function Login() {
           justifyContent: 'center',
           alignItems: 'center',
           gap: '24px',
-        }}
-      >
+        }}>
         <Grid
           sx={{
             display: 'flex',
@@ -43,8 +41,7 @@ export default function Login() {
             pt: '16px',
             pb: '40px',
             gap: '8px',
-          }}
-        >
+          }}>
           <Typography
             sx={{
               fontWeight: '700',
@@ -56,31 +53,32 @@ export default function Login() {
               height: '96px',
               py: '16px',
               mx: 'auto',
-            }}
-          >
-            Ingreso<br />Administrador
+            }}>
+            Ingreso
+            <br />
+            Administrador
           </Typography>
           <img
             src={logoLogin}
             width={33}
             height={75}
           />
-        </Grid >
+        </Grid>
         <Grid
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             height: '117px',
-            pb: '32px'
-          }}
-        >
-        <LoginButton name='Continuá con Google' avatar={avatarGoogle}/>
+            pb: '32px',
+          }}>
+          <LoginButton
+            name="Continuá con Google"
+            avatar={avatarGoogle}
+          />
         </Grid>
       </Paper>
     </Box>
-
-
   );
 }
 

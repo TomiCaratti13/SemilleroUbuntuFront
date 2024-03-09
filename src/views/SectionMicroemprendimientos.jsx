@@ -12,7 +12,7 @@ export const SectionMicroemprendmientos = () => {
     title: 'Invertí sostenible',
     description:
       'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
-    img: '/webp/backgroundMicroemprendimiento.webp',
+    img: '/backgroundMicroemprendimiento.webp',
   };
 
   return (

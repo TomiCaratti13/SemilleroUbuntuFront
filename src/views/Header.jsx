@@ -6,7 +6,6 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -122,7 +121,7 @@ function Header(props) {
           boxShadow: 'none',
           height: CONST_HEADER_HEIGHT,
         }}>
-        <Toolbar sx={{ display: 'flex' }}>
+        <Toolbar sx={{ display: 'flex'}}>
           {location.pathname === '/login' ? (
             <Link
               to="/"
@@ -158,45 +157,27 @@ function Header(props) {
               {mobileOpen ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
           )}
-          <Box
-            sx={{
-              flexGrow: 1,
+          <Link
+            to="/"
+            style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               position: 'absolute',
               width: '100%',
-              height: '100%',
+              height: '56px',
               left: 0,
               top: 0,
               zIndex: '0',
             }}>
-              <Link
-              to="/"
-              style={{
-                flexGrow: 1,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                left: 0,
-                top: 0,
-                zIndex: '0',
-              }}>
             <img
               src="/UBUNTU.png"
               alt="UBUNTU Financiamiento Sostenible"
               style={{
                 height: '100%',
-                width: '100%',
-                padding: '2px',
-                objectFit: 'contain',
               }}
             />
           </Link>
-          </Box>
           {location.pathname === '/login' ? null : (
             <Box
               sx={{
@@ -205,20 +186,25 @@ function Header(props) {
                 alignItems: 'center',
               }}>
               {navItems.map(item => (
-                <Button
+                <Link
                   key={item}
-                  variant="text"
-                  sx={{
-                    color: 'negro.main',
-                    justifyContent: 'center',
-                    margin: '5px',
-                    fontFamily: 'Lato',
-                    fontWeight: 700,
-                    fontSize: '14px',
-                    alignItems: 'flex-start',
-                  }}>
-                  {item}
-                </Button>
+                  to={item === 'Inicio' ? '/' : `/${item.toLowerCase()}`}
+                  style={{ textDecoration: 'none' }}>
+                  <Button
+                    key={item}
+                    variant="text"
+                    sx={{
+                      color: 'negro.main',
+                      justifyContent: 'center',
+                      margin: '5px',
+                      fontFamily: 'Lato',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      alignItems: 'flex-start',
+                    }}>
+                    {item}
+                  </Button>
+                </Link>
               ))}
               <Link
                 to="/login"

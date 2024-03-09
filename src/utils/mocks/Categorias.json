@@ -1,18 +1,18 @@
 [
   {
     "title":"Economía social/Desarrollo local/Inclusión financiera",
-    "img":"/webp/economiaSocial.webp"
+    "img":"/economiaSocial.webp"
   },
   {
     "title":"Agroecología/Orgánicos/ Alimentación saludable",
-    "img":"/webp/agroecologia.webp"
+    "img":"/agroecologia.webp"
   },
   {
     "title":"Conservación/Regeneración/ Servicios ecosistémicos",
-    "img":"/webp/conservacion.webp"
+    "img":"/conservacion.webp"
   },
   {
     "title":"Empresas/Organismos de impacto/ Economía circular",
-    "img":"/webp/empresas.webp"
+    "img":"/empresas.webp"
   }
 ]

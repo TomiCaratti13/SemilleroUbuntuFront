@@ -13,7 +13,7 @@ export const LandingPage = () => {
   const landingPage = {
     category: 'FINANCIAMIENTO SOSTENIBLE',
     title: 'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
-    img: '/webp/backgroundLandingPage.webp',
+    img: '/backgroundLandingPage.webp',
   };
 
   const { enqueueSnackbar } = useSnackbar();
