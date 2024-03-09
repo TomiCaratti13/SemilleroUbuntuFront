@@ -1,8 +1,7 @@
-import { useTheme } from "@emotion/react";
-import { Avatar, Card, Box, Typography } from "@mui/material"
+import { useTheme } from '@emotion/react';
+import { Avatar, Card, Box, Typography } from '@mui/material';
 
 function CardCategoria({ title, img }) {
-
   const theme = useTheme();
 
   return (
@@ -18,8 +17,7 @@ function CardCategoria({ title, img }) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       <Box
         sx={{
           width: '283px',
@@ -27,8 +25,7 @@ function CardCategoria({ title, img }) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-        }}
-      >
+        }}>
         <Avatar
           src={img}
           sx={{
@@ -49,13 +46,12 @@ function CardCategoria({ title, img }) {
             color: 'azul.main',
             ml: '8px',
             borderBottom: `1px solid ${theme.palette.verde.main}`,
-          }}
-        >
+          }}>
           {title}
         </Typography>
       </Box>
     </Card>
-  )
+  );
 }
 
-export default CardCategoria
+export default CardCategoria;

@@ -6,13 +6,13 @@ import { Box, Container, Typography } from '@mui/material';
 import Objetivos from '../components/Objetivos';
 import { MapPublicaciones } from '../components/MapPublicaciones';
 import { MapCategorias } from '../components/MapCategorias';
-
+import { ButtonBlue } from '../components/ButtonBlue';
 
 export const LandingPage = () => {
-
   const landingPage = {
     category: 'FINANCIAMIENTO SOSTENIBLE',
-    title: 'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
+    title:
+      'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
     img: '/backgroundLandingPage.webp',
   };
 
@@ -37,7 +37,35 @@ export const LandingPage = () => {
         img={landingPage.img}
       />
       <Objetivos />
-      <MapCategorias categorias={categorias} />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontSize: '16px',
+            lineHeight: '25px',
+            fontWeight: 600,
+          }}>
+          Microemprendimientos Ubuntu
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            fontSize: '22px',
+            lineHeight: '25px',
+            fontWeight: 600,
+            mb: '12px',
+          }}>
+          Categorias
+        </Typography>
+        <MapCategorias categorias={categorias} />
+        <ButtonBlue text="Ver más Categorias" />
+      </Box>
       <Container
         sx={{
           display: 'flex',
