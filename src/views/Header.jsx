@@ -121,7 +121,7 @@ function Header(props) {
           boxShadow: 'none',
           height: CONST_HEADER_HEIGHT,
         }}>
-        <Toolbar sx={{ display: 'flex'}}>
+        <Toolbar sx={{ display: 'flex' }}>
           {location.pathname === '/login' ? (
             <Link
               to="/"
@@ -164,10 +164,10 @@ function Header(props) {
               justifyContent: 'center',
               alignItems: 'center',
               position: 'absolute',
-              width: '100%',
               height: '56px',
-              left: 0,
+              left: '50%',
               top: 0,
+              transform: 'translate(-50%,0)',
               zIndex: '0',
             }}>
             <img
