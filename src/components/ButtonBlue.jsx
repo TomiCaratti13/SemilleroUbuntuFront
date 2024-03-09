@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Typography, Button } from '@mui/material';
 
-export const ButtonBlue = ({ text, width = 'fitContent' }) => {
+export const ButtonBlue = ({ link, text, width = 'fitContent' }) => {
   //Me encantaria crear un tipo para width que pueda ser 'fitContent' o '100%'
   return (
     <Link
-      to="/microemprendimientos"
+      to={link}
       style={{
         width: '100%',
         display: 'flex',

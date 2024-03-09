@@ -64,7 +64,10 @@ export const LandingPage = () => {
           Categorias
         </Typography>
         <MapCategorias categorias={categorias} />
-        <ButtonBlue text="Ver más Categorias" />
+        <ButtonBlue
+          text="Ver más Categorias"
+          link="/microemprendimientos"
+        />
       </Box>
       <Container
         sx={{
@@ -85,7 +88,13 @@ export const LandingPage = () => {
           Finanzas con impacto
         </Typography>
       </Container>
-      <MapPublicaciones publicaciones={publicaciones} />
+      <Box>
+        <MapPublicaciones publicaciones={publicaciones} />
+        <ButtonBlue
+          text="Ver más Publicaciones"
+          link="/publicaciones"
+        />
+      </Box>
     </Box>
   );
 };
