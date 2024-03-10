@@ -2,14 +2,14 @@ import { useTheme } from '@emotion/react';
 import { Avatar, Box, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-function CardCategoria({ title, img, setToMap }) {
+function CardCategoria({ title, identifier, img }) {
   const theme = useTheme();
 
   return (
     <Link
-      to={`/microemprendimientos`}>
+      to={`/microemprendimientos/${identifier}`}
+      style={{ textDecoration: 'none' }}>
       <Button
-        onClick={() => setToMap(title)}
         sx={{
           width: '100%',
           padding: '20px',

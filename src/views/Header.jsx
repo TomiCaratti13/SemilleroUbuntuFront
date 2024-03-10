@@ -64,7 +64,13 @@ function Header(props) {
             {navItems.map(item => (
               <Link
                 key={item}
-                to={item === 'Inicio' ? '/' : `/${item.toLowerCase()}`}
+                to={
+                  item === 'Inicio'
+                    ? '/'
+                    : item === 'Microemprendimientos'
+                    ? '/microemprendimientos/categorias'
+                    : `/${item.toLowerCase()}`
+                }
                 style={{ textDecoration: 'none' }}>
                 <ListItemText
                   sx={{

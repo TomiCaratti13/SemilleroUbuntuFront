@@ -5,7 +5,8 @@ import { MapCategorias } from '../components/MapCategorias';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
 import Categorias from '../utils/mocks/Categorias';
 import Microemprendmietos from '../utils/mocks/Microemprendimientos';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 
 export const SectionMicroemprendmientos = () => {
   const sectionPublicaiones = {
@@ -15,8 +16,21 @@ export const SectionMicroemprendmientos = () => {
       'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
     img: '/backgroundMicroemprendimiento.webp',
   };
-  //Existe un pequeño drill prop en el componente MapCategoriasy CardCategoria que se encarga de cambiar el estado de toMap
-  const [toMap, setToMap] = useState('');
+
+  const [categoryToMap, setCategoryToMap] = useState('');
+
+  const { categoryUrl } = useParams();
+  const location = useLocation();
+
+  //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryToMap
+  useEffect(() => {
+    if (categoryUrl !== 'categorias') {
+      const category = Categorias.filter(
+        categoria => categoria.identifier === categoryUrl
+      )[0];
+      setCategoryToMap({ ...category });
+    }
+  }, [categoryUrl, location.pathname]);
 
   return (
     <Box
@@ -45,7 +59,7 @@ export const SectionMicroemprendmientos = () => {
           flexWrap: 'wrap',
         }}>
         <Typography
-          onClick={() => setToMap('')}
+          onClick={() => setCategoryToMap('')}
           variant="h4"
           sx={{
             fontSize: '24px',
@@ -56,54 +70,54 @@ export const SectionMicroemprendmientos = () => {
           }}>
           Categorías
         </Typography>
-        <VectorGreen text={toMap === '' ? false : true} />
-        {
-          /*Cuando toMap cambie el componente debe cambiar */
-          toMap === '' ? (
-            <>
-              <MapCategorias
-                categorias={Categorias}
-                setToMap={setToMap}
-              />
-            </>
-          ) : (
-            <>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontSize: '20px',
-                  lineHeight: '30px',
-                  fontWeight: 500,
-                  textAlign: 'center',
-                  width: '100%',
-                  color: 'azul.main',
-                  textWrap: 'balance',
-                }}>
-                {toMap}
-              </Typography>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontSize: '16px',
-                  lineHeight: '25px',
-                  fontWeight: 400,
-                  textAlign: 'center',
-                  width: '100%',
-                  padding: '0 16px',
-                }}>
-                {
-                  Categorias.filter(categoria => categoria.title === toMap)[0]
-                    .description
-                }
-              </Typography>
-              <MapMicroemprendimientos
-                microemprendimientos={Microemprendmietos.filter(
-                  item => item.category === toMap
-                )}
-              />
-            </>
-          )
-        }
+        <VectorGreen text={categoryToMap === '' ? false : true} />
+        {location.pathname === '/microemprendimientos/categorias' ||
+        categoryToMap === '' ? (
+          <>
+            <MapCategorias categorias={Categorias} />
+          </>
+        ) : (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px',
+              width: '100%',
+              padding: '0 16px',
+            }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: '20px',
+                lineHeight: '30px',
+                fontWeight: 500,
+                textAlign: 'center',
+                width: '100%',
+                color: 'azul.main',
+                textWrap: 'balance',
+              }}>
+              {categoryToMap.title}
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: '16px',
+                lineHeight: '25px',
+                fontWeight: 400,
+                textAlign: 'center',
+                width: '100%',
+                padding: '0 16px',
+              }}>
+              {categoryToMap.description}
+            </Typography>
+            <MapMicroemprendimientos
+              microemprendimientos={Microemprendmietos.filter(
+                microemprendimiento =>
+                  microemprendimiento.category === categoryToMap.title
+              )}
+            />
+          </Box>
+        )}
       </Box>
     </Box>
   );

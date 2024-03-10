@@ -1,7 +1,7 @@
 import CardCategoria from './CardCategoria';
 import { Container, Box } from '@mui/material';
 
-export const MapCategorias = ({ categorias , setToMap}) => (
+export const MapCategorias = ({ categorias }) => (
   <Container
     sx={{
       display: 'flex',
@@ -15,8 +15,8 @@ export const MapCategorias = ({ categorias , setToMap}) => (
         <CardCategoria
           key={index}
           title={categorias.title}
+          identifier={categorias.identifier}
           img={categorias.img}
-          setToMap={setToMap}
         />
       ))}
     </Box>

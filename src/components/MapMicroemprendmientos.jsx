@@ -12,7 +12,7 @@ export const MapMicroemprendimientos = ({ microemprendimientos }) => (
       flexWrap: 'wrap',
       gap: '16px',
       padding: '0',
-      margin: '0',
+      width: '100%',
     }}>
     {microemprendimientos.map((microemprendimiento, index) => (
       <CardMicroemprendimiento

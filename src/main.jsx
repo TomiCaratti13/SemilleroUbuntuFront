@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             element={<Login />}
           />
           <Route
-            path="microemprendimientos"
+            path="microemprendimientos/:categoryUrl"
             element={<SectionMicroemprendmientos />}
           />
           <Route

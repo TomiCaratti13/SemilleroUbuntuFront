@@ -66,7 +66,7 @@ export const LandingPage = () => {
         <MapCategorias categorias={categorias} />
         <ButtonBlue
           text="Ver más Categorias"
-          link="/microemprendimientos"
+          link="/microemprendimientos/categorias"
         />
       </Box>
       <Container

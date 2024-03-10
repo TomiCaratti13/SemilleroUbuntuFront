@@ -1,22 +1,26 @@
 [
   {
-    "title":"Economía social/Desarrollo local/Inclusión financiera",
-    "img":"/economiaSocial.webp",
-    "description":"Conéctate con microemprendimientos que promueven la economía social, el desarrollo local y la inclusión financiera."
+    "title": "Economía social/Desarrollo local/Inclusión financiera",
+    "identifier": "Economia",
+    "img": "/economiaSocial.webp",
+    "description": "Conéctate con microemprendimientos que promueven la economía social, el desarrollo local y la inclusión financiera."
   },
   {
-    "title":"Agroecología/Orgánicos/ Alimentación saludable",
-    "img":"/agroecologia.webp",
-    "description":"Conéctate con microemprendimientos que respetan la tierra y priorizan la salud, a través de prácticas agrícolas limpias y alimentos nutritivos."
+    "title": "Agroecología/Orgánicos/ Alimentación saludable",
+    "identifier": "Agroecologia",
+    "img": "/agroecologia.webp",
+    "description": "Conéctate con microemprendimientos que respetan la tierra y priorizan la salud, a través de prácticas agrícolas limpias y alimentos nutritivos."
   },
   {
-    "title":"Conservación/Regeneración/ Servicios ecosistémicos",
-    "img":"/conservacion.webp",
-    "description":"Conéctate con microemprendimientos que se dedican a la conservación y regeneración del medio ambiente y a la prestación de servicios ecosistémicos."
+    "title": "Conservación/Regeneración/ Servicios ecosistémicos",
+    "identifier": "Conservacion",
+    "img": "/conservacion.webp",
+    "description": "Conéctate con microemprendimientos que se dedican a la conservación y regeneración del medio ambiente y a la prestación de servicios ecosistémicos."
   },
   {
-    "title":"Empresas/Organismos de impacto/ Economía circular",
-    "img":"/empresas.webp",
-    "description":"Conéctate con empresas y organismos que generan un impacto positivo en la sociedad y promueven la economía circular."
+    "title": "Empresas/Organismos de impacto/ Economía circular",
+    "identifier": "Empresas",
+    "img": "/empresas.webp",
+    "description": "Conéctate con empresas y organismos que generan un impacto positivo en la sociedad y promueven la economía circular."
   }
 ]
