@@ -14,11 +14,11 @@ function Objetivos() {
   return (
     <Box
       sx={{
-        width: '327px',
+        width: '90%',
+        maxWidth: '500px',
         mt: '12px',
         mx: 'auto',
-        pt: '8px',
-        pb: '16px',
+        padding: "8px 16px 16px 16px",
         borderTop: `1px solid ${theme.palette.verde.main}`,
         borderBottom: `1px solid ${theme.palette.verde.main}`,
         gap: '8px',
@@ -54,6 +54,7 @@ function Objetivos() {
               display: 'flex',
               alignItems: 'flex-start',
               p: 0,
+              textWrap: "pretty",
               "&::before": {
                 content: "'\\2022'",
                 paddingRight: '8px',
