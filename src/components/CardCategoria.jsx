@@ -6,9 +6,10 @@ function CardCategoria({ title, img, setToMap }) {
 
   return (
     <Button
-    onClick={() => setToMap(title)}
+      onClick={() => setToMap(title)}
       sx={{
-        width: '328px',
+        width: '100%',
+        padding: '20px',
         height: '64px',
         my: '16px',
         borderRadius: '16px',
@@ -16,21 +17,12 @@ function CardCategoria({ title, img, setToMap }) {
         boxShadow: 'none',
         gap: '10px',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'start',
         textTransform: 'none',
         '&:hover': {
           backgroundColor: 'gris.medio',
         },
       }}>
-      <Box
-        sx={{
-          width: '283px',
-          height: '56px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
         <Avatar
           src={img}
           sx={{
@@ -55,7 +47,6 @@ function CardCategoria({ title, img, setToMap }) {
           }}>
           {title}
         </Typography>
-      </Box>
     </Button>
   );
 }
