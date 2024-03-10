@@ -158,7 +158,7 @@ export default function CardMicroemprendimiento({
             }}>
             {moreinfo}
           </Typography>
-          <ButtonBlue text="Contactar" link="formularioContacto" />
+          <ButtonBlue text="Contactar" link={`/formularioContacto/${title}`} />
         </CardContent>
       </Collapse>
       <CardActions

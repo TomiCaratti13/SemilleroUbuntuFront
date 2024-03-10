@@ -2,6 +2,7 @@ import { SectionHero } from '../components/SectionHero';
 import { Typography, Box, TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import styled from '@mui/material/styles/styled';
+import { useParams } from 'react-router-dom';
 
 const CssTextField = styled(TextField)({
   '& label': {
@@ -33,6 +34,8 @@ export const SectionFormularioContacto = () => {
   };
 
   const [chars, setChars] = useState(0);
+
+  const { id } = useParams();
 
   return (
     <Box
@@ -80,7 +83,7 @@ export const SectionFormularioContacto = () => {
             width: '100%',
             color: 'azul.main',
           }}>
-          TITULO
+          {id}
         </Typography>
         <Typography
           variant="h4"

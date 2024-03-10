@@ -33,7 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             element={<SectionPublicaciones />}
           />
           <Route
-            path="formularioContacto"
+            path="formularioContacto/:id"
             element={<SectionFormularioContacto />}
           />
         </Route>
