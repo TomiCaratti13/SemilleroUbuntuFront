@@ -1,8 +1,9 @@
 import { SectionHero } from '../components/SectionHero';
-import { Typography, Box, TextField, Button } from '@mui/material';
-import { useState } from 'react';
+import { Typography, Box, TextField, Button, Modal } from '@mui/material';
+import React, { useState } from 'react';
 import styled from '@mui/material/styles/styled';
 import { useParams } from 'react-router-dom';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const CssTextField = styled(TextField)({
   '& label': {
@@ -37,6 +38,10 @@ export const SectionFormularioContacto = () => {
 
   const { id } = useParams();
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Box
       sx={{
@@ -61,6 +66,7 @@ export const SectionFormularioContacto = () => {
           display: 'flex',
           flexDirection: 'column',
           gap: '16px',
+          padding: '0 16px',
         }}>
         <Typography
           variant="h4"
@@ -178,7 +184,8 @@ export const SectionFormularioContacto = () => {
           </Box>
         </Box>
         <Button
-          type="submit"
+          onClick={handleOpen}
+          // type="submit"
           sx={{
             width: '100%',
             padding: '0 20px',
@@ -203,6 +210,75 @@ export const SectionFormularioContacto = () => {
             Enviar
           </Typography>
         </Button>
+        <div>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            sx={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '328px',
+                height: '200px',
+                bgcolor: 'blanco.main',
+                borderRadius: '20px',
+                padding: '16px',
+                textAlign: 'center',
+              }}>
+              <CheckCircleOutlineIcon
+                sx={{
+                  color: 'verde.main',
+                  width: '50px',
+                  height: '50px',
+                }}
+              />
+              <Typography
+                sx={{
+                  fontSize: '18px',
+                  lineHeight: '25px',
+                  fontWeight: 400,
+                  color: 'negro.main',
+                }}>
+                Formulario enviado con éxito
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  fontWeight: 400,
+                  color: 'negro.main',
+                  textAlign: 'start',
+                }}>
+                Gracias por contactarnos, nos comunicaremos en breve
+              </Typography>
+              <Button
+                sx={{
+                  marginLeft: '70%',
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  fontWeight: 600,
+                  color: 'azul.main',
+                  textAlign: 'center',
+                  textTransform: 'none',
+                  '&:hover': {
+                    bgcolor: 'gris.medio',
+                  },
+                }}
+                onClick={handleClose}>
+                Aceptar
+              </Button>
+            </Box>
+          </Modal>
+        </div>
       </Box>
     </Box>
   );
