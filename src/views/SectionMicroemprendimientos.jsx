@@ -27,7 +27,8 @@ export const SectionMicroemprendmientos = () => {
         flexDirection: 'column',
         gap: '30px',
         width: '100%',
-        height: '100%',
+        minHeight: '100vh',
+        paddingBottom: '30px',
       }}>
       <SectionHero
         category={sectionPublicaiones.category}
@@ -45,6 +46,7 @@ export const SectionMicroemprendmientos = () => {
           flexWrap: 'wrap',
         }}>
         <Typography
+          onClick={() => setToMap('')}
           variant="h4"
           sx={{
             fontSize: '24px',
@@ -55,19 +57,18 @@ export const SectionMicroemprendmientos = () => {
           }}>
           Categorías
         </Typography>
+        <VectorGreen text={toMap === '' ? false : true} />
         {
           /*Cuando toMap cambie el componente debe cambiar */
           toMap === '' ? (
             <>
-              <VectorGreen/>
               <MapCategorias
                 categorias={Categorias}
                 setToMap={setToMap}
               />
             </>
-          ):(
+          ) : (
             <>
-              <VectorGreen text={true}/>
               <Typography
                 variant="h4"
                 sx={{
@@ -89,12 +90,20 @@ export const SectionMicroemprendmientos = () => {
                   fontWeight: 400,
                   textAlign: 'center',
                   width: '100%',
-                  padding: "0 16px"
+                  padding: '0 16px',
                 }}>
-                {Categorias.filter((categoria) => categoria.title === toMap)[0].description}
+                {
+                  Categorias.filter(categoria => categoria.title === toMap)[0]
+                    .description
+                }
               </Typography>
+              <MapMicroemprendimientos
+                microemprendimientos={Microemprendmietos.filter(
+                  item => item.category === toMap
+                )}
+              />
             </>
-          ) 
+          )
         }
       </Box>
     </Box>

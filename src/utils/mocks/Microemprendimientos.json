@@ -1,7 +1,7 @@
 [
   {
     "title": "EcoSenda",
-    "category": "Agroecología/Orgánicos/Alimentación saludable",
+    "category": "Agroecología/Orgánicos/ Alimentación saludable",
     "subcategory": "Finca Agroecológica",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
@@ -11,8 +11,8 @@
     "moreinfo": "Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina."
   },
   {
-    "title": "Eaeaea",
-    "category": "Agroecología/Orgánicos/Alimentación saludable",
+    "title": "Comida Sana",
+    "category": "Agroecología/Orgánicos/ Alimentación saludable",
     "subcategory": "Finca Agroecológica",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
@@ -22,8 +22,8 @@
     "moreinfo": "Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina."
   },
   {
-    "title": "HolaMundo",
-    "category": "Agroecología/Orgánicos/Alimentación saludable",
+    "title": "Dinero Verde",
+    "category": "Economía social/Desarrollo local/Inclusión financiera",
     "subcategory": "Finca Agroecológica",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
@@ -33,8 +33,41 @@
     "moreinfo": "Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina."
   },
   {
-    "title": "Pipipipi",
-    "category": "Agroecología/Orgánicos/Alimentación saludable",
+    "title": "Luz Brillante",
+    "category": "Conservación/Regeneración/ Servicios ecosistémicos",
+    "subcategory": "Finca Agroecológica",
+    "ubication": "Tunuyán, Mendoza, Argentina",
+    "img0": "/microemprendimiento1.webp",
+    "img1": "/microemprendimiento2.webp",
+    "img2": "/microemprendimiento3.webp",
+    "description": "Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultivan frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.",
+    "moreinfo": "Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina."
+  },
+  {
+    "title": "Refrigerio Sano",
+    "category": "Conservación/Regeneración/ Servicios ecosistémicos",
+    "subcategory": "Finca Agroecológica",
+    "ubication": "Tunuyán, Mendoza, Argentina",
+    "img0": "/microemprendimiento1.webp",
+    "img1": "/microemprendimiento2.webp",
+    "img2": "/microemprendimiento3.webp",
+    "description": "Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultivan frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.",
+    "moreinfo": "Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina."
+  },
+  {
+    "title": "EcoSur",
+    "category": "Conservación/Regeneración/ Servicios ecosistémicos",
+    "subcategory": "Finca Agroecológica",
+    "ubication": "Tunuyán, Mendoza, Argentina",
+    "img0": "/microemprendimiento1.webp",
+    "img1": "/microemprendimiento2.webp",
+    "img2": "/microemprendimiento3.webp",
+    "description": "Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultivan frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.",
+    "moreinfo": "Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina."
+  },
+  {
+    "title": "FaceVerde",
+    "category": "Empresas/Organismos de impacto/ Economía circular",
     "subcategory": "Finca Agroecológica",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
