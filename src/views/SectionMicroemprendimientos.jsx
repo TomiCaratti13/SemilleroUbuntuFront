@@ -2,7 +2,10 @@ import { SectionHero } from '../components/SectionHero';
 import { Typography, Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';
 import { MapCategorias } from '../components/MapCategorias';
+import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
 import Categorias from '../utils/mocks/Categorias';
+import Microemprendmietos from '../utils/mocks/Microemprendimientos';
+import { useState } from 'react';
 
 export const SectionMicroemprendmientos = () => {
   const sectionPublicaiones = {
@@ -12,7 +15,10 @@ export const SectionMicroemprendmientos = () => {
       'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
     img: '/backgroundMicroemprendimiento.webp',
   };
+  //Existe un pequeño drill prop en el componente MapCategoriasy CardCategoria que se encarga de cambiar el estado de toMap
+  const [toMap, setToMap] = useState('');
 
+  console.log(toMap);
   return (
     <Box
       sx={{
@@ -38,7 +44,6 @@ export const SectionMicroemprendmientos = () => {
           display: 'flex',
           flexWrap: 'wrap',
         }}>
-        <VectorGreen />
         <Typography
           variant="h4"
           sx={{
@@ -50,9 +55,48 @@ export const SectionMicroemprendmientos = () => {
           }}>
           Categorías
         </Typography>
-        <MapCategorias categorias={Categorias} />
+        {
+          /*Cuando toMap cambie el componente debe cambiar */
+          toMap === '' ? (
+            <>
+              <VectorGreen/>
+              <MapCategorias
+                categorias={Categorias}
+                setToMap={setToMap}
+              />
+            </>
+          ):(
+            <>
+              <VectorGreen text={true}/>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: '20px',
+                  lineHeight: '30px',
+                  fontWeight: 500,
+                  textAlign: 'center',
+                  width: '100%',
+                  color: 'azul.main',
+                  textWrap: 'balance',
+                }}>
+                {toMap}
+              </Typography>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: '16px',
+                  lineHeight: '25px',
+                  fontWeight: 400,
+                  textAlign: 'center',
+                  width: '100%',
+                  padding: "0 16px"
+                }}>
+                {Categorias.filter((categoria) => categoria.title === toMap)[0].description}
+              </Typography>
+            </>
+          ) 
+        }
       </Box>
-      {/* Necesito que categories sea un estado y al clieckear en un categoria cambie el componente por un mapeo de microemprendimientos que coinciden con nuestro nombre */}
     </Box>
   );
 };

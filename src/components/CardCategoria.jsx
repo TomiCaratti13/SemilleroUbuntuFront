@@ -1,11 +1,12 @@
 import { useTheme } from '@emotion/react';
-import { Avatar, Card, Box, Typography } from '@mui/material';
+import { Avatar, Box, Typography , Button} from '@mui/material';
 
-function CardCategoria({ title, img }) {
+function CardCategoria({ title, img, setToMap }) {
   const theme = useTheme();
 
   return (
-    <Card
+    <Button
+    onClick={() => setToMap(title)}
       sx={{
         width: '328px',
         height: '64px',
@@ -17,6 +18,10 @@ function CardCategoria({ title, img }) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        textTransform: 'none',
+        '&:hover': {
+          backgroundColor: 'gris.medio',
+        },
       }}>
       <Box
         sx={{
@@ -46,11 +51,12 @@ function CardCategoria({ title, img }) {
             color: 'azul.main',
             ml: '8px',
             borderBottom: `1px solid ${theme.palette.verde.main}`,
+            textAlign: "left"
           }}>
           {title}
         </Typography>
       </Box>
-    </Card>
+    </Button>
   );
 }
 
