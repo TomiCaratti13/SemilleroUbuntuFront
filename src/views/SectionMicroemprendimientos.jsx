@@ -18,7 +18,6 @@ export const SectionMicroemprendmientos = () => {
   //Existe un pequeño drill prop en el componente MapCategoriasy CardCategoria que se encarga de cambiar el estado de toMap
   const [toMap, setToMap] = useState('');
 
-  console.log(toMap);
   return (
     <Box
       sx={{

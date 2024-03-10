@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { SliderSwipper } from './SliderSwipper';
+import { ButtonBlue } from './ButtonBlue';
 
 const ExpandMore = styled(props => {
   const { expand, ...other } = props;
@@ -157,6 +158,7 @@ export default function CardMicroemprendimiento({
             }}>
             {moreinfo}
           </Typography>
+          <ButtonBlue text="Contactar" link="formularioContacto" />
         </CardContent>
       </Collapse>
       <CardActions

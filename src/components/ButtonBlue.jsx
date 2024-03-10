@@ -16,6 +16,7 @@ export const ButtonBlue = ({ link, text, width = 'fitContent' }) => {
       }}>
       <Button
         sx={{
+          minWidth: '140px',
           width: { width },
           padding: '0 20px',
           height: '40px',
