@@ -1,28 +1,31 @@
 import { useTheme } from '@emotion/react';
-import { Avatar, Box, Typography , Button} from '@mui/material';
+import { Avatar, Box, Typography, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function CardCategoria({ title, img, setToMap }) {
   const theme = useTheme();
 
   return (
-    <Button
-      onClick={() => setToMap(title)}
-      sx={{
-        width: '100%',
-        padding: '20px',
-        height: '64px',
-        my: '16px',
-        borderRadius: '16px',
-        backgroundColor: 'gris.claro',
-        boxShadow: 'none',
-        gap: '10px',
-        display: 'flex',
-        justifyContent: 'start',
-        textTransform: 'none',
-        '&:hover': {
-          backgroundColor: 'gris.medio',
-        },
-      }}>
+    <Link
+      to={`/microemprendimientos`}>
+      <Button
+        onClick={() => setToMap(title)}
+        sx={{
+          width: '100%',
+          padding: '20px',
+          height: '64px',
+          my: '16px',
+          borderRadius: '16px',
+          backgroundColor: 'gris.claro',
+          boxShadow: 'none',
+          gap: '10px',
+          display: 'flex',
+          justifyContent: 'start',
+          textTransform: 'none',
+          '&:hover': {
+            backgroundColor: 'gris.medio',
+          },
+        }}>
         <Avatar
           src={img}
           sx={{
@@ -43,11 +46,12 @@ function CardCategoria({ title, img, setToMap }) {
             color: 'azul.main',
             ml: '8px',
             borderBottom: `1px solid ${theme.palette.verde.main}`,
-            textAlign: "left"
+            textAlign: 'left',
           }}>
           {title}
         </Typography>
-    </Button>
+      </Button>
+    </Link>
   );
 }
 
