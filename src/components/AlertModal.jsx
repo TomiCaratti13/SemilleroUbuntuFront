@@ -3,7 +3,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Box, Button, Modal, Typography } from '@mui/material';
 
-export const AlertForm = ({ open, setOpen, success }) => {
+export const AlertModal = ({ open, setOpen, success , title , info }) => {
   const handleClose = () => setOpen(false);
 
   if (success) {
@@ -47,7 +47,7 @@ export const AlertForm = ({ open, setOpen, success }) => {
                 fontWeight: 400,
                 color: 'negro.main',
               }}>
-              Formulario enviado con éxito
+              {title}
             </Typography>
             <Typography
               sx={{
@@ -57,7 +57,7 @@ export const AlertForm = ({ open, setOpen, success }) => {
                 color: 'negro.main',
                 textAlign: 'start',
               }}>
-              Gracias por contactarnos, nos comunicaremos en breve
+              {info}
             </Typography>
             <Button
               sx={{
@@ -120,7 +120,7 @@ export const AlertForm = ({ open, setOpen, success }) => {
                 fontWeight: 400,
                 color: 'negro.main',
               }}>
-              Lo sentimos, el Formulario no pudo ser enviado.
+              {title}
             </Typography>
             <Typography
               sx={{
@@ -130,7 +130,7 @@ export const AlertForm = ({ open, setOpen, success }) => {
                 color: 'negro.main',
                 textAlign: 'start',
               }}>
-              Por favor, volvé a intentarlo.
+              {info}
             </Typography>
             <Box
               sx={{

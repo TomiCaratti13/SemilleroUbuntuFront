@@ -3,7 +3,7 @@ import { Typography, Box, TextField, Button } from '@mui/material';
 import React, { useState } from 'react';
 import styled from '@mui/material/styles/styled';
 import { useParams } from 'react-router-dom';
-import { AlertForm } from '../components/AlertForm';
+import { AlertModal } from '../components/AlertModal';
 
 const CssTextField = styled(TextField)({
   '& label': {
@@ -40,7 +40,6 @@ export const SectionFormularioContacto = () => {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   return (
     <Box
@@ -210,11 +209,22 @@ export const SectionFormularioContacto = () => {
             Enviar
           </Typography>
         </Button>
-        <AlertForm
+        {/* Alerta Exito */}
+        <AlertModal
+          open={open}
+          setOpen={setOpen}
+          success={true}
+          title="Formulario enviado con éxito"
+          info="Gracias por contactarnos, nos comunicaremos en breve"
+        />
+        {/* Alerta Error */}
+        {/* <AlertModal
           open={open}
           setOpen={setOpen}
           success={false}
-        />
+          title="Lo sentimos, el Formulario no pudo ser enviado."
+          info="Por favor, volvé a intentarlo."
+          /> */}
       </Box>
     </Box>
   );
