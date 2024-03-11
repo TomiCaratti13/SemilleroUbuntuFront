@@ -1,98 +1,102 @@
 import { useState, useEffect } from 'react';
 import { gapi } from 'gapi-script';
 import GoogleLogin from 'react-google-login';
+import { AdminDashboard } from './Admin/AdminDashboard';
 
-// const enviarDatos = async (username, password) => {
-//     try {
-//       const response = await fetch('https://example.com/verify-admin', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ username, password }),
-//       });
-
-//       if (response.ok) {
-//         const data = await response.json();
-
-//         if (data.isAdmin) {
-//           // El usuario es un administrador, realizar acciones necesarias
-//         } else {
-//           // El usuario no es un administrador, mostrar mensaje de error
-//         }
-//       } else {
-//         // Acceso no verificado, mostrar mensaje de error
-//       }
-//     } catch (error) {
-//       console.error('Error al enviar los datos:', error);
-//     }
-//   };
-
-//   const traerDatos = async () => {
-//     try {
-//       const response = await fetch('https://example.com/data-endpoint');
-
-//       if (response.ok) {
-//         const data = await response.json();
-
-//         const id = data.id;
-//         const imagen = data.imagen;
-//         const nombre = data.nombre;
-
-//         console.log('ID:', id);
-//         console.log('Imagen:', imagen);
-//         console.log('Nombre:', nombre);
-//       } else {
-//         console.error('Error al obtener los datos:', response.status);
-//       }
-//     } catch (error) {
-//       console.error('Error al obtener los datos:', error);
-//     }
-//   };
+const ENDPOINT_TRAERADMIN = 'https://example.com/admin-endpoint';
+const CLIENT_ID =
+  '403200765369-mc5tks9ap8vpt9qd637bjem75ef1s02p.apps.googleusercontent.com';
 
 const PruebaLogin = () => {
-  const clientID =
-    '403200765369-mc5tks9ap8vpt9qd637bjem75ef1s02p.apps.googleusercontent.com';
   const [user, setUser] = useState({});
   const [loggeIn, setLoggetInfo] = useState(false);
 
   const onSuccess = response => {
     setUser(response.profileObj);
+    setLoggetInfo(true);
+    console.log('Login Success:', response);
+    console.log('AcessToken', response.accessToken);
+    console.log('Objeto:', response.profileObj);
+    let accessToken = response.accessToken;
+    enviarDatos(accessToken);
     document.getElementsByClassName('btn').hidden = true;
   };
-  
+
+  //////////////////////////////////
+
   const onFailure = response => {
-    console.log('Something went wrong');
+    console.log('No pinto entrar mi pollo');
   };
-  const handleLogout = () => {
-    setUser({});
-  };
+
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: clientID,
+        clientId: CLIENT_ID,
       });
     }
     gapi.load('client:auth2', start);
   });
 
+  //////////////////////////////////////////
+
+  const enviarDatos = async accessToken => {
+    try {
+      const response = await fetch(
+        { ENDPOINT_TRAERADMIN },
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ accessToken }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Error en la respuesta del servidor');
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Buen día señor admin');
+      } else {
+        console.log('No se pudo verificar al admin');
+      }
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+    }
+  };
+
+  const redirectToAdminDashboard = () => {
+    if (loggeIn) {
+      window.location.href = '/Admin';
+    }
+  };
+
+  useEffect(() => {
+    redirectToAdminDashboard();
+  }, [loggeIn]);
+
   return (
-    <div className="center">
-      <h1>Login</h1>
-      <div className="btn">
-        <GoogleLogin
-          clientId={clientID}
-          onSuccess={onSuccess}
-          onFailure={onFailure}
-          buttonText="Continue  with Google"
-          cookiePolicy={'single_host_origin'}
-        />
+    <>
+      <div className="center">
+        <h1>Login</h1>
+        <div className="btn">
+          <GoogleLogin
+            clientId={CLIENT_ID}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            buttonText="Continue  with Google"
+            cookiePolicy={'single_host_origin'}
+          />
+        </div>
       </div>
-      <div class={user ? 'profile' : 'hidden'}>
+      <div class={loggeIn ? 'profile' : 'hidden'}>
         <img src={user.imageUrl} />
         <h3>{user.name}</h3>
       </div>
-    </div>
+    </>
   );
 };
 

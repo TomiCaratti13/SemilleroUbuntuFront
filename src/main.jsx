@@ -9,6 +9,7 @@ import { SectionPublicaciones } from './views/SectionPublicaciones.jsx';
 import { SectionMicroemprendmientos } from './views/SectionMicroemprendimientos.jsx';
 import { SectionFormularioContacto } from './views/SectionFormularioContacto.jsx';
 import { PruebaLogin } from './views/PruebaLogin.jsx';
+import { AdminDashboard } from './views/Admin/AdminDashboard.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -24,6 +25,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route
             path="login"
             element={<Login />}
+          />
+          <Route
+            path="Admin"
+            element={<AdminDashboard />}
           />
           <Route
             path="PruebaLogin"
