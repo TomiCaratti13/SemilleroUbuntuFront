@@ -5,6 +5,10 @@ import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
 
 export default function Login() {
+  const linkToAdmin = () => {
+    window.location.href = '/Admin';
+  };
+
   return (
     <Box
       sx={{
@@ -73,6 +77,7 @@ export default function Login() {
             pb: '32px',
           }}>
           <LoginButton
+            onClick={linkToAdmin}
             name="Continuá con Google"
             avatar={avatarGoogle}
           />
