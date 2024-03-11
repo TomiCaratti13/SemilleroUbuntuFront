@@ -165,9 +165,9 @@ export const SectionFormularioContacto = () => {
               padding: '0 16px',
               '& p': {
                 fontSize: '13px',
-                lineHeight: '16px',
+                lineHeight: '1.66',
                 fontWeight: 300,
-                margin: '0',
+                marginTop: '3px',
                 padding: '0',
               },
             }}>
