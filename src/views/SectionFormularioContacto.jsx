@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import styled from '@mui/material/styles/styled';
 import { useParams } from 'react-router-dom';
 import { AlertModal } from '../components/AlertModal';
+import schemaTest from '../utils/schemas/schemaTest';
 
 const CssTextField = styled(TextField)({
   '& label': {
@@ -210,21 +211,21 @@ export const SectionFormularioContacto = () => {
           </Typography>
         </Button>
         {/* Alerta Exito */}
-        <AlertModal
+        {/* <AlertModal
           open={open}
           setOpen={setOpen}
           success={true}
           title="Formulario enviado con éxito"
           info="Gracias por contactarnos, nos comunicaremos en breve"
-        />
+        /> */}
         {/* Alerta Error */}
-        {/* <AlertModal
+        <AlertModal
           open={open}
           setOpen={setOpen}
           success={false}
           title="Lo sentimos, el Formulario no pudo ser enviado."
           info="Por favor, volvé a intentarlo."
-          /> */}
+          />
       </Box>
     </Box>
   );

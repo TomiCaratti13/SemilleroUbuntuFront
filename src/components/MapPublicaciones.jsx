@@ -7,11 +7,11 @@ export const MapPublicaciones = ({ publicaciones }) => (
   <Container
     component="section"
     sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexWrap: 'wrap',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      placeItems: 'center',
       gap: '16px',
+      width: '100%',
     }}>
     {publicaciones
       //Convertimos Date a fechas para poder ordenarlas

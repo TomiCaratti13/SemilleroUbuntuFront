@@ -35,12 +35,11 @@ export default function CardPublicacion({
   return (
     <Card
       sx={{
-        width: 328,
         bgcolor: 'gris.claro',
         borderRadius: 4,
         padding: '16px 0px 8px 0px',
-        gap: '24px',
         boxShadow: 'none',
+        width: '100%',
       }}>
       <Typography
         sx={{
