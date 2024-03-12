@@ -24,6 +24,7 @@ export const SectionMicroemprendmientos = () => {
 
   //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryToMap
   useEffect(() => {
+    setCategoryToMap('');
     if (categoryUrl !== 'categorias') {
       const category = Categorias.filter(
         categoria => categoria.identifier === categoryUrl
