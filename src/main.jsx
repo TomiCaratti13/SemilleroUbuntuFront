@@ -9,10 +9,12 @@ import { SectionPublicaciones } from './views/SectionPublicaciones.jsx';
 import { SectionMicroemprendmientos } from './views/SectionMicroemprendimientos.jsx';
 import { SectionFormularioContacto } from './views/SectionFormularioContacto.jsx';
 import { PruebaLogin } from './views/PruebaLogin.jsx';
+import ScrollToTop from './utils/services/scrollToTop.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/"
