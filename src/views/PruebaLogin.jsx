@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { gapi } from 'gapi-script';
 import GoogleLogin from 'react-google-login';
-import { AdminDashboard } from './Admin/AdminDashboard';
 
 const ENDPOINT_TRAERADMIN = 'https://example.com/admin-endpoint';
 const CLIENT_ID =
@@ -17,9 +16,6 @@ const PruebaLogin = () => {
     console.log('Login Success:', response);
     console.log('AcessToken', response.accessToken);
     console.log('Objeto:', response.profileObj);
-    let accessToken = response.accessToken;
-    enviarDatos(accessToken);
-    document.getElementsByClassName('btn').hidden = true;
   };
 
   //////////////////////////////////
@@ -68,16 +64,6 @@ const PruebaLogin = () => {
     }
   };
 
-  const redirectToAdminDashboard = () => {
-    if (loggeIn) {
-      window.location.href = '/Admin';
-    }
-  };
-
-  useEffect(() => {
-    redirectToAdminDashboard();
-  }, [loggeIn]);
-
   return (
     <>
       <div className="center">
@@ -92,7 +78,7 @@ const PruebaLogin = () => {
           />
         </div>
       </div>
-      <div class={loggeIn ? 'profile' : 'hidden'}>
+      <div style={{display: loggeIn ? "block" : "hidden"}}>
         <img src={user.imageUrl} />
         <h3>{user.name}</h3>
       </div>
