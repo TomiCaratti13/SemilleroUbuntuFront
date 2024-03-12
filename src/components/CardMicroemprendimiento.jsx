@@ -46,6 +46,8 @@ export default function CardMicroemprendimiento({
         borderRadius: 4,
         padding: '16px 0px 8px 0px',
         boxShadow: 'none',
+        maxWidth: '500px',
+        width: '100%',
       }}>
       <SliderSwipper imgs={[img0, img1, img2]} />
       <CardContent

@@ -6,10 +6,8 @@ export const MapMicroemprendimientos = ({ microemprendimientos }) => (
   <Container
     component="section"
     sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexWrap: 'wrap',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
       gap: '16px',
       padding: '0',
       width: '100%',
