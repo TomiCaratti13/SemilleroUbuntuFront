@@ -134,7 +134,7 @@ function AdminHeader(props) {
             onClick={handleDrawerToggle}
             sx={{
               mr: 2,
-              display: { lg: 'none' },
+              display: "block",
               position: 'relative',
               zIndex: 2,
             }}>
@@ -161,34 +161,6 @@ function AdminHeader(props) {
               }}
             />
           </Link>
-          <Box
-            sx={{
-              display: { xs: 'none', lg: 'flex' },
-              width: '100%',
-              alignItems: 'center',
-            }}>
-            {navItems.map(item => (
-              <Link
-                key={item}
-                //   to={item === 'Inicio' ? '/' : `/${item.toLowerCase()}`}
-                style={{ textDecoration: 'none' }}>
-                <Button
-                  key={item}
-                  variant="text"
-                  sx={{
-                    color: 'negro.main',
-                    justifyContent: 'center',
-                    margin: '5px',
-                    fontFamily: 'Lato',
-                    fontWeight: 700,
-                    fontSize: '14px',
-                    alignItems: 'flex-start',
-                  }}>
-                  {item}
-                </Button>
-              </Link>
-            ))}
-          </Box>
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'block', height: '56px' }} />
@@ -202,7 +174,7 @@ function AdminHeader(props) {
             keepMounted: true,
           }}
           sx={{
-            display: { xs: 'block', lg: 'none' },
+            display: 'block',
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,
