@@ -8,7 +8,7 @@ export const MapPublicaciones = ({ publicaciones }) => (
     component="section"
     sx={{
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
       placeItems: 'center',
       gap: '16px',
       width: '100%',

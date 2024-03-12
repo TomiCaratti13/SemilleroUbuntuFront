@@ -40,6 +40,7 @@ export default function CardPublicacion({
         padding: '16px 0px 8px 0px',
         boxShadow: 'none',
         width: '100%',
+        maxWidth: '500px',
       }}>
       <Typography
         sx={{
