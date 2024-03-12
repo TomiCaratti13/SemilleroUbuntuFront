@@ -13,10 +13,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { Link, useLocation } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AdminHeader from './Admin/AdminHeader';
 
-const drawerWidth = 240;
+const drawerWidth = 256;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones'];
-export const CONST_HEADER_HEIGHT = '60px';
+export const CONST_HEADER_HEIGHT = '56px';
 
 function Header(props) {
   // eslint-disable-next-line react/prop-types
@@ -116,7 +117,9 @@ function Header(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  return (
+  return location.pathname === '/Admin' ? (
+    <AdminHeader />
+  ) : (
     <Box sx={{ display: 'flex', position: 'relative' }}>
       <CssBaseline />
       <AppBar
@@ -171,6 +174,7 @@ function Header(props) {
               alignItems: 'center',
               position: 'absolute',
               height: '56px',
+              width: '120px',
               left: '50%',
               top: 0,
               transform: 'translate(-50%,0)',
@@ -181,6 +185,7 @@ function Header(props) {
               alt="UBUNTU Financiamiento Sostenible"
               style={{
                 height: '100%',
+                padding: '3px',
               }}
             />
           </Link>
@@ -194,7 +199,13 @@ function Header(props) {
               {navItems.map(item => (
                 <Link
                   key={item}
-                  to={item === 'Inicio' ? '/' : `/${item.toLowerCase()}`}
+                  to={
+                    item === 'Inicio'
+                      ? '/'
+                      : item === 'Microemprendimientos'
+                      ? '/microemprendimientos/categorias'
+                      : `/${item.toLowerCase()}`
+                  }
                   style={{ textDecoration: 'none' }}>
                   <Button
                     key={item}
