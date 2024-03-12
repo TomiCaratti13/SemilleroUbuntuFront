@@ -42,15 +42,19 @@ export default function CardMicroemprendimiento({
   return (
     <Card
       sx={{
-        width: 328,
         bgcolor: 'gris.claro',
         borderRadius: 4,
         padding: '16px 0px 8px 0px',
-        gap: '24px',
         boxShadow: 'none',
       }}>
       <SliderSwipper imgs={[img0, img1, img2]} />
-      <CardContent style={{ paddingBottom: 0 }}>
+      <CardContent
+        style={{
+          paddingBottom: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+        }}>
         <Typography
           gutterBottom
           sx={{
@@ -62,18 +66,20 @@ export default function CardMicroemprendimiento({
           }}>
           {title}
         </Typography>
-        <Typography
-          variant="body2"
-          color="negro"
-          sx={{
-            fontSize: '14px',
-            fontFamily: 'Lato',
-            lineHeight: '18px',
-            fontWeight: 700,
-            color: 'azul.main',
-          }}>
-          {subcategory}
-        </Typography>
+        {subcategory && (
+          <Typography
+            variant="body2"
+            color="negro"
+            sx={{
+              fontSize: '14px',
+              fontFamily: 'Lato',
+              lineHeight: '18px',
+              fontWeight: 700,
+              color: 'azul.main',
+            }}>
+            {subcategory}
+          </Typography>
+        )}
         <Typography
           paragraph
           sx={{
@@ -158,7 +164,10 @@ export default function CardMicroemprendimiento({
             }}>
             {moreinfo}
           </Typography>
-          <ButtonBlue text="Contactar" link={`/formularioContacto/${title}`} />
+          <ButtonBlue
+            text="Contactar"
+            link={`/formularioContacto/${title}`}
+          />
         </CardContent>
       </Collapse>
       <CardActions

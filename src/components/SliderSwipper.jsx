@@ -25,7 +25,7 @@ export const SliderSwipper = ({ imgs }) => {
           objectFit: 'cover',
           borderRadius: '16px',
           height: 148,
-          width: 304,
+          padding: '0px 16px',
         }}>
         <div className="container-images">
           <Swiper

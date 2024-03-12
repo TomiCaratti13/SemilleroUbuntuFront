@@ -13,7 +13,7 @@
   {
     "title": "Comida Sana",
     "category": "Agroecología/Orgánicos/ Alimentación saludable",
-    "subcategory": "Finca Agroecológica",
+    "subcategory": "Finca Alimentaria",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
     "img1": "/microemprendimiento2.webp",
@@ -24,7 +24,7 @@
   {
     "title": "Dinero Verde",
     "category": "Economía social/Desarrollo local/Inclusión financiera",
-    "subcategory": "Finca Agroecológica",
+    "subcategory": "Economia y Finanzas",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
     "img1": "/microemprendimiento2.webp",
@@ -35,7 +35,7 @@
   {
     "title": "Luz Brillante",
     "category": "Conservación/Regeneración/ Servicios ecosistémicos",
-    "subcategory": "Finca Agroecológica",
+    "subcategory": "Servicios Básicos",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
     "img1": "/microemprendimiento2.webp",
@@ -46,7 +46,6 @@
   {
     "title": "Refrigerio Sano",
     "category": "Conservación/Regeneración/ Servicios ecosistémicos",
-    "subcategory": "Finca Agroecológica",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
     "img1": "/microemprendimiento2.webp",
@@ -57,7 +56,6 @@
   {
     "title": "EcoSur",
     "category": "Conservación/Regeneración/ Servicios ecosistémicos",
-    "subcategory": "Finca Agroecológica",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
     "img1": "/microemprendimiento2.webp",
@@ -68,7 +66,7 @@
   {
     "title": "FaceVerde",
     "category": "Empresas/Organismos de impacto/ Economía circular",
-    "subcategory": "Finca Agroecológica",
+    "subcategory": "Emprendimiento Social y Sustentable",
     "ubication": "Tunuyán, Mendoza, Argentina",
     "img0": "/microemprendimiento1.webp",
     "img1": "/microemprendimiento2.webp",
