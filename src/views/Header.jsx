@@ -14,7 +14,6 @@ import Button from '@mui/material/Button';
 import { Link, useLocation } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AdminHeader from './Admin/AdminHeader';
-import PerfilAdmin from '../components/PerfilAdmin';
 
 const drawerWidth = 256;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones'];
@@ -256,7 +255,6 @@ function Header(props) {
             alignItems: 'center',
             marginLeft: 'auto',
           }}>
-            <PerfilAdmin />
           </Box>
         </Toolbar>
       </AppBar>

@@ -10,10 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import { Link, useLocation } from 'react-router-dom';
-import { axios } from 'axios';
-import { GOOGLE_AUTH } from '../../utils/services/constants';
+import PerfilAdmin from '../../components/PerfilAdmin';
 
 const drawerWidth = 256;
 const navItems = [
@@ -25,24 +23,6 @@ const navItems = [
 export const CONST_HEADER_HEIGHT = '56px';
 
 function AdminHeader(props) {
-
-  
-//  const traerToken = () => {
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//       // Aquí puedes setear el token en el estado
-//     }
-//  }
-
-  axios.get('http://localhost:5173/Admin')
-    .then(response => {
-    const token = response.data.token;
-    console.log(token);
-    // localStorage.setItem('token', token);
-  })
-  .catch(e => {console.log("error" , e)})
-
-
   // eslint-disable-next-line react/prop-types
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -181,6 +161,7 @@ function AdminHeader(props) {
               }}
             />
           </Link>
+          <PerfilAdmin />
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'block', height: '56px' }} />

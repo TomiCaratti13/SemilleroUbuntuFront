@@ -3,15 +3,8 @@ import backgroundImage from '/fondoLogin.webp';
 import logoLogin from '/logoLogin.png';
 import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
-import { GOOGLE_AUTH } from '../utils/services/constants';
-import { useDispatch } from 'react-redux';
-import { setToken } from '../redux/tokenSlice';
 
 export default function Login() {
-
-  const linkToAdmin = () => {
-    window.location.href = GOOGLE_AUTH;
-  };
 
   return (
     <Box
@@ -81,7 +74,7 @@ export default function Login() {
             pb: '32px',
           }}>
           <LoginButton
-            onClick={linkToAdmin}
+            onClick={() => {window.location.href = "/Admin"}}
             name="Continuá con Google"
             avatar={avatarGoogle}
           />
