@@ -181,8 +181,9 @@ export const AdminDashboard = () => {
               padding: ' 8px 20px 20px',
               flexDirection: 'column',
             }}>
-            {Categorias.map(categoria => (
+            {Categorias.map((categoria, index) => (
               <Box
+                key={index}
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -232,8 +233,9 @@ export const AdminDashboard = () => {
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: '16px',
         }}>
-        {Publicaciones.map(publicacion => (
+        {Publicaciones.map((publicacion, index) => (
           <Box
+            key={index}
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
