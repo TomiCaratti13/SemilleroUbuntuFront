@@ -4,10 +4,21 @@ import logoLogin from '/logoLogin.png';
 import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
 import { GOOGLE_AUTH } from '../utils/services/constants';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../redux/tokenSlice';
 
 export default function Login() {
+
   const linkToAdmin = () => {
     window.location.href = GOOGLE_AUTH;
+    
+    const dispatch = useDispatch();
+    
+    const token = response.data.token;;
+
+    dispatch(setToken(token))
+
+    window.localStorage.setItem('token', token);
   };
 
   return (
