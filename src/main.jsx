@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App.jsx';
-import { store } from './redux/store.js';
 import './assets/styles/index.css';
 import { LandingPage } from './views/LandingPage.jsx';
 import Login from './views/Login.jsx';
@@ -12,6 +11,7 @@ import { SectionMicroemprendmientos } from './views/SectionMicroemprendimientos.
 import { SectionFormularioContacto } from './views/SectionFormularioContacto.jsx';
 import ScrollToTop from './utils/services/scrollToTop.js';
 import { AdminDashboard } from './views/Admin/AdminDashboard.jsx';
+import { store } from './utils/redux/store.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -34,10 +34,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               path="Admin"
               element={<AdminDashboard />}
             />
-            {/* <Route
-            path="PruebaLogin"
-            element={<PruebaLogin />}
-          /> */}
             <Route
               path="microemprendimientos/:categoryUrl"
               element={<SectionMicroemprendmientos />}
