@@ -4,8 +4,20 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AdminInfo from '../../utils/mocks/AdminDashboard.json';
 import Categorias from '../../utils/mocks/Categorias.json';
 import Publicaciones from '../../utils/mocks/Publicaciones.json';
+import axios from 'axios';
+import { GOOGLE_AUTH } from '../../utils/services/constants.js';
 
 export const AdminDashboard = () => {
+
+  axios.get(GOOGLE_AUTH)
+  .then(response => {
+    const token = response.headers['authorization'];
+    console.log(token);
+  })
+  .catch(error => {
+      console.error('Error al iniciar sesión:', error);
+  });
+
   return (
     <Container
       sx={{

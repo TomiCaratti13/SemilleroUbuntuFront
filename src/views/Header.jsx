@@ -247,17 +247,8 @@ function Header(props) {
                   Administrador
                 </Button>
               </Link>
-
             </Box>
           )}
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 'auto',
-          }}>
-            <PerfilAdmin />
-          </Box>
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'block', height: '56px' }} />

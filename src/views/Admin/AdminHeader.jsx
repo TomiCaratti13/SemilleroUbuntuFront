@@ -10,8 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import { Link, useLocation } from 'react-router-dom';
+import PerfilAdmin from '../../components/PerfilAdmin.jsx';
 
 const drawerWidth = 256;
 const navItems = [
@@ -161,6 +161,14 @@ function AdminHeader(props) {
               }}
             />
           </Link>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginLeft: 'auto',
+          }}>
+            <PerfilAdmin />
+          </Box>
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'block', height: '56px' }} />

@@ -1,6 +1,6 @@
 
 // URL backend google login
-export const GOOGLE_AUTH = 'http://localhost:8080/auth'
+export const GOOGLE_AUTH = 'http://localhost:8080/oauth2/authorize/google'
 
 // URL del backend local
 export const LOCAL_URL = 'http://localhost:8080';
