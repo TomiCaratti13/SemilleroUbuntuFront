@@ -11,14 +11,6 @@ export default function Login() {
 
   const linkToAdmin = () => {
     window.location.href = GOOGLE_AUTH;
-    
-    const dispatch = useDispatch();
-    
-    const token = response.data.token;;
-
-    dispatch(setToken(token))
-
-    window.localStorage.setItem('token', token);
   };
 
   return (
