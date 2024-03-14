@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   nombre: '',
   foto: '',
-  authorities: '',
+  isAdmin: false,
 };
 
 export const userSlice = createSlice({
@@ -11,32 +11,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-      const {nombre, foto, authorities} = action.payload;
+      const {nombre, foto, isAdmin} = action.payload;
       state.nombre = nombre;
       state.foto = foto;
-      state.authorities = authorities;
+      state.isAdmin = isAdmin;
     }
   }
 });
-
-// const initialState = {
-//   iat: '',
-//   name: '',
-//   sub: '',
-// };
-
-// export const userSlice = createSlice({
-//   name: 'user',
-//   initialState,
-//   reducers: {
-//     addUser: (state, action) => {
-//       const {iat, name, sub} = action.payload;
-//       state.iat = iat;
-//       state.name = name;
-//       state.sub = sub;
-//     }
-//   }
-// });
 
 export const { addUser } = userSlice.actions;
 export default userSlice.reducer;

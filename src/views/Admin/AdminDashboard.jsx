@@ -4,7 +4,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AdminInfo from '../../utils/mocks/AdminDashboard.json';
 import Categorias from '../../utils/mocks/Categorias.json';
 import Publicaciones from '../../utils/mocks/Publicaciones.json';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode'
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../utils/redux/userSlice';
@@ -12,51 +12,26 @@ import { useParams } from 'react-router-dom';
 
 export const AdminDashboard = () => {
 
-  // const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user);
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   // const getCookie = () => {
-
-  //   document.cookie = 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-
   //   const token = Cookies.get('token');
-  //   console.log(token);
-
   //   const decodedToken = jwtDecode(token);
-  //   console.log(decodedToken);
-
   //   dispatch(addUser(decodedToken))
-
-  //   console.log(user.iat)
-  //   console.log(user.name)
-  //   console.log(user.sub)
   // }
-
   // useEffect(()=>{
   //   getCookie();
   // }, []);
 
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-
-  const getCookie = () => {
-
-    const {token} = useParams(); 
-     console.log(token);
-
+  const getParams = () => {
+    const {token} = useParams()
     const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
-
     dispatch(addUser(decodedToken))
-
-    console.log(user.nombre)
-    console.log(user.foto)
-    console.log(user.authorities)
   }
 
   useEffect(()=>{
-    getCookie();
-  }, []);
+    getParams();
+  }, [user]);
 
   return (
     <Container

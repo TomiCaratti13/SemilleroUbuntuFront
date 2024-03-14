@@ -60,7 +60,10 @@ export const SectionMicroemprendmientos = () => {
           flexWrap: 'wrap',
         }}>
         <Typography
-          onClick={() => setCategoryToMap('')}
+          onClick={() => {
+            setCategoryToMap('');
+            window.location.href = "/microemprendimientos/categorias";
+          }}
           variant="h4"
           sx={{
             fontSize: '24px',
