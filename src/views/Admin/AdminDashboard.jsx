@@ -1,22 +1,62 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AdminInfo from '../../utils/mocks/AdminDashboard.json';
 import Categorias from '../../utils/mocks/Categorias.json';
 import Publicaciones from '../../utils/mocks/Publicaciones.json';
-import axios from 'axios';
-import { GOOGLE_AUTH } from '../../utils/services/constants.js';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode'
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '../../utils/redux/userSlice';
+import { useParams } from 'react-router-dom';
 
 export const AdminDashboard = () => {
 
-  axios.get(GOOGLE_AUTH)
-  .then(response => {
-    const token = response.headers['authorization'];
-    console.log(token);
-  })
-  .catch(error => {
-      console.error('Error al iniciar sesión:', error);
-  });
+  // const dispatch = useDispatch();
+  // const user = useSelector((state) => state.user);
+
+  // const getCookie = () => {
+
+  //   document.cookie = 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+
+  //   const token = Cookies.get('token');
+  //   console.log(token);
+
+  //   const decodedToken = jwtDecode(token);
+  //   console.log(decodedToken);
+
+  //   dispatch(addUser(decodedToken))
+
+  //   console.log(user.iat)
+  //   console.log(user.name)
+  //   console.log(user.sub)
+  // }
+
+  // useEffect(()=>{
+  //   getCookie();
+  // }, []);
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const getCookie = () => {
+
+    const {token} = useParams(); 
+     console.log(token);
+
+    const decodedToken = jwtDecode(token);
+    console.log(decodedToken);
+
+    dispatch(addUser(decodedToken))
+
+    console.log(user.nombre)
+    console.log(user.foto)
+    console.log(user.authorities)
+  }
+
+  useEffect(()=>{
+    getCookie();
+  }, []);
 
   return (
     <Container
