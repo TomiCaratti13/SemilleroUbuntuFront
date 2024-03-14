@@ -134,7 +134,7 @@ function AdminHeader(props) {
             onClick={handleDrawerToggle}
             sx={{
               mr: 2,
-              display: "block",
+              display: 'block',
               position: 'relative',
               zIndex: 2,
             }}>
@@ -161,7 +161,7 @@ function AdminHeader(props) {
               }}
             />
           </Link>
-          <PerfilAdmin />
+        <PerfilAdmin />
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'block', height: '56px' }} />
