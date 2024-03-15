@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App.jsx';
+import { store } from './redux/store.js';
 import './assets/styles/index.css';
 import { LandingPage } from './views/LandingPage.jsx';
 import Login from './views/Login.jsx';
@@ -31,7 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               element={<Login />}
             />
             <Route
-              path="Admin"
+              path="Admin/:token"
               element={<AdminDashboard />}
             />
             <Route

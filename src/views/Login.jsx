@@ -3,8 +3,14 @@ import backgroundImage from '/fondoLogin.webp';
 import logoLogin from '/logoLogin.png';
 import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
+import { GOOGLE_AUTH } from '../utils/services/constants';
+
 
 export default function Login() {
+
+  const linkToAdmin = () => {
+    window.location.href = GOOGLE_AUTH;
+  };
 
   return (
     <Box

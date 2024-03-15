@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  name: '',
-  perfil: '',
+  nombre: '',
+  foto: '',
+  isAdmin: false,
 };
 
 export const userSlice = createSlice({
@@ -10,9 +11,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-      const {name, perfil} = action.payload;
-      state.name = name;
-      state.perfil = perfil;
+      const {nombre, foto, isAdmin} = action.payload;
+      state.nombre = nombre;
+      state.foto = foto;
+      state.isAdmin = isAdmin;
     }
   }
 });

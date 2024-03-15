@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import { Link, useLocation } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AdminHeader from './Admin/AdminHeader';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 256;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones'];
@@ -24,6 +25,7 @@ function Header(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const location = useLocation();
+  const user = useSelector((state)=> state.user)
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
@@ -117,7 +119,7 @@ function Header(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  return location.pathname === '/Admin' ? (
+    return user.nombre !== "" ? (
     <AdminHeader />
   ) : (
     <Box sx={{ display: 'flex', position: 'relative' }}>
@@ -246,7 +248,6 @@ function Header(props) {
                   Administrador
                 </Button>
               </Link>
-
             </Box>
           )}
           <Box sx={{
@@ -255,6 +256,7 @@ function Header(props) {
             alignItems: 'center',
             marginLeft: 'auto',
           }}>
+            <PerfilAdmin />
           </Box>
         </Toolbar>
       </AppBar>
