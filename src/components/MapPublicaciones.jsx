@@ -1,9 +1,8 @@
-
 import CardPublicaciones from './CardPublicacion';
 import { Container } from '@mui/material';
 
 // eslint-disable-next-line react/prop-types
-export const MapPublicaciones = ({ publicaciones }) => (
+export const MapPublicaciones = ({ publicaciones, cantidad }) => (
   <Container
     component="section"
     sx={{
@@ -21,6 +20,7 @@ export const MapPublicaciones = ({ publicaciones }) => (
         const dateB = new Date(b.date.split('/').reverse().join('-'));
         return dateB - dateA;
       })
+      .slice(0, cantidad)
       .map((publicacion, index) => (
         <CardPublicaciones
           key={index}

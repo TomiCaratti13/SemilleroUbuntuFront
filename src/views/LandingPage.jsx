@@ -89,7 +89,7 @@ export const LandingPage = () => {
         </Typography>
       </Container>
       <Box>
-        <MapPublicaciones publicaciones={publicaciones} />
+        <MapPublicaciones publicaciones={publicaciones} cantidad={3}/>
         <ButtonBlue
           text="Ver más Publicaciones"
           link="/publicaciones"
