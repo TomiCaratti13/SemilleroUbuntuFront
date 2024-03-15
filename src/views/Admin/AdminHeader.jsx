@@ -161,7 +161,14 @@ function AdminHeader(props) {
               }}
             />
           </Link>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '100%',
+          }}>
+
         <PerfilAdmin />
+          </div>
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'block', height: '56px' }} />
