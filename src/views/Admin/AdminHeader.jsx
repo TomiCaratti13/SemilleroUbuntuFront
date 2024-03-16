@@ -1,16 +1,18 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import {
+  AppBar,
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  Toolbar,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import Toolbar from '@mui/material/Toolbar';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { HEADER_HEIGHT } from '../../utils/services/constants';
+import { useState } from 'react';
 
 const drawerWidth = 256;
 const navItems = [
@@ -19,13 +21,11 @@ const navItems = [
   'Solicitudes de Contacto',
   'Publicaciones',
 ];
-export const CONST_HEADER_HEIGHT = '56px';
 
 function AdminHeader(props) {
   // eslint-disable-next-line react/prop-types
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
@@ -37,7 +37,7 @@ function AdminHeader(props) {
       sx={{
         bgcolor: 'azul.main',
         height: '100%',
-        marginTop: CONST_HEADER_HEIGHT,
+        marginTop: HEADER_HEIGHT,
         display: 'flex',
       }}>
       <List
@@ -116,14 +116,13 @@ function AdminHeader(props) {
 
   return (
     <Box sx={{ display: 'flex', position: 'relative' }}>
-      <CssBaseline />
       <AppBar
         component="nav"
         sx={{
           bgcolor: 'blanco.main',
           color: 'negro.main',
           boxShadow: 'none',
-          height: CONST_HEADER_HEIGHT,
+          height: HEADER_HEIGHT,
         }}>
         <Toolbar sx={{ display: 'flex' }}>
           <IconButton
@@ -160,12 +159,13 @@ function AdminHeader(props) {
               }}
             />
           </Link>
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 'auto',
-          }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginLeft: 'auto',
+            }}>
             <PerfilAdmin />
           </Box>
         </Toolbar>

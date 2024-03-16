@@ -24,12 +24,7 @@ export const MapPublicaciones = ({ publicaciones, cantidad }) => (
       .map((publicacion, index) => (
         <CardPublicaciones
           key={index}
-          title={publicacion.title}
-          date={publicacion.date}
-          img0={publicacion.img0}
-          img1={publicacion.img1}
-          img2={publicacion.img2}
-          description={publicacion.description}
+          publicacion={publicacion}
         />
       ))}
   </Container>

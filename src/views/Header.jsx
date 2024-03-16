@@ -1,43 +1,44 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Toolbar,
+  Button,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import { Link, useLocation } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AdminHeader from './Admin/AdminHeader';
 import { useSelector } from 'react-redux';
+import { HEADER_HEIGHT } from '../utils/services/constants';
 
 const drawerWidth = 256;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones'];
-export const CONST_HEADER_HEIGHT = '56px';
 
 function Header(props) {
   // eslint-disable-next-line react/prop-types
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  const user = useSelector((state)=> state.user)
+  const user = useSelector(state => state.user);
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
   };
-
+  
   const drawer = (
     <Box
       onClick={handleDrawerToggle}
       sx={{
         bgcolor: 'azul.main',
         height: '100%',
-        marginTop: CONST_HEADER_HEIGHT,
+        marginTop: HEADER_HEIGHT,
         display: 'flex',
       }}>
       <List
@@ -71,8 +72,8 @@ function Header(props) {
                   item === 'Inicio'
                     ? '/'
                     : item === 'Microemprendimientos'
-                      ? '/microemprendimientos/categorias'
-                      : `/${item.toLowerCase()}`
+                    ? '/microemprendimientos/categorias'
+                    : `/${item.toLowerCase()}`
                 }
                 style={{ textDecoration: 'none' }}>
                 <ListItemText
@@ -119,18 +120,17 @@ function Header(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-    return user.nombre !== "" ? (
+  return user.nombre !== '' ? (
     <AdminHeader />
   ) : (
     <Box sx={{ display: 'flex', position: 'relative' }}>
-      <CssBaseline />
       <AppBar
         component="nav"
         sx={{
           bgcolor: 'blanco.main',
           color: 'negro.main',
           boxShadow: 'none',
-          height: CONST_HEADER_HEIGHT,
+          height: HEADER_HEIGHT,
         }}>
         <Toolbar sx={{ display: 'flex' }}>
           {location.pathname === '/login' ? (
@@ -175,7 +175,7 @@ function Header(props) {
               justifyContent: 'center',
               alignItems: 'center',
               position: 'absolute',
-              height: '56px',
+              height: HEADER_HEIGHT,
               width: '120px',
               left: '50%',
               top: 0,
@@ -205,8 +205,8 @@ function Header(props) {
                     item === 'Inicio'
                       ? '/'
                       : item === 'Microemprendimientos'
-                        ? '/microemprendimientos/categorias'
-                        : `/${item.toLowerCase()}`
+                      ? '/microemprendimientos/categorias'
+                      : `/${item.toLowerCase()}`
                   }
                   style={{ textDecoration: 'none' }}>
                   <Button
@@ -250,17 +250,9 @@ function Header(props) {
               </Link>
             </Box>
           )}
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 'auto',
-          }}>
-            <PerfilAdmin />
-          </Box>
         </Toolbar>
       </AppBar>
-      <Box sx={{ display: 'block', height: '56px' }} />
+      <Box sx={{ display: 'block', height: HEADER_HEIGHT }} />
       {location.pathname === '/login' ? null : (
         <nav>
           <Drawer

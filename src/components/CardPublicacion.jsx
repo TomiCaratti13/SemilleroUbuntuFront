@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Collapse,
+  Button,
+  Typography,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { SliderSwipper } from './SliderSwipper';
 
-const ExpandMore = styled(props => {
+const ExpandMoreInfo = styled(props => {
   const { expand, ...other } = props;
   return <Button {...other} />;
 })(({ theme }) => ({
@@ -19,19 +21,12 @@ const ExpandMore = styled(props => {
   }),
 }));
 
-export default function CardPublicacion({
-  title,
-  date,
-  img0,
-  img1,
-  img2,
-  description,
-}) {
+export default function CardPublicacion({ publicacion }) {
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const descriptionSplit = description.split('  ');
+  const descriptionSplit = publicacion.description.split('  ');
   return (
     <Card
       sx={{
@@ -53,15 +48,17 @@ export default function CardPublicacion({
           marginBottom: '16px',
           marginLeft: '16px',
         }}>
-        {title}
+        {publicacion.title}
       </Typography>
-      <SliderSwipper imgs={[img0, img1, img2]} />
+      <SliderSwipper
+        imgs={[publicacion.img0, publicacion.img1, publicacion.img2]}
+      />
       <CardContent style={{ paddingBottom: 0 }}>
         <Typography
           variant="body2"
           color="negro"
           sx={{ fontSize: '14px', fontFamily: 'Lato', fontWeight: 600 }}>
-          {date}
+          {publicacion.date}
         </Typography>
         <Typography
           paragraph
@@ -99,7 +96,7 @@ export default function CardPublicacion({
       <CardActions
         disableSpacing
         sx={{ padding: '0px 0 0 0' }}>
-        <ExpandMore
+        <ExpandMoreInfo
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
@@ -113,7 +110,7 @@ export default function CardPublicacion({
             height: '40px',
           }}>
           {expanded ? 'Ver menos' : 'Ver más'}
-        </ExpandMore>
+        </ExpandMoreInfo>
       </CardActions>
     </Card>
   );

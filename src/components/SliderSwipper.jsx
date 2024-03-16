@@ -1,5 +1,5 @@
 import React from 'react';
-import CardMedia from '@mui/material/CardMedia';
+import { CardMedia } from '@mui/material';
 import '../assets/styles/sliderCard.css';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';

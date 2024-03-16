@@ -1,3 +1,5 @@
+// Heigth of the header
+export const HEADER_HEIGHT = '60px';
 
 // URL backend google login
 export const GOOGLE_AUTH = 'http://localhost:8080/oauth2/authorize/google'

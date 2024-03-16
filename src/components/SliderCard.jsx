@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import '../assets/styles/sliderCard.css';
-import CardMedia from '@mui/material/CardMedia';
+import { CardMedia } from '@mui/material';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 

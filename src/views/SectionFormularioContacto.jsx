@@ -1,10 +1,9 @@
 import { SectionHero } from '../components/SectionHero';
 import { Typography, Box, TextField, Button } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from '@mui/material/styles/styled';
 import { useParams } from 'react-router-dom';
 import { AlertModal } from '../components/AlertModal';
-import schemaTest from '../utils/schemas/schemaTest';
 
 const CssTextField = styled(TextField)({
   '& label': {
@@ -39,7 +38,7 @@ export const SectionFormularioContacto = () => {
 
   const { id } = useParams();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
   return (
@@ -225,7 +224,7 @@ export const SectionFormularioContacto = () => {
           success={false}
           title="Lo sentimos, el Formulario no pudo ser enviado."
           info="Por favor, volvé a intentarlo."
-          />
+        />
       </Box>
     </Box>
   );

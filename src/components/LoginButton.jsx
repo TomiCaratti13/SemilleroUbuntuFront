@@ -1,9 +1,9 @@
 import { Avatar, Button, Typography } from '@mui/material';
 
-function LoginButton(props) {
+function LoginButton({ onClick, name, avatar }) {
   return (
     <Button
-      onClick={props.onClick}
+      onClick={onClick}
       sx={{
         textTransform: 'none',
         color: 'blanco.main',
@@ -18,7 +18,7 @@ function LoginButton(props) {
         },
       }}>
       <Avatar
-        src={props.avatar}
+        src={avatar}
         sx={{
           backgroundColor: 'blanco.main',
           width: '24px',
@@ -36,7 +36,7 @@ function LoginButton(props) {
           lineHeight: '30px',
           textAlign: 'center',
         }}>
-        {props.name}
+        {name}
       </Typography>
     </Button>
   );

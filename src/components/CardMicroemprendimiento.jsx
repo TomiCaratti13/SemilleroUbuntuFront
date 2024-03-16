@@ -1,20 +1,20 @@
-import * as React from 'react';
 import { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Collapse,
+  Button,
+  Typography,
+  Divider,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Divider from '@mui/material/Divider';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { SliderSwipper } from './SliderSwipper';
 import { ButtonBlue } from './ButtonBlue';
 
-const ExpandMore = styled(props => {
+const ExpandMoreInfo = styled(props => {
   const { expand, ...other } = props;
   return <Button {...other} />;
 })(({ theme }) => ({
@@ -24,17 +24,7 @@ const ExpandMore = styled(props => {
   }),
 }));
 
-export default function CardMicroemprendimiento({
-  title,
-  category,
-  subcategory,
-  ubication,
-  img0,
-  img1,
-  img2,
-  description,
-  moreinfo,
-}) {
+export default function CardMicroemprendimiento({ microemprendimiento }) {
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -49,7 +39,13 @@ export default function CardMicroemprendimiento({
         maxWidth: '500px',
         width: '100%',
       }}>
-      <SliderSwipper imgs={[img0, img1, img2]} />
+      <SliderSwipper
+        imgs={[
+          microemprendimiento.img0,
+          microemprendimiento.img1,
+          microemprendimiento.img2,
+        ]}
+      />
       <CardContent
         style={{
           paddingBottom: 0,
@@ -66,9 +62,9 @@ export default function CardMicroemprendimiento({
             margin: '0px',
             lineHeight: '25px',
           }}>
-          {title}
+          {microemprendimiento.title}
         </Typography>
-        {subcategory && (
+        {microemprendimiento.subcategory && (
           <Typography
             variant="body2"
             color="negro"
@@ -79,7 +75,7 @@ export default function CardMicroemprendimiento({
               fontWeight: 700,
               color: 'azul.main',
             }}>
-            {subcategory}
+            {microemprendimiento.subcategory}
           </Typography>
         )}
         <Typography
@@ -92,7 +88,7 @@ export default function CardMicroemprendimiento({
             color: 'negro',
             margin: '0',
           }}>
-          {category}
+          {microemprendimiento.category}
         </Typography>
         <Typography
           paragraph
@@ -110,7 +106,7 @@ export default function CardMicroemprendimiento({
             margin: '16px 0',
           }}>
           <LocationOnOutlinedIcon />
-          {ubication}
+          {microemprendimiento.ubication}
         </Typography>
       </CardContent>
       <Collapse
@@ -140,7 +136,7 @@ export default function CardMicroemprendimiento({
               color: 'negro',
               margin: '0',
             }}>
-            {description}
+            {microemprendimiento.description}
           </Typography>
           <Divider sx={{ bgcolor: 'azul.main', margin: '16px 0' }} />
           <Typography
@@ -164,18 +160,18 @@ export default function CardMicroemprendimiento({
               lineHeight: '20px',
               color: 'negro',
             }}>
-            {moreinfo}
+            {microemprendimiento.moreinfo}
           </Typography>
           <ButtonBlue
             text="Contactar"
-            link={`/formularioContacto/${title}`}
+            link={`/formularioContacto/${microemprendimiento.title}`}
           />
         </CardContent>
       </Collapse>
       <CardActions
         disableSpacing
         sx={{ padding: '0px 0 0 0' }}>
-        <ExpandMore
+        <ExpandMoreInfo
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
@@ -189,15 +185,15 @@ export default function CardMicroemprendimiento({
             height: '40px',
           }}>
           {expanded ? (
-            <ExpandLessIcon
+            <ExpandLess
               sx={{ width: '40px', height: '40px', aspectRatio: '1:1' }}
             />
           ) : (
-            <ExpandMoreIcon
+            <ExpandMore
               sx={{ width: '40px', height: '40px', aspectRatio: '1:1' }}
             />
           )}
-        </ExpandMore>
+        </ExpandMoreInfo>
       </CardActions>
     </Card>
   );

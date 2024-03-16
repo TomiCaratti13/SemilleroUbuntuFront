@@ -15,15 +15,7 @@ export const MapMicroemprendimientos = ({ microemprendimientos }) => (
     {microemprendimientos.map((microemprendimiento, index) => (
       <CardMicroemprendimiento
         key={index}
-        title={microemprendimiento.title}
-        category={microemprendimiento.category}
-        subcategory={microemprendimiento.subcategory}
-        ubication={microemprendimiento.ubication}
-        img0={microemprendimiento.img0}
-        img1={microemprendimiento.img1}
-        img2={microemprendimiento.img2}
-        description={microemprendimiento.description}
-        moreinfo={microemprendimiento.moreinfo}
+        microemprendimiento={microemprendimiento}
       />
     ))}
   </Container>

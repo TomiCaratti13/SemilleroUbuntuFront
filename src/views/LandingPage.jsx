@@ -1,9 +1,9 @@
 import publicaciones from '../utils/mocks/Publicaciones.json';
 import categorias from '../utils/mocks/Categorias.json';
+import Objetivos from '../components/Objetivos';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
 import { Box, Container, Typography } from '@mui/material';
-import Objetivos from '../components/Objetivos';
 import { MapPublicaciones } from '../components/MapPublicaciones';
 import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
@@ -89,7 +89,10 @@ export const LandingPage = () => {
         </Typography>
       </Container>
       <Box>
-        <MapPublicaciones publicaciones={publicaciones} cantidad={3}/>
+        <MapPublicaciones
+          publicaciones={publicaciones}
+          cantidad={3}
+        />
         <ButtonBlue
           text="Ver más Publicaciones"
           link="/publicaciones"

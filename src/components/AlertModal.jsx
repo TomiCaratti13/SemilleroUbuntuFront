@@ -1,9 +1,8 @@
-import React from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Box, Button, Modal, Typography } from '@mui/material';
 
-export const AlertModal = ({ open, setOpen, success , title , info }) => {
+export const AlertModal = ({ open, setOpen, success, title, info }) => {
   const handleClose = () => setOpen(false);
 
   if (success) {

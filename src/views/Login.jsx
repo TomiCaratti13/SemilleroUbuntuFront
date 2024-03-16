@@ -4,7 +4,7 @@ import logoLogin from '/logoLogin.png';
 import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
 import { GOOGLE_AUTH } from '../utils/services/constants';
-
+import { HEADER_HEIGHT } from '../utils/services/constants';
 
 export default function Login() {
 
@@ -16,7 +16,7 @@ export default function Login() {
     <Box
       sx={{
         width: '100%',
-        height: 'calc(100vh - 56px)',
+        height: `calc(100vh - ${HEADER_HEIGHT})`,
         overflowY: 'hidden',
         backgroundImage: `linear-gradient(rgba(34, 34, 34, 0.5), rgba(34, 34, 34, 0.5)), url(${backgroundImage})`,
         backgroundSize: 'cover',

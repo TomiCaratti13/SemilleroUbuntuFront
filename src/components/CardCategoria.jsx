@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { Avatar, Box, Typography, Button } from '@mui/material';
+import { Avatar, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 function CardCategoria({ title, identifier, img }) {
