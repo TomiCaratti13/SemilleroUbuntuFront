@@ -5,6 +5,13 @@ import styled from '@mui/material/styles/styled';
 import { useParams } from 'react-router-dom';
 import { AlertModal } from '../components/AlertModal';
 
+const heroForm = {
+  category: 'CONTACTO',
+  title:
+    'Contactanos para obtener información detallada sobre cómo podés invertir en un futuro más sostenible',
+  img: '/backgroundForm.webp',
+};
+
 const CssTextField = styled(TextField)({
   '& label': {
     color: '#093c59',
@@ -27,12 +34,6 @@ const CssTextField = styled(TextField)({
 });
 
 export const SectionFormularioContacto = () => {
-  const sectionForm = {
-    category: 'CONTACTO',
-    title:
-      'Contactanos para obtener información detallada sobre cómo podés invertir en un futuro más sostenible',
-    img: '/backgroundForm.webp',
-  };
 
   const [chars, setChars] = useState(0);
 
@@ -53,9 +54,9 @@ export const SectionFormularioContacto = () => {
         paddingBottom: '30px',
       }}>
       <SectionHero
-        category={sectionForm.category}
-        title={sectionForm.title}
-        img={sectionForm.img}
+        category={heroForm.category}
+        title={heroForm.title}
+        img={heroForm.img}
       />
       <Box
         sx={{

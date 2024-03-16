@@ -8,13 +8,16 @@ import { MapPublicaciones } from '../components/MapPublicaciones';
 import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
 
+const categoriasToMap = categorias;
+const publicacionesToMap = publicaciones;
+const heroLanding = {
+  category: 'FINANCIAMIENTO SOSTENIBLE',
+  title:
+    'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
+  img: '/backgroundLandingPage.webp',
+};
+
 export const LandingPage = () => {
-  const landingPage = {
-    category: 'FINANCIAMIENTO SOSTENIBLE',
-    title:
-      'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
-    img: '/backgroundLandingPage.webp',
-  };
 
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = () => {
@@ -32,9 +35,9 @@ export const LandingPage = () => {
         paddingBottom: '30px',
       }}>
       <SectionHero
-        category={landingPage.category}
-        title={landingPage.title}
-        img={landingPage.img}
+        category={heroLanding.category}
+        title={heroLanding.title}
+        img={heroLanding.img}
       />
       <Objetivos />
       <Box
@@ -63,7 +66,7 @@ export const LandingPage = () => {
           }}>
           Categorias
         </Typography>
-        <MapCategorias categorias={categorias} />
+        <MapCategorias categorias={categoriasToMap} />
         <ButtonBlue
           text="Ver más Categorias"
           link="/microemprendimientos/categorias"
@@ -90,7 +93,7 @@ export const LandingPage = () => {
       </Container>
       <Box>
         <MapPublicaciones
-          publicaciones={publicaciones}
+          publicaciones={publicacionesToMap}
           cantidad={3}
         />
         <ButtonBlue

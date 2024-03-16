@@ -17,7 +17,7 @@ import { useState } from 'react';
 const drawerWidth = 256;
 const navItems = [
   'Dashboard Administrador',
-  'Microemprendmientos',
+  'Microemprendimientos',
   'Solicitudes de Contacto',
   'Publicaciones',
 ];

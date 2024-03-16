@@ -4,13 +4,14 @@ import { SectionHero } from '../components/SectionHero';
 import { Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';
 
+const heroPublicaciones = {
+  category: 'PUBLICACIONES',
+  title: 'Explorando finanzas de impacto',
+  description: 'Conocé cómo decisiones financieras pueden impactar positivamente en la sociedad y el medio ambiente',
+  img: '/backgroundPublicacion.webp',
+};
+
 export const SectionPublicaciones = () => {
-  const sectionPublicaiones = {
-    category: 'PUBLICACIONES',
-    title: 'Explorando finanzas de impacto',
-    description: 'Conocé cómo decisiones financieras pueden impactar positivamente en la sociedad y el medio ambiente',
-    img: '/backgroundPublicacion.webp',
-  };
 
   return (
     <Box
@@ -24,10 +25,10 @@ export const SectionPublicaciones = () => {
         paddingBottom: '30px',
       }}>
       <SectionHero
-        category={sectionPublicaiones.category}
-        title={sectionPublicaiones.title}
-        description={sectionPublicaiones.description}
-        img={sectionPublicaiones.img}
+        category={heroPublicaciones.category}
+        title={heroPublicaciones.title}
+        description={heroPublicaciones.description}
+        img={heroPublicaciones.img}
       />
       <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
         <VectorGreen />

@@ -8,14 +8,15 @@ import Microemprendmietos from '../utils/mocks/Microemprendimientos';
 import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
+const heroPublicaciones = {
+  category: 'MICROEMPRENDIMIENTOS',
+  title: 'Invertí sostenible',
+  description:
+    'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
+  img: '/backgroundMicroemprendimiento.webp',
+};
+
 export const SectionMicroemprendmientos = () => {
-  const sectionPublicaiones = {
-    category: 'MICROEMPRENDIMIENTOS',
-    title: 'Invertí sostenible',
-    description:
-      'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
-    img: '/backgroundMicroemprendimiento.webp',
-  };
 
   const [categoryToMap, setCategoryToMap] = useState('');
 
@@ -45,10 +46,10 @@ export const SectionMicroemprendmientos = () => {
         paddingBottom: '30px',
       }}>
       <SectionHero
-        category={sectionPublicaiones.category}
-        title={sectionPublicaiones.title}
-        description={sectionPublicaiones.description}
-        img={sectionPublicaiones.img}
+        category={heroPublicaciones.category}
+        title={heroPublicaciones.title}
+        description={heroPublicaciones.description}
+        img={heroPublicaciones.img}
       />
       <Box
         sx={{

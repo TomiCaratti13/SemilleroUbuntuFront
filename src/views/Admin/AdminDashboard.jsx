@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import AdminInfo from '../../utils/mocks/AdminDashboard.json';
-import Categorias from '../../utils/mocks/Categorias.json';
-import Publicaciones from '../../utils/mocks/Publicaciones.json';
+import AdminDashboardInfo from '../../utils/mocks/AdminDashboard.json';
+import CategoriasInfo from '../../utils/mocks/Categorias.json';
+import PublicacionesInfo from '../../utils/mocks/Publicaciones.json';
 // import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../utils/redux/userSlice';
 import { useParams } from 'react-router-dom';
+
+const AdminInfo = AdminDashboardInfo;
+const Categorias = CategoriasInfo;
+const Publicaciones = PublicacionesInfo;
 
 export const AdminDashboard = () => {
   const dispatch = useDispatch();
