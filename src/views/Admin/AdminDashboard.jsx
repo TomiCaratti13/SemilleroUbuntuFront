@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../utils/redux/userSlice';
 import { useParams } from 'react-router-dom';
 
+//Para cargar a redux
 const AdminInfo = AdminDashboardInfo;
 const Categorias = CategoriasInfo;
 const Publicaciones = PublicacionesInfo;
 
 export const AdminDashboard = () => {
-  const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
   // const getCookie = () => {
   //   const token = Cookies.get('token');
   //   const decodedToken = jwtDecode(token);
@@ -26,6 +25,8 @@ export const AdminDashboard = () => {
   //   getCookie();
   // }, []);
 
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
   const getParams = () => {
     const { token } = useParams();
     const decodedToken = jwtDecode(token);

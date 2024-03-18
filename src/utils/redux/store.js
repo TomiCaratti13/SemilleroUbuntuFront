@@ -8,6 +8,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     token: tokenReducer,
+    category : categoryReducer,
     // publicacion: publiReducer,
     // microemprendimiento: microReducer,
   },

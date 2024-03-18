@@ -3,10 +3,41 @@ import { Typography, Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';
 import { MapCategorias } from '../components/MapCategorias';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
-import Categorias from '../utils/mocks/Categorias';
-import Microemprendmietos from '../utils/mocks/Microemprendimientos';
+import categoriasAPI from '../utils/mocks/Categorias';
+import microemprendmietosAPI from '../utils/mocks/Microemprendimientos';
 import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import { getCategorias } from '../utils/services/axiosConfig';
+import { getPublicaciones } from '../utils/services/axiosConfig';
+import { addCategory } from '../utils/redux/categorySlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+
+//Si usamos redux esto ya estaria en el store
+const Categorias = categoriasAPI.map(categoria => {
+  return {
+    title: categoria.title,
+    identifier: categoria.identifier,
+    cantidad: categoria.cantidad,
+    img: categoria.img,
+    description: categoria.description,
+  };
+});
+
+//Preguntar si meter esto en redux para hacer menos llamadas a la api
+const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
+  return {
+    title: microemprendimiento.title,
+    category: microemprendimiento.category,
+    subcategory: microemprendimiento.subcategory,
+    ubication: microemprendimiento.ubication,
+    img0: microemprendimiento.img0,
+    img1: microemprendimiento.img1,
+    img2: microemprendimiento.img2,
+    description: microemprendimiento.description,
+    moreinfo: microemprendimiento.moreinfo,
+  }
+});
 
 const heroPublicaciones = {
   category: 'MICROEMPRENDIMIENTOS',
@@ -17,20 +48,37 @@ const heroPublicaciones = {
 };
 
 export const SectionMicroemprendmientos = () => {
-
-  const [categoryToMap, setCategoryToMap] = useState('');
+  const [categoryURL, setCategoryURL] = useState('');
+  const Categorias = useSelector(state => state.category.lista);
 
   const { categoryUrl } = useParams();
   const location = useLocation();
 
-  //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryToMap
+  const dispatch = useDispatch();
   useEffect(() => {
-    setCategoryToMap('');
+    //async
+    const categoriasAPI = getCategorias();
+    const categoriasRedux = categoriasAPI?.map(categoria => {
+      return {
+        title: categoria.title,
+        identifier: categoria.identifier,
+        cantidad: categoria.cantidad,
+        img: categoria.img,
+        description: categoria.description,
+      };
+    })
+    dispatch(addCategory(categoriasRedux));
+    getPublicaciones();
+  },[])
+
+  //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryURL
+  useEffect(() => {
+    setCategoryURL('');
     if (categoryUrl !== 'categorias') {
       const category = Categorias.filter(
         categoria => categoria.identifier === categoryUrl
       )[0];
-      setCategoryToMap({ ...category });
+      setCategoryURL({ ...category });
     }
   }, [categoryUrl, location.pathname]);
 
@@ -62,8 +110,8 @@ export const SectionMicroemprendmientos = () => {
         }}>
         <Typography
           onClick={() => {
-            setCategoryToMap('');
-            window.location.href = "/microemprendimientos/categorias";
+            setCategoryURL('');
+            window.location.href = '/microemprendimientos/categorias';
           }}
           variant="h4"
           sx={{
@@ -75,9 +123,9 @@ export const SectionMicroemprendmientos = () => {
           }}>
           Categorías
         </Typography>
-        <VectorGreen text={categoryToMap === '' ? false : true} />
+        <VectorGreen text={categoryURL === '' ? false : true} />
         {location.pathname === '/microemprendimientos/categorias' ||
-        categoryToMap === '' ? (
+        categoryURL === '' ? (
           <>
             <MapCategorias categorias={Categorias} />
           </>
@@ -101,7 +149,7 @@ export const SectionMicroemprendmientos = () => {
                 color: 'azul.main',
                 textWrap: 'balance',
               }}>
-              {categoryToMap.title}
+              {categoryURL.title}
             </Typography>
             <Typography
               variant="h4"
@@ -113,12 +161,12 @@ export const SectionMicroemprendmientos = () => {
                 width: '100%',
                 padding: '0 16px',
               }}>
-              {categoryToMap.description}
+              {categoryURL.description}
             </Typography>
             <MapMicroemprendimientos
-              microemprendimientos={Microemprendmietos.filter(
+              microemprendimientos={Microemprendimientos.filter(
                 microemprendimiento =>
-                  microemprendimiento.category === categoryToMap.title
+                  microemprendimiento.category === categoryURL.title
               )}
             />
           </Box>

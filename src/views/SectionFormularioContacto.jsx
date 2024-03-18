@@ -1,9 +1,10 @@
 import { SectionHero } from '../components/SectionHero';
 import { Typography, Box, TextField, Button } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState , useRef} from 'react';
 import styled from '@mui/material/styles/styled';
 import { useParams } from 'react-router-dom';
 import { AlertModal } from '../components/AlertModal';
+import { enviarFormulario } from '../utils/services/axiosConfig';
 
 const heroForm = {
   category: 'CONTACTO',
@@ -41,6 +42,30 @@ export const SectionFormularioContacto = () => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleSubmit = () => {
+
+  }
+
+  const useNombre = useRef(null);
+  useEffect(() => {
+    const enviarFormularioYManejarAlerta = async () => {
+      let formulario = {
+        nombre: useNombre.current.value,
+      };
+  
+      const enviado = await enviarFormulario(formulario);
+
+      if(enviado.status === 200){
+        // Si la petición fue exitosa, mostrar alerta de éxito
+      } else if(enviado) {
+        // Si la petición falló, mostrar alerta de error y MENSAJE
+      } else {
+        // Si la petición falló, mostrar alerta de error
+      }
+    };
+  
+    enviarFormularioYManejarAlerta();
+  }, [onSubmit]);
 
   return (
     <Box
@@ -122,11 +147,13 @@ export const SectionFormularioContacto = () => {
           },
         }}
         noValidate
-        autoComplete="off">
+        autoComplete="off"
+        ref={useForm}>
         <CssTextField
           id="Apellido y Nombre"
           label="Apellido y Nombre"
           required
+          ref={useNombre}
         />
         <CssTextField
           id="Correo electrónico"
@@ -184,8 +211,8 @@ export const SectionFormularioContacto = () => {
           </Box>
         </Box>
         <Button
-          onClick={handleOpen}
-          // type="submit"
+          onClick={handleSubmit}
+          //type="submit"
           sx={{
             width: '100%',
             padding: '0 20px',
@@ -223,7 +250,7 @@ export const SectionFormularioContacto = () => {
           open={open}
           setOpen={setOpen}
           success={false}
-          title="Lo sentimos, el Formulario no pudo ser enviado."
+          title={tituloAlerta}
           info="Por favor, volvé a intentarlo."
         />
       </Box>

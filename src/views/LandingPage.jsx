@@ -1,5 +1,5 @@
-import publicaciones from '../utils/mocks/Publicaciones.json';
-import categorias from '../utils/mocks/Categorias.json';
+import publicacionesAPI from '../utils/mocks/Publicaciones.json';
+import categoriasAPI from '../utils/mocks/Categorias.json';
 import Objetivos from '../components/Objetivos';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
@@ -8,8 +8,30 @@ import { MapPublicaciones } from '../components/MapPublicaciones';
 import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
 
-const categoriasToMap = categorias;
-const publicacionesToMap = publicaciones;
+//Preguntar si meter esto en redux para hacer menos llamadas a la api
+const Categorias = categoriasAPI.map(categoria => {
+  return {
+    title: categoria.title,
+    identifier: categoria.identifier,
+    cantidad: categoria.cantidad,
+    img: categoria.img,
+    description: categoria.description,
+  };
+});
+
+//Preguntar si meter esto en redux para hacer menos llamadas a la api
+const Publicaciones = publicacionesAPI.map(publicacion => {
+  return {
+    title: publicacion.title,
+    visualizaciones: publicacion.visualizaciones,
+    date: publicacion.date,
+    img0: publicacion.img0,
+    img1: publicacion.img1,
+    img2: publicacion.img2,
+    description: publicacion.description,
+  };
+});
+
 const heroLanding = {
   category: 'FINANCIAMIENTO SOSTENIBLE',
   title:
@@ -66,7 +88,7 @@ export const LandingPage = () => {
           }}>
           Categorias
         </Typography>
-        <MapCategorias categorias={categoriasToMap} />
+        <MapCategorias categorias={Categorias} />
         <ButtonBlue
           text="Ver más Categorias"
           link="/microemprendimientos/categorias"
@@ -93,7 +115,7 @@ export const LandingPage = () => {
       </Container>
       <Box>
         <MapPublicaciones
-          publicaciones={publicacionesToMap}
+          publicaciones={Publicaciones}
           cantidad={3}
         />
         <ButtonBlue
