@@ -17,9 +17,9 @@ export const FormContact = ({ nameMicro, alert }) => {
   const formik = useFormik({
     initialValues: {
       nombre: '',
-      email: 'asda@gaskdla.com',
-      telefono: '2313',
-      mensaje: 'Hola mundo',
+      email: '',
+      telefono: '',
+      mensaje: '',
     },
     validationSchema: formContact,
     onSubmit: formData => {
@@ -46,7 +46,8 @@ export const FormContact = ({ nameMicro, alert }) => {
         variant="outlined"
         value={formik.values.nombre}
         onChange={formik.handleChange}
-        error={formik.errors.nombre}
+        onBlur={formik.handleBlur}
+        error={formik.touched.nombre && Boolean(formik.errors.nombre)}
       />
       <TextField
         fullWidth
@@ -56,6 +57,8 @@ export const FormContact = ({ nameMicro, alert }) => {
         variant="outlined"
         value={formik.values.email}
         onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.email && Boolean(formik.errors.email)}
       />
       <TextField
         fullWidth
@@ -66,6 +69,8 @@ export const FormContact = ({ nameMicro, alert }) => {
         helperText="Con el siguiente formato +54 9 261 002 002"
         value={formik.values.telefono}
         onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.telefono && Boolean(formik.errors.telefono)}
       />
       <Box>
         <TextField
@@ -86,6 +91,8 @@ export const FormContact = ({ nameMicro, alert }) => {
               formik.handleChange(e);
             }
           }}
+          onBlur={formik.handleBlur}
+          error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
         />
         <Box
           sx={{
