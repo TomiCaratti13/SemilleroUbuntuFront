@@ -49,27 +49,27 @@ const heroPublicaciones = {
 
 export const SectionMicroemprendmientos = () => {
   const [categoryURL, setCategoryURL] = useState('');
-  const Categorias = useSelector(state => state.category.lista);
+  // const Categorias = useSelector(state => state.category.lista);
 
   const { categoryUrl } = useParams();
   const location = useLocation();
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    //async
-    const categoriasAPI = getCategorias();
-    const categoriasRedux = categoriasAPI?.map(categoria => {
-      return {
-        title: categoria.title,
-        identifier: categoria.identifier,
-        cantidad: categoria.cantidad,
-        img: categoria.img,
-        description: categoria.description,
-      };
-    })
-    dispatch(addCategory(categoriasRedux));
-    getPublicaciones();
-  },[])
+  // useEffect(() => {
+  //   //async
+  //   const categoriasAPI = getCategorias();
+  //   const categoriasRedux = categoriasAPI?.map(categoria => {
+  //     return {
+  //       title: categoria.title,
+  //       identifier: categoria.identifier,
+  //       cantidad: categoria.cantidad,
+  //       img: categoria.img,
+  //       description: categoria.description,
+  //     };
+  //   })
+  //   dispatch(addCategory(categoriasRedux));
+  //   getPublicaciones();
+  // },[])
 
   //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryURL
   useEffect(() => {

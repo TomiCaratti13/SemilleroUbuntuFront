@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from './userSlice';
 import tokenReducer from './tokenSlice';
+import categoryReducer from './categorySlice';
 // import publiReducer from './publiSlice';
 // import microReducer from './microSlice';
 
