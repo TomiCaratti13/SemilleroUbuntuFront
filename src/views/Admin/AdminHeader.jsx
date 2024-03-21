@@ -81,13 +81,13 @@ function AdminHeader(props) {
             {navItems.map(item => (
               <Link
                 key={item}
-                // to={
-                //   item === 'Inicio'
-                //     ? '/'
-                //     : item === 'Microemprendimientos'
-                //     ? '/microemprendimientos/categorias'
-                //     : `/${item.toLowerCase()}`
-                // }
+                to={
+                  item === 'Dashboard Administrador'
+                    ? '/Admin'
+                    : item === "Solicitudes de Contacto"
+                    ? '/Admin/contactos'
+                    : `/Admin/${item.toLowerCase()}`
+                }
                 style={{ textDecoration: 'none' }}>
                 <ListItemText
                   sx={{
