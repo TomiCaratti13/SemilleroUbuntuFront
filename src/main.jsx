@@ -12,6 +12,7 @@ import { SectionMicroemprendmientos } from './views/SectionMicroemprendimientos.
 import { SectionFormularioContacto } from './views/SectionFormularioContacto.jsx';
 import ScrollToTop from './utils/services/scrollToTop.js';
 import { AdminDashboard } from './views/Admin/AdminDashboard.jsx';
+import { SectionBuscarMicroemprendimiento } from './views/SectionBuscarMicroemprendimiento.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -41,6 +42,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route
               path="formularioContacto/:id"
               element={<SectionFormularioContacto />}
+            />
+            <Route
+              path="buscar/:search"
+              element={<SectionBuscarMicroemprendimiento />}
             />
             <Route
               path="Admin/:token"

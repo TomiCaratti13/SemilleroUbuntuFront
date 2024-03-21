@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import formContact from '../../utils/schemas/schemaFormContact';
-import { useTheme } from '@emotion/react';
 
-export const FormContact = ({ nameMicro, alert }) => {
-  const theme = useTheme();
+export const FormContact = () => {
   const [chars, setChars] = useState(0);
   const formik = useFormik({
     initialValues: {
