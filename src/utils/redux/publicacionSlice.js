@@ -7,14 +7,17 @@ export const publicacionSlice = createSlice({
   },
   reducers: {
     addPublicacion: (state, action) => {
-      const { id , title , description , date , visualizaciones } = action.payload;
-      state.lista.push({
-        id: id,
-        title: title,
-        description: description,
-        date: date,
-        visualizaciones: visualizaciones,
-      });
+      const { id, title, description, date, visualizaciones } = action.payload;
+      const existe = state.lista.find(p => p.id === action.payload.id);
+      if (!existe) {
+        state.lista.push({
+          id: id,
+          title: title,
+          description: description,
+          date: date,
+          visualizaciones: visualizaciones,
+        });
+      }
     },
   },
 });

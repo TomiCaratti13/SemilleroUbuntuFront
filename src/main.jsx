@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App.jsx';
-import { store } from './utils/redux/store.js';
+import { store ,persistor } from './utils/redux/store.js';
 import './assets/styles/index.css';
 import { LandingPage } from './views/LandingPage.jsx';
 import Login from './views/Login.jsx';
@@ -16,10 +16,12 @@ import { SectionBuscarMicroemprendimiento } from './views/SectionBuscarMicroempr
 import { AdminMicroemprendimientos } from './views/Admin/AdminMicroemprendimientos.jsx';
 import { AdminContactos } from './views/Admin/AdminContactos.jsx';
 import { AdminPublicaciones } from './views/Admin/AdminPublicaciones.jsx';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -79,6 +81,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           />
         </Routes>
       </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
