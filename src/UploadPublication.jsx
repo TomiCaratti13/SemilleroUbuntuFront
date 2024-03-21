@@ -190,9 +190,9 @@ const UploadPublication = () => {
             required
             label="Título"
             helperText={
-              formik.touched.title && formik.errors.title
-                ? formik.errors.title
-                : "Se visualizará en el título de la publicación"
+                formik.touched.title && formik.errors.title
+                  ? formik.errors.title
+                  : "Se visualizará en el título de la publicación"
             }
             value={formik.values.title}
             onChange={formik.handleChange}

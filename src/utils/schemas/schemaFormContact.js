@@ -10,7 +10,7 @@ const formContact = yup.object().shape({
     .email('Debe ser un correo electrónico válido')
     .required('Este campo es obligatorio'),
   telefono: yup
-    .number()
+    .number('Debe ser un número de teléfono o celular válido')
     .required('Este campo es obligatorio'),
   mensaje: yup
     .string()

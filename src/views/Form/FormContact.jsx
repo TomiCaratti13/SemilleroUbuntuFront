@@ -1,18 +1,11 @@
 import { useState } from 'react';
-
-import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import formContact from '../../utils/schemas/schemaFormContact';
-import * as yup from 'yup';
+import { useTheme } from '@emotion/react';
 
 export const FormContact = ({ nameMicro, alert }) => {
+  const theme = useTheme();
   const [chars, setChars] = useState(0);
   const formik = useFormik({
     initialValues: {
@@ -47,7 +40,53 @@ export const FormContact = ({ nameMicro, alert }) => {
         value={formik.values.nombre}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+        disabled={formik.isSubmitting}
         error={formik.touched.nombre && Boolean(formik.errors.nombre)}
+        helperText={formik.touched.nombre && formik.errors.nombre}
+        sx={{
+          '& .MuiOutlinedInput-input': {
+            fontWeight: '400',
+          },
+
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#090909',
+            fontWeight: '400',
+          },
+
+          '& .MuiFormLabel-root': {
+            color: theme =>
+              formik.touched.nombre && formik.errors.nombre
+                ? theme.palette.gestion.error
+                : '#090909 !important',
+            fontWeight: '400',
+          },
+
+          '& .MuiInputLabel-root.Mui-focused': {
+            color: theme =>
+              formik.touched.nombre && formik.errors.nombre
+                ? theme.palette.gestion.error
+                : `${theme.palette.primary.main} !important`,
+          },
+
+          '& .MuiFormHelperText-root': {
+            color: theme =>
+              formik.touched.nombre && formik.errors.nombre
+                ? theme.palette.gestion.error
+                : '#090909 !important',
+            fontWeight: '400',
+          },
+
+          '& .Mui-disabled': {
+            color: theme => `${theme.palette.primary.main} !important`,
+          },
+        }}
+        InputProps={{
+          sx: {
+            '& .Mui-disabled': {
+              WebkitTextFillColor: '#090909 !important',
+            },
+          },
+        }}
       />
       <TextField
         fullWidth
@@ -58,7 +97,48 @@ export const FormContact = ({ nameMicro, alert }) => {
         value={formik.values.email}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+        disabled={formik.isSubmitting}
         error={formik.touched.email && Boolean(formik.errors.email)}
+        helperText={formik.touched.email && formik.errors.email}
+        sx={{
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#090909',
+          },
+
+          '& .MuiFormLabel-root': {
+            color: theme =>
+              formik.touched.email && formik.errors.email
+                ? theme.palette.gestion.error
+                : '#090909 !important',
+            fontWeight: '400',
+          },
+
+          '& .MuiInputLabel-root.Mui-focused': {
+            color: theme =>
+              formik.touched.email && formik.errors.email
+                ? theme.palette.gestion.error
+                : `${theme.palette.primary.main} !important`,
+          },
+
+          '& .MuiFormHelperText-root': {
+            color: theme =>
+              formik.touched.email && formik.errors.email
+                ? theme.palette.gestion.error
+                : '#090909 !important',
+            fontWeight: '400',
+          },
+
+          '& .Mui-disabled': {
+            color: theme => `${theme.palette.primary.main} !important`,
+          },
+        }}
+        InputProps={{
+          sx: {
+            '& .Mui-disabled': {
+              WebkitTextFillColor: '#090909 !important',
+            },
+          },
+        }}
       />
       <TextField
         fullWidth
@@ -66,11 +146,55 @@ export const FormContact = ({ nameMicro, alert }) => {
         name="telefono"
         label="Teléfono"
         variant="outlined"
-        helperText="Con el siguiente formato +54 9 261 002 002"
         value={formik.values.telefono}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+        disabled={formik.isSubmitting}
         error={formik.touched.telefono && Boolean(formik.errors.telefono)}
+        helperText={
+          formik.touched.telefono && formik.errors.telefono
+            ? formik.errors.telefono
+            : 'Con el siguiente formato +54 9 261 002 002'
+        }
+        sx={{
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#090909',
+          },
+
+          '& .MuiFormLabel-root': {
+            color: theme =>
+              formik.touched.telefono && formik.errors.telefono
+                ? theme.palette.gestion.error
+                : '#090909 !important',
+            fontWeight: '400',
+          },
+
+          '& .MuiInputLabel-root.Mui-focused': {
+            color: theme =>
+              formik.touched.telefono && formik.errors.telefono
+                ? theme.palette.gestion.error
+                : `${theme.palette.primary.main} !important`,
+          },
+
+          '& .MuiFormHelperText-root': {
+            color: theme =>
+              formik.touched.telefono && formik.errors.telefono
+                ? theme.palette.gestion.error
+                : '#090909 !important',
+            fontWeight: '400',
+          },
+
+          '& .Mui-disabled': {
+            color: theme => `${theme.palette.primary.main} !important`,
+          },
+        }}
+        InputProps={{
+          sx: {
+            '& .Mui-disabled': {
+              WebkitTextFillColor: '#090909 !important',
+            },
+          },
+        }}
       />
       <Box>
         <TextField
@@ -92,7 +216,48 @@ export const FormContact = ({ nameMicro, alert }) => {
             }
           }}
           onBlur={formik.handleBlur}
+          disabled={formik.isSubmitting}
           error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
+          helperText={formik.touched.mensaje && formik.errors.mensaje}
+          sx={{
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#090909',
+            },
+
+            '& .MuiFormLabel-root': {
+              color: theme =>
+                formik.touched.mensaje && formik.errors.mensaje
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: theme =>
+                formik.touched.mensaje && formik.errors.mensaje
+                  ? theme.palette.gestion.error
+                  : `${theme.palette.primary.main} !important`,
+            },
+
+            '& .MuiFormHelperText-root': {
+              color: theme =>
+                formik.touched.mensaje && formik.errors.mensaje
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+            },
+          }}
+          InputProps={{
+            sx: {
+              '& .Mui-disabled': {
+                WebkitTextFillColor: '#090909 !important',
+              },
+            },
+          }}
         />
         <Box
           sx={{
@@ -100,23 +265,31 @@ export const FormContact = ({ nameMicro, alert }) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             gap: '16px',
-            padding: '0 16px',
+            padding: '0 15px',
             '& p': {
               fontSize: '13px',
               lineHeight: '1.66',
-              fontWeight: 300,
+              fontWeight: 400,
               marginTop: '3px',
               padding: '0',
             },
           }}>
           <Typography
             component="p"
-            sx={{ fontSize: '16px', lineHeight: '25px' }}>
+            color={theme =>
+              formik.touched.mensaje && formik.errors.mensaje
+                ? theme.palette.gestion.error
+                : '#090909'
+            }>
             Máximo 300 caracteres
           </Typography>
           <Typography
             component="p"
-            sx={{ fontSize: '16px', lineHeight: '25px' }}>
+            color={theme =>
+              formik.touched.mensaje && formik.errors.mensaje
+                ? theme.palette.gestion.error
+                : '#090909'
+            }>
             {chars}/300
           </Typography>
         </Box>
