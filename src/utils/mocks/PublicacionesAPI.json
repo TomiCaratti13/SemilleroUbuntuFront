@@ -1,0 +1,23 @@
+[
+    {
+      "titulo": "Inversiones Éticas: Más que ganancias",
+      "descripcion": "Aprende a invertir de manera ética y sostenible, conoce las mejores prácticas y herramientas para invertir en proyectos que generen un impacto positivo en el mundo."
+    },
+    {
+      "titulo": "Domina los lenguajes de programación",
+        "descripcion": "Aprende a programar desde cero, domina los lenguajes de programación más populares y conviértete en un experto en el desarrollo de software."
+    },
+    {
+      "titulo": "HTML CSS JAVASCRIPT",
+        "descripcion": "Aprende a programar dando tus primeros paso en el FrontEnd desde cero, domina los lenguajes de programación más populares y conviértete en un experto en el desarrollo de software."
+    },
+    {
+      "titulo": "REACT TYPESCRIPT<3 Y REDUX",
+        "descripcion": "Aprende a programar FrontEnd desde cero, domina los lenguajes de programación más populares y conviértete en un experto en el desarrollo de software."
+    },
+    {
+      "titulo": "Java y Spring Boot",
+        "descripcion": "Aprende a programar Backend desde cero, domina los lenguajes de programación más populares y conviértete en un experto en el desarrollo de software."
+    }
+  ]
+  

@@ -4,7 +4,6 @@ import { SectionHero } from '../components/SectionHero';
 import { Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';
 
-
 const publicaciones = publicacionesAPI.map(publicacion => {
   return {
     title: publicacion.title,

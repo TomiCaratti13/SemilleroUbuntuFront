@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from './userSlice';
 import tokenReducer from './tokenSlice';
 import categoryReducer from './categorySlice';
-// import publiReducer from './publiSlice';
+import publicacionReducer from './publicacionSlice';
 // import microReducer from './microSlice';
 
 export const store = configureStore({
@@ -10,7 +10,7 @@ export const store = configureStore({
     user: userReducer,
     token: tokenReducer,
     category : categoryReducer,
-    // publicacion: publiReducer,
+    publicacion: publicacionReducer,
     // microemprendimiento: microReducer,
   },
 })

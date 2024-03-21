@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configuración de la instancia de Axios
 const URL_SERVIDOR = axios.create({
-    baseURL: 'https://api.example.com', // Cambia esto por la URL de tu backend
+    baseURL: 'http://localhost:8080', // Cambia esto por la URL de tu backend
     timeout: 5000, // Tiempo máximo de espera para las peticiones en milisegundos
 });
 
@@ -21,7 +21,8 @@ export const getCategorias = async () => {
 // Función para obtener las publicaciones
 export const getPublicaciones = async () => {
     try {
-        const response = await URL_SERVIDOR.get('/publicaciones');
+        const response = await URL_SERVIDOR.get('/publicacion/activas');
+        console.log('response.data', response.data)
         return response.data;
     } catch (error) {
         console.error('Error al obtener las publicaciones:', error);

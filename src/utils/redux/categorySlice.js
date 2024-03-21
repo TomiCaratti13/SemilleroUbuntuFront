@@ -3,12 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 export const categorySlice = createSlice({
   name: 'category',
   initialState: {
-    lista : []
+    lista: [],
   },
   reducers: {
     addCategory: (state, action) => {
       const { title, identifier, cantidad, img, description } = action.payload;
-      state.lista.push({ title: title, identifier: identifier, cantidad: cantidad, img: img, description: description});
+      state.lista.push({
+        title: title,
+        identifier: identifier,
+        cantidad: cantidad,
+        img: img,
+        description: description,
+      });
     },
   },
 });

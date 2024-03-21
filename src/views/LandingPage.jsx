@@ -7,6 +7,10 @@ import { Box, Container, Typography } from '@mui/material';
 import { MapPublicaciones } from '../components/MapPublicaciones';
 import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { getPublicaciones } from '../utils/services/axiosConfig';
+import { addPublicacion } from '../utils/redux/publicacionSlice';
 
 //Preguntar si meter esto en redux para hacer menos llamadas a la api
 const Categorias = categoriasAPI.map(categoria => {
@@ -19,19 +23,6 @@ const Categorias = categoriasAPI.map(categoria => {
   };
 });
 
-//Preguntar si meter esto en redux para hacer menos llamadas a la api
-const Publicaciones = publicacionesAPI.map(publicacion => {
-  return {
-    title: publicacion.title,
-    visualizaciones: publicacion.visualizaciones,
-    date: publicacion.date,
-    img0: publicacion.img0,
-    img1: publicacion.img1,
-    img2: publicacion.img2,
-    description: publicacion.description,
-  };
-});
-
 const heroLanding = {
   category: 'FINANCIAMIENTO SOSTENIBLE',
   title:
@@ -40,13 +31,49 @@ const heroLanding = {
 };
 
 export const LandingPage = () => {
+  const dispatch = useDispatch();
+  const publicacionesStorage = useSelector(state => state.publicacion.lista);
+  console.log('publicacionesStorage', publicacionesStorage);
 
+  //Manejar alertas
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = () => {
     enqueueSnackbar('Probando alertasssss', {
       variant: 'warning',
     });
   };
+
+  //Llamar a publicaciones
+  const [publicaciones, setPublicaciones] = useState([]);
+  const traerPublicaciones = async () => {
+    const publicacionesAPI = await getPublicaciones();
+    const publicacionesRedux = publicacionesAPI?.map(publicacion => {
+      return {
+        id: publicacion.id,
+        title: publicacion.titulo,
+        description: publicacion.descripcion,
+        date: publicacion.fechaCreacion,
+        visualizaciones: publicacion.visualizaciones,
+      };
+    });
+    setPublicaciones(publicacionesRedux);
+  };
+
+  //Guardar publicaciones en el estado de redux
+  useEffect(() => {
+    publicaciones.forEach(publicacion => {
+      const existe = publicacionesStorage.find(p => p.id === publicacion.id);
+      if (!existe) {
+        dispatch(addPublicacion(publicacion));
+      }
+    });
+  }, [publicaciones, publicacionesStorage]);
+
+
+  //Efecto de montado de LandingPage
+  useEffect(() => {
+    traerPublicaciones();
+  }, []);
 
   return (
     <Box
@@ -115,7 +142,7 @@ export const LandingPage = () => {
       </Container>
       <Box>
         <MapPublicaciones
-          publicaciones={Publicaciones}
+          publicaciones={publicaciones}
           cantidad={3}
         />
         <ButtonBlue
