@@ -92,7 +92,8 @@ export default function CardPublicacion({ publicacion }) {
           ))}
         </CardContent>
       </Collapse>
-      <CardActions
+      {descriptionSplit[1] && (
+        <CardActions
         disableSpacing
         sx={{ padding: '0px 0 0 0' }}>
         <ExpandMoreInfo
@@ -111,6 +112,7 @@ export default function CardPublicacion({ publicacion }) {
           {expanded ? 'Ver menos' : 'Ver más'}
         </ExpandMoreInfo>
       </CardActions>
+      )}
     </Card>
   );
 }
