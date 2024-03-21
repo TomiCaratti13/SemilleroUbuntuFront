@@ -29,6 +29,17 @@ export const getPublicaciones = async () => {
   }
 };
 
+// Agregar visualizacion a la publicacion
+export const agregarVisualizacion = async id => {
+  try {
+    const response = await URL_SERVIDOR.put(`/publicacion/visualizacion/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al agregar visualización:', error);
+    throw error;
+  }
+};
+
 // Función para obtener los microemprendimientos
 export const getMicroemprendimientos = async () => {
   try {

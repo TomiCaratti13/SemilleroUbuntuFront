@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { SliderSwipper } from './SliderSwipper';
+import { agregarVisualizacion } from '../utils/services/axiosConfig';
 
 const ExpandMoreInfo = styled(props => {
   const { expand, ...other } = props;
@@ -22,10 +23,19 @@ const ExpandMoreInfo = styled(props => {
 
 export default function CardPublicacion({ publicacion }) {
   const [expanded, setExpanded] = useState(false);
+  
+  //hasSee es para saber si ya se vio la publicacion y no agregar de nuevo
+  const [hasSee, setHasSee] = useState(false);
   const handleExpandClick = () => {
+    if (!hasSee) {
+      agregarVisualizacion(publicacion.id);
+      setHasSee(true);
+    }
     setExpanded(!expanded);
   };
+
   const descriptionSplit = publicacion.description.split('  ');
+
   return (
     <Card
       sx={{
@@ -92,7 +102,6 @@ export default function CardPublicacion({ publicacion }) {
           ))}
         </CardContent>
       </Collapse>
-      {descriptionSplit[1] && (
         <CardActions
         disableSpacing
         sx={{ padding: '0px 0 0 0' }}>
@@ -112,7 +121,6 @@ export default function CardPublicacion({ publicacion }) {
           {expanded ? 'Ver menos' : 'Ver más'}
         </ExpandMoreInfo>
       </CardActions>
-      )}
     </Card>
   );
 }
