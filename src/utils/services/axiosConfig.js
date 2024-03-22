@@ -51,6 +51,17 @@ export const getMicroemprendimientos = async () => {
   }
 };
 
+// Buscar microemprendimientos
+export const buscarMicroemprendimientos = async nombre => {
+  try {
+    const response = await URL_SERVIDOR.get(`/microEmprendimientos/buscarPorNombre/${nombre}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos:', error);
+    throw error;
+  }
+};
+
 // Función para enviar un formulario
 export const enviarFormulario = async formulario => {
   try {

@@ -1,9 +1,10 @@
 import { Typography, Box, Container } from '@mui/material';
 import { SearchBar } from '../components/SearchBar';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
-import MicroemprendmientosAPI from '../utils/mocks/Microemprendimientos.json';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { buscarMicroemprendimientos } from '../utils/services/axiosConfig';
+import MicroemprendmientosAPI from '../utils/mocks/Microemprendimientos.json';
 
 export const SectionBuscarMicroemprendimiento = () => {
   const [filteredMicroemprendimientos, setFilteredMicroemprendimientos] =
@@ -11,18 +12,16 @@ export const SectionBuscarMicroemprendimiento = () => {
   const { search } = useParams();
 
   useEffect(() => {
-
     //Filtramos los microemprendmientos por el parametro de busqueda
-    const filtrados = MicroemprendmientosAPI.filter(
+    const filtrarMic = (e) => e.filter(
       mic =>
         mic.title.toLowerCase().includes(search?.toLowerCase()) ||
         mic.description?.toLowerCase().includes(search?.toLowerCase()) ||
         mic.category?.toLowerCase().includes(search?.toLowerCase()) ||
         mic.subcategory?.toLowerCase().includes(search?.toLowerCase())
     );
-
     //Ordenamos los microemprendimientos por coincidencia en el titulo y categoria
-    const ordenados = filtrados.sort((a, b) => {
+    const ordenarMic = (e) => e.sort((a, b) => {
       const aTitle = a.title.toLowerCase().includes(search?.toLowerCase())
         ? 1
         : 0;
@@ -46,7 +45,11 @@ export const SectionBuscarMicroemprendimiento = () => {
       //    || bSubcategory - aSubcategory;
     });
 
-    setFilteredMicroemprendimientos(ordenados);
+    //Llamamos a la API para obtener los microemprendimientos
+    const micEncontrado = buscarMicroemprendimientos(search);
+
+    // setFilteredMicroemprendimientos(ordenarMic(filtrarMic(micEncontrado)));
+    setFilteredMicroemprendimientos(ordenarMic(filtrarMic(MicroemprendmientosAPI)));
   }, [search]);
 
   return (
