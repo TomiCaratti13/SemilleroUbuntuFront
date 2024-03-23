@@ -10,7 +10,7 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
     if (savedSearchInput) {
       setSearchInput(savedSearchInput);
     }
-  }, []);
+  }, [searchInput]);
 
   const handleSearch = () => {
     if (searchInput.trim() !== '') {
@@ -71,7 +71,6 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
           onChange={event => {
             setSearchInput(event.target.value);
             localStorage.setItem('searchInput', event.target.value);
-            console.log(searchInput);
           }}
           value={searchInput}
           type="text"

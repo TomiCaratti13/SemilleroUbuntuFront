@@ -3,7 +3,7 @@ import axios from 'axios';
 // Configuración de la instancia de Axios
 const URL_SERVIDOR = axios.create({
   baseURL: 'http://localhost:8080', // Cambia esto por la URL de tu backend
-  timeout: 5000, // Tiempo máximo de espera para las peticiones en milisegundos
+  // timeout: 5000, // Tiempo máximo de espera para las peticiones en milisegundos
 });
 
 // Función para obtener las categorías
@@ -21,7 +21,6 @@ export const getCategorias = async () => {
 export const getPublicaciones = async () => {
   try {
     const response = await URL_SERVIDOR.get('/publicacion/activas');
-    console.log('API PUBLICACIONES', response.data);
     return response.data;
   } catch (error) {
     console.error('Error al obtener las publicaciones:', error);
@@ -43,7 +42,7 @@ export const agregarVisualizacion = async id => {
 // Función para obtener los microemprendimientos
 export const getMicroemprendimientos = async () => {
   try {
-    const response = await URL_SERVIDOR.get('/microemprendimientos');
+    const response = await URL_SERVIDOR.get('/microEmprendimiento/listar');
     return response.data;
   } catch (error) {
     console.error('Error al obtener los microemprendimientos:', error);
@@ -54,7 +53,9 @@ export const getMicroemprendimientos = async () => {
 // Buscar microemprendimientos
 export const buscarMicroemprendimientos = async nombre => {
   try {
-    const response = await URL_SERVIDOR.get(`/microEmprendimientos/buscarPorNombre/${nombre}`);
+    console.log('API BUSCAR MICRO', nombre)
+    const response = await URL_SERVIDOR.get(`/microEmprendimiento/buscarPorNombre/${nombre}`);
+    console.log('API TRAER MIC', response.data);
     return response.data;
   } catch (error) {
     console.error('Error al buscar microemprendimientos:', error);
