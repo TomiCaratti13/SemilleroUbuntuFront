@@ -3,6 +3,7 @@ import { SearchBar } from '../components/SearchBar';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
 import { useParams } from 'react-router-dom';
 import { useBuscarMic } from '../utils/hooks/useBuscarMic';
+import { SearchMicNotFound } from '../components/SearchMicNotFound';
 
 export const SectionBuscarMicroemprendimiento = () => {
   const { search } = useParams();
@@ -51,7 +52,11 @@ export const SectionBuscarMicroemprendimiento = () => {
           }}>
           Resultados de tu búsqueda
         </Typography>
-        <MapMicroemprendimientos microemprendimientos={micEncontrados} />
+        {micEncontrados === undefined ? (
+          <SearchMicNotFound />
+        ) : (
+          <MapMicroemprendimientos microemprendimientos={micEncontrados} />
+        )}
       </Box>
     </Box>
   );
