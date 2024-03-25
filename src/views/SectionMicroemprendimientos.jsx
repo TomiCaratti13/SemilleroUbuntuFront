@@ -36,6 +36,7 @@ const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
     img2: microemprendimiento.img2,
     description: microemprendimiento.description,
     moreinfo: microemprendimiento.moreinfo,
+    id: microemprendimiento.id,
   }
 });
 

@@ -1,6 +1,6 @@
 import { SectionHero } from '../components/SectionHero';
 import { Typography, Box, TextField, Button } from '@mui/material';
-import { useEffect, useState , useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styled from '@mui/material/styles/styled';
 import { useParams } from 'react-router-dom';
 import { AlertModal } from '../components/AlertModal';
@@ -14,58 +14,13 @@ const heroForm = {
   img: '/backgroundForm.webp',
 };
 
-const CssTextField = styled(TextField)({
-  '& label': {
-    color: '#093c59',
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#090909',
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#090909',
-      color: '#ff4c0d',
-    },
-    '&:hover fieldset': {
-      borderColor: '#093c59',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: '#093c59',
-    },
-  },
-});
-
 export const SectionFormularioContacto = () => {
+  const { nombre, id } = useParams();
+  const [success, setSuccess] = useState(false);
 
-  const [chars, setChars] = useState(0);
-
-  const { id } = useParams();
-
+  
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleSubmit = () => {
-
-  }
-
-  // useEffect(() => {
-  //   const enviarFormularioYManejarAlerta = async () => {
-  //     let formulario = {
-  //       nombre: useNombre.current.value,
-  //     };
-  
-  //     const enviado = await enviarFormulario(formulario);
-
-  //     if(enviado.status === 200){
-  //       // Si la petición fue exitosa, mostrar alerta de éxito
-  //     } else if(enviado) {
-  //       // Si la petición falló, mostrar alerta de error y MENSAJE
-  //     } else {
-  //       // Si la petición falló, mostrar alerta de error
-  //     }
-  //   };
-  
-  //   enviarFormularioYManejarAlerta();
-  // }, [onSubmit]);
 
   return (
     <Box
@@ -114,7 +69,7 @@ export const SectionFormularioContacto = () => {
             width: '100%',
             color: 'azul.main',
           }}>
-          {id}
+          {nombre}
         </Typography>
         <Typography
           variant="h4"
@@ -129,9 +84,9 @@ export const SectionFormularioContacto = () => {
           Microemprendimiento seleccionado.{' '}
         </Typography>
       </Box>
-      <FormContact />
-        {/* Alerta Exito  */}
-        {/* <AlertModal
+      <FormContact idMic={id} setSuccess={setSuccess}/>
+      {/* Alerta Exito  */}
+      {/* <AlertModal
           open={open}
           setOpen={setOpen}
           success={true}

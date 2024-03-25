@@ -164,7 +164,7 @@ export default function CardMicroemprendimiento({ microemprendimiento }) {
           </Typography>
           <ButtonBlue
             text="Contactar"
-            link={`/formularioContacto/${microemprendimiento.title}`}
+            link={`/formularioContacto/${microemprendimiento.title}/${microemprendimiento.id}`}
           />
         </CardContent>
       </Collapse>

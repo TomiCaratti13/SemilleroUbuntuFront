@@ -53,26 +53,49 @@ export const getMicroemprendimientos = async () => {
 // Buscar microemprendimientos
 export const buscarMicroemprendimientos = async nombre => {
   try {
-    console.log('API BUSCAR MICRO', nombre)
-    const response = await URL_SERVIDOR.get(`/microEmprendimiento/buscarPorNombre/${nombre}`);
-    console.log('API TRAER MIC', response.data);
-    return response.data;
+    console.log('API BUSCAR MICRO', nombre);
+    return axios
+      .get(
+        `http://localhost:8080/microEmprendimiento/buscarPorNombre/${nombre}`,
+        { withCredentials: true }
+      )
+      .then(response => {
+        console.log('Respuesta', response);
+        console.log('API TRAER MIC', response.data);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta data', error.response.data);
+          console.log('Error en respuesta estado', error.response.status);
+          console.log('Error en respuesta headers', error.response.headers);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos:', error);
-    throw error;
+    console.error(
+      'Error al buscar microemprendimientos en componente:',
+      error
+    );
   }
 };
 
 // Función para enviar un formulario
-export const enviarFormulario = async formulario => {
+export const enviarFormulario = async (formulario, id) => {
   try {
-    const response = await URL_SERVIDOR.post('/recibirFormulario', {
-      body: formulario,
-    });
+    console.log('API ENVIAR FORM', formulario, id, `/contacto/${id}`);
+    const response = await URL_SERVIDOR.post(`/contacto/${id}`, formulario);
     console.log(response.data);
     return response;
   } catch (error) {
-    console.error('Error al crear la categoría:', error);
+    console.error('Error al enviar el formulario:', error);
     return error;
   }
 };

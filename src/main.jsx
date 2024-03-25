@@ -45,7 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               element={<SectionPublicaciones />}
             />
             <Route
-              path="formularioContacto/:id"
+              path="formularioContacto/:nombre/:id"
               element={<SectionFormularioContacto />}
             />
             <Route

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import formContact from '../../utils/schemas/schemaFormContact';
+import { enviarFormulario } from '../../utils/services/axiosConfig';
 
-export const FormContact = () => {
+export const FormContact = ({ idMic, setSuccess }) => {
   const [chars, setChars] = useState(0);
   const formik = useFormik({
     initialValues: {
@@ -14,7 +15,21 @@ export const FormContact = () => {
     },
     validationSchema: formContact,
     onSubmit: formData => {
-      console.log(formData);
+      // console.log(formData);
+      const formEnviar = {
+        descripcion: formData.mensaje,
+        usuarioSolicitante: {
+          nombre: formData.nombre,
+          email: formData.email,
+          telefono: formData.telefono
+        }
+      };
+      console.log(formEnviar);
+
+      enviarFormulario(formEnviar,idMic).then((response) => {
+        console.log(response);
+        // setSuccess(true);
+      });
     },
   });
   return (

@@ -2,55 +2,13 @@ import { Typography, Box, Container } from '@mui/material';
 import { SearchBar } from '../components/SearchBar';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { buscarMicroemprendimientos } from '../utils/services/axiosConfig';
-import MicroemprendmientosAPI from '../utils/mocks/Microemprendimientos.json';
+import { useBuscarMic } from '../utils/hooks/useBuscarMic';
 
 export const SectionBuscarMicroemprendimiento = () => {
-  const [filteredMicroemprendimientos, setFilteredMicroemprendimientos] =
-    useState([]);
   const { search } = useParams();
 
-  useEffect(() => {
-    //Filtramos los microemprendmientos por el parametro de busqueda
-    const filtrarMic = (e) => e.filter(
-      mic =>
-        mic.title.toLowerCase().includes(search?.toLowerCase()) ||
-        mic.description?.toLowerCase().includes(search?.toLowerCase()) ||
-        mic.category?.toLowerCase().includes(search?.toLowerCase()) ||
-        mic.subcategory?.toLowerCase().includes(search?.toLowerCase())
-    );
-    //Ordenamos los microemprendimientos por coincidencia en el titulo y categoria
-    const ordenarMic = (e) => e.sort((a, b) => {
-      const aTitle = a.title.toLowerCase().includes(search?.toLowerCase())
-        ? 1
-        : 0;
-      const bTitle = b.title.toLowerCase().includes(search?.toLowerCase())
-        ? 1
-        : 0;
-      const aCategory = a.category
-        ?.toLowerCase()
-        .includes(search?.toLowerCase())
-        ? 1
-        : 0;
-      const bCategory = b.category
-        ?.toLowerCase()
-        .includes(search?.toLowerCase())
-        ? 1
-        : 0;
-      //   const aSubcategory = a.subcategory?.toLowerCase().includes(search?.toLowerCase()) ? 1 : 0;
-      //   const bSubcategory = b.subcategory?.toLowerCase().includes(search?.toLowerCase()) ? 1 : 0;
-
-      return bTitle - aTitle || bCategory - aCategory;
-      //    || bSubcategory - aSubcategory;
-    });
-
-    //Llamamos a la API para obtener los microemprendimientos
-    const micEncontrado = buscarMicroemprendimientos(search);
-
-    // setFilteredMicroemprendimientos(ordenarMic(filtrarMic(micEncontrado)));
-    setFilteredMicroemprendimientos(ordenarMic(filtrarMic(MicroemprendmientosAPI)));
-  }, [search]);
+  //Llamar buscarMicroemprendimientos
+  const micEncontrados = useBuscarMic(search);
 
   return (
     <Box
@@ -93,9 +51,7 @@ export const SectionBuscarMicroemprendimiento = () => {
           }}>
           Resultados de tu búsqueda
         </Typography>
-        <MapMicroemprendimientos
-          microemprendimientos={filteredMicroemprendimientos}
-        />
+        <MapMicroemprendimientos microemprendimientos={micEncontrados} />
       </Box>
     </Box>
   );
