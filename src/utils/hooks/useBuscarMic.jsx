@@ -8,7 +8,7 @@ export const useBuscarMic = search => {
     serviceBuscarMicro(search).then(buscarMic => {
       setbuscarMic(buscarMic);
     });
-  }, []);
+  }, [search]);
 
   return buscarMic;
 };

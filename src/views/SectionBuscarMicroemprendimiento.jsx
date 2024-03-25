@@ -26,7 +26,7 @@ export const SectionBuscarMicroemprendimiento = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          padding: '24px 16px 0 16px',
+          padding: '24px 24px 0',
           gap: '35px',
         }}>
         <SearchBar color={'gris.claro'} />
@@ -39,7 +39,7 @@ export const SectionBuscarMicroemprendimiento = () => {
           display: 'flex',
           flexDirection: 'column',
           gap: '16px',
-          padding: '0 16px',
+          padding: '0 24px',
         }}>
         <Typography
           variant="h4"

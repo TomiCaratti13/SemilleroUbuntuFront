@@ -1,24 +1,28 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const SearchBar = ({ color = 'blanco.main' }) => {
   const [searchInput, setSearchInput] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchInput.trim() !== '') {
+      localStorage.setItem('searchInput', searchInput.trim());
+      navigate(`/buscar/${searchInput.trim()}`);
+    } else {
+      localStorage.removeItem('searchInput');
+    }
+  };
 
   useEffect(() => {
     const savedSearchInput = localStorage.getItem('searchInput');
     if (savedSearchInput) {
       setSearchInput(savedSearchInput);
     }
-  }, [searchInput]);
-
-  const handleSearch = () => {
-    if (searchInput.trim() !== '') {
-      window.location.href = `/buscar/${searchInput.trim()}`;
-    } else {
-      localStorage.removeItem('searchInput');
-    }
-  };
+  }, []);
 
   return (
     <>
