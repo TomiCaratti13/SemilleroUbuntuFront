@@ -80,12 +80,31 @@ export const buscarMicroemprendimientos = async nombre => {
 // Función para enviar un formulario
 export const enviarFormulario = async (formulario, id) => {
   try {
-    console.log('API ENVIAR FORM', formulario, id, `/contacto/${id}`);
-    const response = await URL_SERVIDOR.post(`/contacto/${id}`, formulario);
-    console.log(response.data);
-    return response;
+    return URL_SERVIDOR
+      .post(`/contacto/${id}`, formulario, {
+        withCredentials: true,
+      })
+      .then(response => {
+        console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
   } catch (error) {
-    console.error('Error al enviar el formulario:', error);
-    return error;
+    console.error(
+      'Error al buscar microemprendimientos en componente:',
+      error
+    );
   }
 };

@@ -16,11 +16,15 @@ const heroForm = {
 
 export const SectionFormularioContacto = () => {
   const { nombre, id } = useParams();
-  const [success, setSuccess] = useState(false);
-
   
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  
+  const [alert, setAlert] = useState({
+    open: open,
+    icon: true,
+    title: '',
+    info: '',
+  });
 
   return (
     <Box
@@ -33,6 +37,11 @@ export const SectionFormularioContacto = () => {
         height: '100%',
         paddingBottom: '30px',
       }}>
+      {/* Alerta Exito  */}
+      <AlertModal
+        setOpen={setOpen}
+        alert={alert}
+      />
       <SectionHero
         category={heroForm.category}
         title={heroForm.title}
@@ -84,23 +93,11 @@ export const SectionFormularioContacto = () => {
           Microemprendimiento seleccionado.{' '}
         </Typography>
       </Box>
-      <FormContact idMic={id} setSuccess={setSuccess}/>
-      {/* Alerta Exito  */}
-      {/* <AlertModal
-          open={open}
-          setOpen={setOpen}
-          success={true}
-          title="Formulario enviado con éxito"
-          info="Gracias por contactarnos, nos comunicaremos en breve"
-        /> 
-         Alerta Error 
-        <AlertModal
-          open={open}
-          setOpen={setOpen}
-          success={false}
-          title="Error al enviar el formulario"
-          info="Por favor, volvé a intentarlo."
-        /> */}
+      <FormContact
+        idMic={id}
+        setAlert={setAlert}
+        setOpen={setOpen}
+      />
     </Box>
   );
 };

@@ -4,8 +4,9 @@ import { useFormik } from 'formik';
 import formContact from '../../utils/schemas/schemaFormContact';
 import { enviarFormulario } from '../../utils/services/axiosConfig';
 
-export const FormContact = ({ idMic, setSuccess }) => {
+export const FormContact = ({ idMic, setAlert }) => {
   const [chars, setChars] = useState(0);
+
   const formik = useFormik({
     initialValues: {
       nombre: '',
@@ -15,23 +16,45 @@ export const FormContact = ({ idMic, setSuccess }) => {
     },
     validationSchema: formContact,
     onSubmit: formData => {
-      // console.log(formData);
-      const formEnviar = {
-        descripcion: formData.mensaje,
-        usuarioSolicitante: {
-          nombre: formData.nombre,
-          email: formData.email,
-          telefono: formData.telefono
-        }
-      };
-      console.log(formEnviar);
+      try {
+        formik.setSubmitting(true);
 
-      enviarFormulario(formEnviar,idMic).then((response) => {
-        console.log(response);
-        // setSuccess(true);
-      });
+        const formEnviar = {
+          descripcion: formData.mensaje,
+          usuarioSolicitante: {
+            nombre: formData.nombre,
+            email: formData.email,
+            telefono: formData.telefono,
+          },
+        };
+
+        enviarFormulario(formEnviar, idMic).then(response => {
+          //MANEJO DE ALERTAS
+          if (response.status === 200) {
+            setAlert({
+              // open: true,
+              icon: true,
+              title: 'Formulario enviado con éxito',
+              info: 'Gracias por contactarnos, nos comunicaremos en breve',
+            });
+          } else {
+            setAlert({
+              // open: true,
+              icon: false,
+              title: 'Lo sentimos, el formulario no pudo ser enviado.',
+              info: 'Por favor, volvé a intentarlo.',
+            });
+          }
+        });
+
+        formik.setSubmitting(false);
+      } catch (error) {
+        formik.setSubmitting(false);
+        console.log(error);
+      }
     },
   });
+
   return (
     <Container
       component="form"
