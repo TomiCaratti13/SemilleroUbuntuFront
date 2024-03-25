@@ -2,17 +2,12 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Box, Button, Modal, Typography } from '@mui/material';
 
-export const AlertModal = ({ alert, setOpen }) => {
-  const handleClose = () => {
-    console.log('cerrar alerta');
-    setOpen(false);
-  }
-
+export const AlertModal = ({ alert, closeAlert, resendAlert }) => {
   return (
     <div>
       <Modal
         open={alert.open}
-        onClose={handleClose}
+        onClose={closeAlert}
         sx={{
           width: '100%',
           height: '100%',
@@ -89,10 +84,10 @@ export const AlertModal = ({ alert, setOpen }) => {
                   bgcolor: 'gris.medio',
                 },
               }}
-              onClick={handleClose}>
+              onClick={closeAlert}>
               {alert.icon ? 'Aceptar' : 'Cancelar'}
             </Button>
-            {alert.icon ? null : (
+            {!alert.icon ? (
               <Button
                 sx={{
                   fontSize: '14px',
@@ -105,10 +100,10 @@ export const AlertModal = ({ alert, setOpen }) => {
                     bgcolor: 'gris.medio',
                   },
                 }}
-                onClick={handleClose}>
+                onClick={resendAlert}>
                 Intentar Nuevamente
               </Button>
-            )}
+            ) : null}
           </Box>
         </Box>
       </Modal>
