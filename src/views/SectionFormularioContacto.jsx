@@ -16,9 +16,9 @@ const heroForm = {
 
 export const SectionFormularioContacto = () => {
   const { nombre, id } = useParams();
-  
+
   const [open, setOpen] = useState(false);
-  
+
   const [alert, setAlert] = useState({
     open: open,
     icon: true,
@@ -27,77 +27,79 @@ export const SectionFormularioContacto = () => {
   });
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        overflow: 'hidden',
-        flexDirection: 'column',
-        gap: '30px',
-        width: '100%',
-        height: '100%',
-        paddingBottom: '30px',
-      }}>
+    <>
       {/* Alerta Exito  */}
       <AlertModal
         setOpen={setOpen}
         alert={alert}
       />
-      <SectionHero
-        category={heroForm.category}
-        title={heroForm.title}
-        img={heroForm.img}
-      />
       <Box
         sx={{
-          position: 'relative',
+          display: 'flex',
+          overflow: 'hidden',
+          flexDirection: 'column',
+          gap: '30px',
           width: '100%',
           height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          padding: '0 16px',
+          paddingBottom: '30px',
         }}>
-        <Typography
-          variant="h4"
+        <SectionHero
+          category={heroForm.category}
+          title={heroForm.title}
+          img={heroForm.img}
+        />
+        <Box
           sx={{
-            fontSize: '22px',
-            lineHeight: '30px',
-            fontWeight: 500,
-            textAlign: 'center',
+            position: 'relative',
             width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            padding: '0 16px',
           }}>
-          Por favor, completá el formulario. Nos comunicaremos en breve.
-        </Typography>
-        <Typography
-          variant="h4"
-          sx={{
-            fontSize: '20px',
-            lineHeight: '25px',
-            fontWeight: 600,
-            textAlign: 'center',
-            width: '100%',
-            color: 'azul.main',
-          }}>
-          {nombre}
-        </Typography>
-        <Typography
-          variant="h4"
-          sx={{
-            fontSize: '16px',
-            lineHeight: '25px',
-            fontWeight: 400,
-            textAlign: 'center',
-            width: '100%',
-          }}>
-          Vas a contactar a Ubuntu para recibir más información acerca del
-          Microemprendimiento seleccionado.{' '}
-        </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              fontSize: '22px',
+              lineHeight: '30px',
+              fontWeight: 500,
+              textAlign: 'center',
+              width: '100%',
+            }}>
+            Por favor, completá el formulario. Nos comunicaremos en breve.
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              fontSize: '20px',
+              lineHeight: '25px',
+              fontWeight: 600,
+              textAlign: 'center',
+              width: '100%',
+              color: 'azul.main',
+            }}>
+            {nombre}
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              fontSize: '16px',
+              lineHeight: '25px',
+              fontWeight: 400,
+              textAlign: 'center',
+              width: '100%',
+            }}>
+            Vas a contactar a Ubuntu para recibir más información acerca del
+            Microemprendimiento seleccionado.{' '}
+          </Typography>
+        </Box>
+        <FormContact
+          idMic={id}
+          setAlert={setAlert}
+          setOpen={setOpen}
+        />
       </Box>
-      <FormContact
-        idMic={id}
-        setAlert={setAlert}
-        setOpen={setOpen}
-      />
-    </Box>
+    </>
   );
 };
