@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import { HEADER_HEIGHT } from '../../utils/services/constants';
 import { useState } from 'react';
+import PerfilAdmin from '../../components/PerfilAdmin';
 
 const drawerWidth = 256;
 const navItems = [
@@ -23,7 +24,6 @@ const navItems = [
 ];
 
 function AdminHeader(props) {
-  // eslint-disable-next-line react/prop-types
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -84,7 +84,7 @@ function AdminHeader(props) {
                 to={
                   item === 'Dashboard Administrador'
                     ? '/Admin'
-                    : item === "Solicitudes de Contacto"
+                    : item === 'Solicitudes de Contacto'
                     ? '/Admin/contactos'
                     : `/Admin/${item.toLowerCase()}`
                 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -31,7 +31,7 @@ function Header(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
   };
-  
+
   const drawer = (
     <Box
       onClick={handleDrawerToggle}
@@ -120,7 +120,7 @@ function Header(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  return user.nombre !== '' ? (
+  return user.nombre !== '' && location.pathname.includes('/Admin') ? (
     <AdminHeader />
   ) : (
     <Box sx={{ display: 'flex', position: 'relative' }}>

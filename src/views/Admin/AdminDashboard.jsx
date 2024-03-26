@@ -25,17 +25,17 @@ export const AdminDashboard = () => {
   //   getCookie();
   // }, []);
 
-  const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
-  const getParams = () => {
-    const { token } = useParams();
-    const decodedToken = jwtDecode(token);
-    dispatch(addUser(decodedToken));
-  };
+  // const dispatch = useDispatch();
+  // const user = useSelector(state => state.user);
+  // const getParams = () => {
+  //   const { token } = useParams();
+  //   const decodedToken = jwtDecode(token);
+  //   dispatch(addUser(decodedToken));
+  // };
 
-  useEffect(() => {
-    getParams();
-  }, [user]);
+  // useEffect(() => {
+  //   getParams();
+  // }, [user]);
 
   return (
     <Container

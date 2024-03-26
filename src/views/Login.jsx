@@ -5,11 +5,22 @@ import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
 import { GOOGLE_AUTH } from '../utils/services/constants';
 import { HEADER_HEIGHT } from '../utils/services/constants';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addUser } from '../utils/redux/userSlice';
 
 export default function Login() {
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const linkToAdmin = () => {
-    window.location.href = GOOGLE_AUTH;
+    navigate(GOOGLE_AUTH);
+  };
+
+  const navigate = useNavigate();
+  const redirectGoogle = () => {
+    dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
+    navigate(`/Admin`);
   };
 
   return (
@@ -80,7 +91,7 @@ export default function Login() {
             pb: '32px',
           }}>
           <LoginButton
-            onClick={() => {window.location.href = "/Admin"}}
+            onClick={redirectGoogle}
             name="Continuá con Google"
             avatar={avatarGoogle}
           />
@@ -89,4 +100,3 @@ export default function Login() {
     </Box>
   );
 }
-

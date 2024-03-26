@@ -14,14 +14,13 @@ export const MapPublicaciones = ({ publicaciones, cantidad }) => (
     }}>
     {publicaciones
       //Convertimos Date a fechas para poder ordenarlas
-      // eslint-disable-next-line react/prop-types
-      .sort((a, b) => {
+      ?.sort((a, b) => {
         const dateA = new Date(a.date.split('/').reverse().join('-'));
         const dateB = new Date(b.date.split('/').reverse().join('-'));
         return dateB - dateA;
       })
-      .slice(0, cantidad)
-      .map((publicacion, index) => (
+      ?.slice(0, cantidad)
+      ?.map((publicacion, index) => (
         <CardPublicaciones
           key={index}
           publicacion={publicacion}
