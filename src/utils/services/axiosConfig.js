@@ -42,8 +42,7 @@ export const agregarVisualizacion = async id => {
 // Función para obtener los microemprendimientos
 export const getMicroemprendimientos = async () => {
   try {
-    return URL_SERVIDOR
-      .get(`/microEmprendimiento/listar`)
+    return URL_SERVIDOR.get(`/microEmprendimiento/listar`)
       .then(response => {
         // console.log('Respuesta del servidor', response);
         return response.data;
@@ -62,10 +61,7 @@ export const getMicroemprendimientos = async () => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error(
-      'Error al buscar microemprendimientos en componente:',
-      error
-    );
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 
@@ -99,10 +95,9 @@ export const buscarMicroemprendimientos = async nombre => {
 // Función para enviar un formulario
 export const enviarFormulario = async (formulario, id) => {
   try {
-    return URL_SERVIDOR
-      .post(`/contacto/${id}`, formulario, {
-        withCredentials: true,
-      })
+    return URL_SERVIDOR.post(`/contacto/${id}`, formulario, {
+      withCredentials: true,
+    })
       .then(response => {
         console.log('Respuesta del servidor', response);
         return response;
@@ -121,20 +116,16 @@ export const enviarFormulario = async (formulario, id) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error(
-      'Error al buscar microemprendimientos en componente:',
-      error
-    );
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 
 // Función para traer todos los contactos
 export const getContactos = async () => {
   try {
-    return URL_SERVIDOR
-      .get(`/contacto/all` ,{
-        withCredentials: true,
-      })
+    return URL_SERVIDOR.get(`/contacto/all`, {
+      withCredentials: true,
+    })
       .then(response => {
         // console.log('Respuesta del servidor', response);
         return response;
@@ -153,23 +144,19 @@ export const getContactos = async () => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error(
-      'Error al buscar microemprendimientos en componente:',
-      error
-    );
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 
 // Función para editar un formulario
-export const putFormulario = async (id) => {
-  console.log('id', id)
+export const putFormulario = async (formulario, id) => {
+  console.log('id del contacto', id);
   try {
-    return URL_SERVIDOR
-      .put(`/contacto/gestionar/${id}`, {
-        withCredentials: true,
-      })
+    return URL_SERVIDOR.put(`/contacto/gestionar/${id}`, formulario, {
+      withCredentials: true,
+    })
       .then(response => {
-        console.log('Respuesta del servidor', response);
+        // console.log('Respuesta del servidor', response);
         return response;
       })
       .catch(error => {
@@ -186,20 +173,16 @@ export const putFormulario = async (id) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error(
-      'Error al buscar microemprendimientos en componente:',
-      error
-    );
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 
 // Funcion para traer microemprendmientos por categoria
 export const getMicroCategoria = async () => {
   try {
-    return URL_SERVIDOR
-      .get(`microEmprendimiento/cantidades_por_rubro` ,{
-        withCredentials: true,
-      })
+    return URL_SERVIDOR.get(`microEmprendimiento/cantidades_por_rubro`, {
+      withCredentials: true,
+    })
       .then(response => {
         // console.log('Respuesta del servidor', response);
         return response;
@@ -218,20 +201,19 @@ export const getMicroCategoria = async () => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error(
-      'Error al buscar microemprendimientos en componente:',
-      error
-    );
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 
 //Funcion para traer visualizaciones de las publicaciones del MES
 export const getPublisMes = async () => {
   try {
-    return URL_SERVIDOR
-      .get(`/publicacion/visualizaciones_publicaciones_total` ,{
+    return URL_SERVIDOR.get(
+      `/publicacion/visualizaciones_publicaciones_total`,
+      {
         withCredentials: true,
-      })
+      }
+    )
       .then(response => {
         // console.log('Respuesta del servidor', response);
         return response;
@@ -250,9 +232,6 @@ export const getPublisMes = async () => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error(
-      'Error al buscar microemprendimientos en componente:',
-      error
-    );
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
