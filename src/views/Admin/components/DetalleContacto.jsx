@@ -17,9 +17,11 @@ import { useFormik } from 'formik';
 import formContact from '../../../utils/schemas/schemaFormContact';
 import { putFormulario } from '../../../utils/services/axiosConfig';
 
-export const DetalleContacto = ({ contacto }) => {
-  const [chars, setChars] = useState(0);
-
+export const DetalleContacto = ({
+  contacto,
+  setSelectedContacto,
+  setValue,
+}) => {
   //Arreglo fecha Unix
   let timestamp = contacto.fechaCreacion;
   let date = new Date(timestamp);
@@ -52,7 +54,7 @@ export const DetalleContacto = ({ contacto }) => {
 
         putFormulario(formEnviar, contacto.id)
           .then(response => {
-            console.log('RESPUESTA COMPONENETE', response);
+            // console.log('RESPUESTA COMPONENETE', response);
             //MANEJO DE ALERTAS
             if (response && response.status === 200) {
               openAlert(true, 'Estado modificado con éxito');
@@ -92,6 +94,8 @@ export const DetalleContacto = ({ contacto }) => {
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
+        setSelectedContacto={setSelectedContacto}
+        setValue={setValue}
       />
       <Container
         // onBack={onBack}

@@ -150,7 +150,6 @@ export const getContactos = async () => {
 
 // Función para editar un formulario
 export const putFormulario = async (formulario, id) => {
-  console.log('id del contacto', id);
   try {
     return URL_SERVIDOR.put(`/contacto/gestionar/${id}`, formulario, {
       withCredentials: true,

@@ -1,7 +1,5 @@
-import { Typography, Box, Container, Button, Tab } from '@mui/material';
+import { Typography, Box, Tab } from '@mui/material';
 import { useEffect, useState } from 'react';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import CircleIcon from '@mui/icons-material/Circle';
 
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -15,28 +13,32 @@ export const AdminContactos = () => {
   const [value, setValue] = useState('1');
   const [solContactos, setSolContactos] = useState([]);
   const [contactos, setContactos] = useState([]);
+  const [selectedContacto, setSelectedContacto] = useState(null);
 
   //traerContactos
   useEffect(() => {
     getContactos().then(response => {
-      console.log('Respuesta del servidor', response);
-      setContactos(response.data.filter(contacto => contacto.gestionado === true));
+      setContactos(
+        response.data.filter(contacto => contacto.gestionado === true)
+      );
       setSolContactos(response.data);
     });
-  }, []);
+  }, [, selectedContacto]);
 
   //Esto necesita el evento no borrar
   const handleChange = (event, newValue) => {
     setSelectedContacto(null);
     if (newValue === '1') {
-      setContactos(solContactos.filter(contacto => contacto.gestionado === true));
+      setContactos(
+        solContactos.filter(contacto => contacto.gestionado === true)
+      );
     } else if (newValue === '2') {
-      setContactos(solContactos.filter(contacto => contacto.gestionado === false));
+      setContactos(
+        solContactos.filter(contacto => contacto.gestionado === false)
+      );
     }
     setValue(newValue);
   };
-
-  const [selectedContacto, setSelectedContacto] = useState(null);
 
   return (
     <Box
@@ -115,6 +117,9 @@ export const AdminContactos = () => {
                 ))
               ) : (
                 <DetalleContacto
+                  //SetselectContacto y setVAlue es un pequeño drillProp
+                  setSelectedContacto={setSelectedContacto}
+                  setValue={setValue}
                   contacto={selectedContacto}
                   onBack={() => setSelectedContacto(null)}
                 />
