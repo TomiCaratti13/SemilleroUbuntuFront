@@ -47,8 +47,8 @@ export default function PerfilAdmin() {
     dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
     localStorage.clear();
     //Preguntar por que navigate no funciona
-    // navigate(`/`);
-    window.location.href = '/';
+    navigate(`/`);
+    // window.location.href = '/';
   };
 
   return (
@@ -59,6 +59,11 @@ export default function PerfilAdmin() {
           : { alt: user.nombre, src: user.foto })}
         onClick={handleClick}
         aria-describedby={id}
+        sx={{
+          cursor: 'pointer',
+          width: '40px',
+          height: '40px',
+        }}
       />
       <Popper
         id={id}

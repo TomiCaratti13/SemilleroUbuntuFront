@@ -67,13 +67,14 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
             border: 'none',
             backgroundColor: 'transparent',
           }}
-          onKeyDown={event => {
-            if (event.key === 'Enter') {
-              handleSearch();
-            }
-          }}
+          // onKeyDown={event => {
+          //   if (event.key === 'Enter' || event.key === "Delete") {
+          //     handleSearch();
+          //   }
+          // }}
           onChange={event => {
             setSearchInput(event.target.value);
+            handleSearch();
             localStorage.setItem('searchInput', event.target.value);
           }}
           value={searchInput}
