@@ -47,8 +47,8 @@ export default function PerfilAdmin() {
     dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
     localStorage.clear();
     //Preguntar por que navigate no funciona
-    // navigate(`/`);
-    window.location.href = '/';
+    navigate(`/`);
+    // window.location.href = '/';
   };
 
   return (
