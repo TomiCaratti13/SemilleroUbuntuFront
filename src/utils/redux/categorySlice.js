@@ -11,9 +11,9 @@ export const categorySlice = createSlice({
       state.lista.push({
         title: title,
         identifier: identifier,
-        cantidad: cantidad,
+        // cantidad: cantidad,
         img: img,
-        description: description,
+        // description: description,
       });
     },
   },

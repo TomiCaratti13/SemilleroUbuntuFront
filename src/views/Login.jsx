@@ -14,10 +14,11 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const linkToAdmin = () => {
-    navigate(GOOGLE_AUTH);
-  };
+    window.location.href = GOOGLE_AUTH;
+}
 
   const navigate = useNavigate();
+
   const redirectGoogle = () => {
     dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
     navigate(`/Admin`);
@@ -91,7 +92,8 @@ export default function Login() {
             pb: '32px',
           }}>
           <LoginButton
-            onClick={redirectGoogle}
+            // onClick={redirectGoogle}
+            onClick={linkToAdmin}
             name="Continuá con Google"
             avatar={avatarGoogle}
           />

@@ -1,9 +1,9 @@
 import CardPublicaciones from './CardPublicacion';
 import { Container } from '@mui/material';
 
-// eslint-disable-next-line react/prop-types
 export const MapPublicaciones = ({ publicaciones, cantidad }) => {
-  const publicacionesAPI = [...publicaciones];
+  const publicacionesMutable = [...publicaciones];
+
   return (
     <Container
       component="section"
@@ -14,7 +14,7 @@ export const MapPublicaciones = ({ publicaciones, cantidad }) => {
         gap: '16px',
         width: '100%',
       }}>
-      {publicacionesAPI
+      {publicacionesMutable
         //Convertimos Date a fechas para poder ordenarlas
         ?.sort((a, b) => {
           const dateA = new Date(a.date.split('/').reverse().join('-'));
