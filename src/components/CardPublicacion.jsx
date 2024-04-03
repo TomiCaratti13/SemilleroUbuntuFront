@@ -23,14 +23,10 @@ const ExpandMoreInfo = styled(props => {
 
 export default function CardPublicacion({ publicacion }) {
   const [expanded, setExpanded] = useState(false);
-  
+
   //hasSee es para saber si ya se vio la publicacion y no agregar de nuevo
   const [hasSee, setHasSee] = useState(false);
   const handleExpandClick = () => {
-    if (!hasSee) {
-      agregarVisualizacion(publicacion.id);
-      setHasSee(true);
-    }
     setExpanded(!expanded);
   };
 
@@ -38,6 +34,13 @@ export default function CardPublicacion({ publicacion }) {
 
   return (
     <Card
+      onClick={() => {
+        if (!hasSee) {
+          console.log('Agregando visualizacion', publicacion.id);
+          agregarVisualizacion(publicacion.id);
+          setHasSee(true);
+        }
+      }}
       sx={{
         bgcolor: 'gris.claro',
         borderRadius: 4,
@@ -102,7 +105,7 @@ export default function CardPublicacion({ publicacion }) {
           ))}
         </CardContent>
       </Collapse>
-        <CardActions
+      <CardActions
         disableSpacing
         sx={{ padding: '0px 0 0 0' }}>
         <ExpandMoreInfo
