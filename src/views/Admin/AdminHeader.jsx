@@ -145,7 +145,7 @@ function AdminHeader(props) {
               justifyContent: 'center',
               alignItems: 'center',
               position: 'absolute',
-              height: '56px',
+              height: HEADER_HEIGHT,
               left: '50%',
               top: 0,
               transform: 'translate(-50%,0)',
@@ -156,6 +156,7 @@ function AdminHeader(props) {
               alt="UBUNTU Financiamiento Sostenible"
               style={{
                 height: '100%',
+                padding: '3px',
               }}
             />
           </Link>

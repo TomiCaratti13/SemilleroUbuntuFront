@@ -55,7 +55,7 @@ export const AlertModal = ({ alert, closeAlert, resendAlert }) => {
             }}>
             {alert.title}
           </Typography>
-          <Typography
+          {alert.info && <Typography
             sx={{
               fontSize: '14px',
               lineHeight: '20px',
@@ -64,7 +64,7 @@ export const AlertModal = ({ alert, closeAlert, resendAlert }) => {
               textAlign: 'start',
             }}>
             {alert.info}
-          </Typography>
+          </Typography>}
           <Box
             sx={{
               display: 'flex',
