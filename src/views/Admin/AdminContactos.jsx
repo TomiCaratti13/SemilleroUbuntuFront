@@ -18,12 +18,15 @@ export const AdminContactos = () => {
   //traerContactos
   useEffect(() => {
     getContactos().then(response => {
-      setContactos(
-        response.data.filter(contacto => contacto.gestionado === true)
-      );
-      setSolContactos(response.data);
+      const allContactos = response.data;
+      setSolContactos(allContactos);
+      if (value === '1') {
+        setContactos(allContactos.filter(contacto => contacto.gestionado === true));
+      } else if (value === '2') {
+        setContactos(allContactos.filter(contacto => contacto.gestionado === false));
+      }
     });
-  }, [, selectedContacto]);
+  }, [value, selectedContacto]);
 
   //Esto necesita el evento no borrar
   const handleChange = (event, newValue) => {
@@ -121,7 +124,6 @@ export const AdminContactos = () => {
                   setSelectedContacto={setSelectedContacto}
                   setValue={setValue}
                   contacto={selectedContacto}
-                  onBack={() => setSelectedContacto(null)}
                 />
               )}
             </TabPanel>

@@ -18,7 +18,6 @@ export const MapSolContactos = ({ contacto, onClick }) => {
 
   return (
     <Container
-      onClick={onClick}
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -69,6 +68,7 @@ export const MapSolContactos = ({ contacto, onClick }) => {
         </Typography>
       </Box>
       <Button
+        onClick={onClick}
         style={{
           display: 'flex',
           justifyContent: 'flex-end',
