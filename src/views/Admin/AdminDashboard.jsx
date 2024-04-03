@@ -1,21 +1,79 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import AdminDashboardInfo from '../../utils/mocks/AdminDashboard.json';
-import CategoriasInfo from '../../utils/mocks/Categorias.json';
-import PublicacionesInfo from '../../utils/mocks/Publicaciones.json';
 // import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../utils/redux/userSlice';
 import { useParams } from 'react-router-dom';
-
-//Para cargar a redux
-const AdminInfo = AdminDashboardInfo;
-const Categorias = CategoriasInfo;
-const Publicaciones = PublicacionesInfo;
+import {
+  getContactos,
+  getMicroCategoria,
+  getPublisMes,
+} from '../../utils/services/axiosConfig';
 
 export const AdminDashboard = () => {
+  const [AdminInfo, setAdminInfo] = useState({
+    NuevosMicroemprendimientos: 0,
+    Gestionados: 0,
+    NoGestionados: 0,
+    MicroxCategoria: [
+      {
+        cantidad: 0,
+        title: '',
+      },
+    ],
+    Publicaciones: [
+      {
+        title: '',
+        fecha: '',
+        visualizaciones: 0,
+      },
+    ],
+  });
+  //traerCosas
+  useEffect(() => {
+    const contactos = getContactos().then(response => {
+      let gestionados = 0;
+      let noGestionados = 0;
+      response.data.forEach(contacto => {
+        if (contacto.gestionado) {
+          gestionados++;
+        } else {
+          noGestionados++;
+        }
+      });
+      return { gestionados, noGestionados };
+    });
+    const microXCat = getMicroCategoria().then(response => {
+      const categorias = response.data.map(cat => {
+        return {
+          title: cat.categoria,
+          cantidad: cat.cantidad_microEmprendimientos,
+        };
+      });
+      return categorias;
+    });
+    const visPubli = getPublisMes().then(response => {
+      const publicaciones = response.data.map(publicacion => {
+        return {
+          title: publicacion.titulo,
+          visualizaciones: publicacion.visualizaciones,
+          fecha: publicacion.fecha_creacion,
+        };
+      });
+      return publicaciones;
+    });
+    Promise.all([contactos, microXCat, visPubli]).then(info => {
+      setAdminInfo({
+        NuevosMicroemprendimientos: info[1].reduce((total, cat) => total + cat.cantidad, 0),
+        Gestionados: info[0].gestionados,
+        NoGestionados: info[0].noGestionados,
+        MicroxCategoria: info[1],
+        Publicaciones: info[2],
+      });
+    });
+  }, []);
   // const getCookie = () => {
   //   const token = Cookies.get('token');
   //   const decodedToken = jwtDecode(token);
@@ -212,7 +270,7 @@ export const AdminDashboard = () => {
               padding: ' 8px 20px 20px',
               flexDirection: 'column',
             }}>
-            {Categorias.map((categoria, index) => (
+            {AdminInfo.MicroxCategoria.map((categoria, index) => (
               <Box
                 key={index}
                 sx={{
@@ -264,7 +322,7 @@ export const AdminDashboard = () => {
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: '16px',
         }}>
-        {Publicaciones.map((publicacion, index) => (
+        {AdminInfo.Publicaciones.map((publicacion, index) => (
           <Box
             key={index}
             sx={{

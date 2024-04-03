@@ -136,7 +136,7 @@ export const getContactos = async () => {
         withCredentials: true,
       })
       .then(response => {
-        console.log('Respuesta del servidor', response);
+        // console.log('Respuesta del servidor', response);
         return response;
       })
       .catch(error => {
@@ -170,6 +170,70 @@ export const putFormulario = async (id) => {
       })
       .then(response => {
         console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error(
+      'Error al buscar microemprendimientos en componente:',
+      error
+    );
+  }
+};
+
+// Funcion para traer microemprendmientos por categoria
+export const getMicroCategoria = async () => {
+  try {
+    return URL_SERVIDOR
+      .get(`microEmprendimiento/cantidades_por_rubro` ,{
+        withCredentials: true,
+      })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error(
+      'Error al buscar microemprendimientos en componente:',
+      error
+    );
+  }
+};
+
+//Funcion para traer visualizaciones de las publicaciones del MES
+export const getPublisMes = async () => {
+  try {
+    return URL_SERVIDOR
+      .get(`/publicacion/visualizaciones_publicaciones_total` ,{
+        withCredentials: true,
+      })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
         return response;
       })
       .catch(error => {
