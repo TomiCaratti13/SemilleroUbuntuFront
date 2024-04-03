@@ -3,13 +3,18 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Link } from 'react-router-dom';
 
-export const MapSolContactos = ({ contacto , onClick}) => {
-
+export const MapSolContactos = ({ contacto, onClick }) => {
+  let timestamp = contacto.fechaCreacion;
+  let date = new Date(timestamp);
   const contactoMap = {
     nombre: contacto.microemprendimiento,
-    fecha: contacto.fechaCreacion,
+    fecha: date.toLocaleDateString('es-AR', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    }),
     gestionado: contacto.gestionado,
-  }
+  };
 
   return (
     <Container
@@ -30,7 +35,7 @@ export const MapSolContactos = ({ contacto , onClick}) => {
           flexDirection: 'column',
           gap: '8px',
           flexGrow: 1,
-          p: "8px"
+          p: '8px',
         }}>
         <Typography
           sx={{
@@ -70,13 +75,13 @@ export const MapSolContactos = ({ contacto , onClick}) => {
           alignItems: 'center',
           textDecoration: 'none',
         }}>
-          <ArrowForwardIosIcon
-            sx={{
-              color: 'negro.main',
-              height: '24px',
-              width: '24px',
-            }}
-          />
+        <ArrowForwardIosIcon
+          sx={{
+            color: 'negro.main',
+            height: '24px',
+            width: '24px',
+          }}
+        />
       </Button>
     </Container>
   );

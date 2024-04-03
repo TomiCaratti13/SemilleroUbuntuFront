@@ -4,13 +4,11 @@ import {
   Typography,
   Box,
   Container,
-  Button,
   TextField,
   InputLabel,
   MenuItem,
   FormControl,
   Select,
-  NativeSelect,
   ListItemIcon,
 } from '@mui/material';
 import { AlertModal } from '../../../components/AlertModal';
@@ -21,6 +19,15 @@ import { putFormulario } from '../../../utils/services/axiosConfig';
 
 export const DetalleContacto = ({ contacto }) => {
   const [chars, setChars] = useState(0);
+
+  //Arreglo fecha Unix
+  let timestamp = contacto.fechaCreacion;
+  let date = new Date(timestamp);
+  const contactoFecha = date.toLocaleDateString('es-AR', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -33,8 +40,17 @@ export const DetalleContacto = ({ contacto }) => {
     onSubmit: formData => {
       try {
         formik.setSubmitting(true);
+        const formEnviar = {
+          descripcion: formData.mensaje,
+          usuarioSolicitante: {
+            nombre: formData.nombre,
+            email: formData.email,
+            telefono: formData.telefono,
+          },
+          gestionado: true,
+        };
 
-        putFormulario(contacto.id)
+        putFormulario(formEnviar, contacto.id)
           .then(response => {
             console.log('RESPUESTA COMPONENETE', response);
             //MANEJO DE ALERTAS
@@ -69,11 +85,6 @@ export const DetalleContacto = ({ contacto }) => {
     formik.handleSubmit
   );
 
-  //   const [age, setAge] = useState('');
-
-  //   const handleChange = event => {
-  //     setAge(event.target.value);
-  //   };
   const [isFocused, setIsFocused] = useState(false);
   return (
     <>
@@ -125,44 +136,46 @@ export const DetalleContacto = ({ contacto }) => {
             />
             {contacto.gestionado ? 'Gestionada' : 'No gestionada'}
           </Typography>
-          {contacto.gestionado ? null : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
-            <FormControl
-              sx={{
-                width: '200px',
-                bgcolor: 'gris.claro',
-                border: 'none',
-              }}>
-              {!isFocused && (
-                <InputLabel id="demo-simple-select-label">Estado</InputLabel>
-              )}
-              <Select
-                labelId="demo-simple-select-label"
-                displayEmpty
-                defaultValue=""
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                onChange={formik.handleSubmit}
-                inputProps={{
-                  id: 'uncontrolled-native',
+          {contacto.gestionado ? null : (
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+              <FormControl
+                sx={{
+                  width: '200px',
+                  bgcolor: 'gris.claro',
+                  border: 'none',
                 }}>
-                <MenuItem value="20">
-                  <ListItemIcon>
-                    <CircleIcon
-                      sx={{
-                        color: 'gestion.exito',
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        pl: '8px',
-                      }}>
-                      Gestionada
-                    </Typography>
-                  </ListItemIcon>
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Box>}
+                {!isFocused && (
+                  <InputLabel id="demo-simple-select-label">Estado</InputLabel>
+                )}
+                <Select
+                  labelId="demo-simple-select-label"
+                  displayEmpty
+                  defaultValue=""
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  onChange={formik.handleSubmit}
+                  inputProps={{
+                    id: 'uncontrolled-native',
+                  }}>
+                  <MenuItem value="20">
+                    <ListItemIcon>
+                      <CircleIcon
+                        sx={{
+                          color: 'gestion.exito',
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          pl: '8px',
+                        }}>
+                        Gestionada
+                      </Typography>
+                    </ListItemIcon>
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          )}
           <Typography
             sx={{
               fontSize: '22px',
@@ -176,6 +189,7 @@ export const DetalleContacto = ({ contacto }) => {
               width: '100%',
             }}>
             {contacto.microemprendimiento}
+            {contacto.id}
           </Typography>
           <Typography
             sx={{
@@ -189,7 +203,7 @@ export const DetalleContacto = ({ contacto }) => {
               justifyContent: 'center',
               width: '100%',
             }}>
-            Fecha de solicitud: {contacto.fechaCreacion}
+            Fecha de solicitud: {contactoFecha}
           </Typography>
         </Container>
         <TextField

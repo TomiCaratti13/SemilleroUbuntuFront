@@ -56,17 +56,27 @@ export const AdminDashboard = () => {
     });
     const visPubli = getPublisMes().then(response => {
       const publicaciones = response.data.map(publicacion => {
+        //Arreglo fecha Unix
+        let timestamp = publicacion.fecha_creacion;
+        let date = new Date(timestamp);
         return {
           title: publicacion.titulo,
           visualizaciones: publicacion.visualizaciones,
-          fecha: publicacion.fecha_creacion,
+          fecha: date.toLocaleDateString('es-AR', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          }),
         };
       });
       return publicaciones;
     });
     Promise.all([contactos, microXCat, visPubli]).then(info => {
       setAdminInfo({
-        NuevosMicroemprendimientos: info[1].reduce((total, cat) => total + cat.cantidad, 0),
+        NuevosMicroemprendimientos: info[1].reduce(
+          (total, cat) => total + cat.cantidad,
+          0
+        ),
         Gestionados: info[0].gestionados,
         NoGestionados: info[0].noGestionados,
         MicroxCategoria: info[1],
