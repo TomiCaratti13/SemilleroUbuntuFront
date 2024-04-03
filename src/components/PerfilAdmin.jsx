@@ -21,6 +21,7 @@ export default function PerfilAdmin() {
     }
     return color;
   };
+
   const stringAvatar = name => {
     return {
       sx: {
@@ -46,9 +47,7 @@ export default function PerfilAdmin() {
   const closeSesion = () => {
     dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
     localStorage.clear();
-    //Preguntar por que navigate no funciona
     navigate(`/`);
-    // window.location.href = '/';
   };
 
   return (

@@ -9,7 +9,8 @@ const URL_SERVIDOR = axios.create({
 // Función para obtener las categorías
 export const getCategorias = async () => {
   try {
-    const response = await URL_SERVIDOR.get('/categorias');
+    const response = await URL_SERVIDOR.get('/rubro/listarRubros');
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Error al obtener las categorías:', error);

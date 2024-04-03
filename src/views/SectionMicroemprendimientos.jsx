@@ -11,18 +11,19 @@ import { getCategorias } from '../utils/services/axiosConfig';
 import { getPublicaciones } from '../utils/services/axiosConfig';
 import { addCategory } from '../utils/redux/categorySlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCategorias } from '../utils/hooks/useCategorias';
 
 
 //Si usamos redux esto ya estaria en el store
-const Categorias = categoriasAPI.map(categoria => {
-  return {
-    title: categoria.title,
-    identifier: categoria.identifier,
-    cantidad: categoria.cantidad,
-    img: categoria.img,
-    description: categoria.description,
-  };
-});
+// const Categorias = categoriasAPI.map(categoria => {
+//   return {
+//     title: categoria.title,
+//     identifier: categoria.identifier,
+//     cantidad: categoria.cantidad,
+//     img: categoria.img,
+//     description: categoria.description,
+//   };
+// });
 
 //Preguntar si meter esto en redux para hacer menos llamadas a la api
 const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
@@ -51,6 +52,8 @@ const heroPublicaciones = {
 export const SectionMicroemprendmientos = () => {
   const [categoryURL, setCategoryURL] = useState('');
   // const Categorias = useSelector(state => state.category.lista);
+
+  const categorias = useCategorias();
 
   const { categoryUrl } = useParams();
   const location = useLocation();
@@ -128,7 +131,7 @@ export const SectionMicroemprendmientos = () => {
         {location.pathname === '/microemprendimientos/categorias' ||
         categoryURL === '' ? (
           <>
-            <MapCategorias categorias={Categorias} />
+            <MapCategorias categorias={categorias} />
           </>
         ) : (
           <Box

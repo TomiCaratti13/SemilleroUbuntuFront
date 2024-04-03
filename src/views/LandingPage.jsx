@@ -7,17 +7,7 @@ import { MapPublicaciones } from '../components/MapPublicaciones';
 import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
 import { usePublicaciones } from '../utils/hooks/usePublicaciones';
-
-//Preguntar si meter esto en redux para hacer menos llamadas a la api
-const Categorias = categoriasAPI.map(categoria => {
-  return {
-    title: categoria.title,
-    identifier: categoria.identifier,
-    cantidad: categoria.cantidad,
-    img: categoria.img,
-    description: categoria.description,
-  };
-});
+import { useCategorias } from '../utils/hooks/useCategorias';
 
 const heroLanding = {
   category: 'FINANCIAMIENTO SOSTENIBLE',
@@ -37,6 +27,9 @@ export const LandingPage = () => {
 
   //Llamar a publicaciones
   const publicaciones = usePublicaciones();
+
+  //Llamar a Categorias
+  const categorias = useCategorias();
 
   return (
     <Box
@@ -78,7 +71,7 @@ export const LandingPage = () => {
           }}>
           Categorias
         </Typography>
-        <MapCategorias categorias={Categorias} />
+        <MapCategorias categorias={categorias} />
         <ButtonBlue
           text="Ver más Categorias"
           link="/microemprendimientos/categorias"

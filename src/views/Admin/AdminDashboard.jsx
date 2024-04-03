@@ -1,14 +1,8 @@
-import { useEffect } from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AdminDashboardInfo from '../../utils/mocks/AdminDashboard.json';
 import CategoriasInfo from '../../utils/mocks/Categorias.json';
 import PublicacionesInfo from '../../utils/mocks/Publicaciones.json';
-// import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
-import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../../utils/redux/userSlice';
-import { useParams } from 'react-router-dom';
 
 //Para cargar a redux
 const AdminInfo = AdminDashboardInfo;
@@ -16,27 +10,6 @@ const Categorias = CategoriasInfo;
 const Publicaciones = PublicacionesInfo;
 
 export const AdminDashboard = () => {
-  // const getCookie = () => {
-  //   const token = Cookies.get('token');
-  //   const decodedToken = jwtDecode(token);
-  //   dispatch(addUser(decodedToken))
-  // }
-  // useEffect(()=>{
-  //   getCookie();
-  // }, []);
-
-  // const dispatch = useDispatch();
-  // const user = useSelector(state => state.user);
-  // const getParams = () => {
-  //   const { token } = useParams();
-  //   const decodedToken = jwtDecode(token);
-  //   dispatch(addUser(decodedToken));
-  // };
-
-  // useEffect(() => {
-  //   getParams();
-  // }, [user]);
-
   return (
     <Container
       sx={{
