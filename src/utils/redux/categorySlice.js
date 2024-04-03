@@ -3,18 +3,22 @@ import { createSlice } from '@reduxjs/toolkit';
 export const categorySlice = createSlice({
   name: 'category',
   initialState: {
-    lista: [],
+    categoryLista: [],
   },
   reducers: {
     addCategory: (state, action) => {
-      const { title, identifier, cantidad, img, description } = action.payload;
-      state.lista.push({
-        title: title,
-        identifier: identifier,
-        // cantidad: cantidad,
-        img: img,
-        // description: description,
-      });
+      const { title, identifier, img, id } = action.payload;
+      const existe = state.categoryLista.find(
+        c => c.id === action.payload.id
+      );
+      if (existe) {
+        state.categoryLista.push({
+          id:id,
+          title: title,
+          identifier: identifier,
+          img: img,
+        });
+      }
     },
   },
 });

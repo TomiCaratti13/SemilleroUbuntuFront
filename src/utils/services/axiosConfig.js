@@ -9,14 +9,41 @@ const URL_SERVIDOR = axios.create({
 // Función para obtener las categorías
 export const getCategorias = async () => {
   try {
-    const response = await URL_SERVIDOR.get('/rubro/listarRubros');
-    console.log(response.data);
-    return response.data;
+    return URL_SERVIDOR.get(`/rubro/listarRubros`,
+    {
+      withCredentials: true,
+    })
+      .then(response => {
+        console.log('Respuesta del servidor', response);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
   } catch (error) {
-    console.error('Error al obtener las categorías:', error);
-    throw error;
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
+// export const getCategorias = async () => {
+//   try {
+//     const response = await URL_SERVIDOR.get('/rubro/listarRubros');
+//     console.log(response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error al obtener las categorías:', error);
+//     throw error;
+//   }
+// };
 
 // Función para obtener las publicaciones
 export const getPublicaciones = async () => {

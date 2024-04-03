@@ -8,13 +8,15 @@ import { jwtDecode } from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../utils/redux/userSlice';
 import { useParams } from 'react-router-dom';
+import { useAdminDashboard } from '../../utils/hooks/useAdminDashboard';
 
 //Para cargar a redux
-const AdminInfo = AdminDashboardInfo;
+// const AdminInfo = AdminDashboardInfo;
 const Categorias = CategoriasInfo;
 const Publicaciones = PublicacionesInfo;
 
 export const AdminDashboard = () => {
+  const AdminInfo = useAdminDashboard();
   // const getCookie = () => {
   //   const token = Cookies.get('token');
   //   const decodedToken = jwtDecode(token);

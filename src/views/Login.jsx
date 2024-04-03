@@ -20,7 +20,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const redirectGoogle = () => {
-    dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
+    dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', isAdmin: true }));
     navigate(`/Admin`);
   };
 
@@ -92,8 +92,8 @@ export default function Login() {
             pb: '32px',
           }}>
           <LoginButton
-            // onClick={redirectGoogle}
-            onClick={linkToAdmin}
+            onClick={redirectGoogle}
+            // onClick={linkToAdmin}
             name="Continuá con Google"
             avatar={avatarGoogle}
           />

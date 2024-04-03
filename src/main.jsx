@@ -55,7 +55,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 element={<SectionBuscarMicroemprendimiento />}
               />
               <Route
-                path="Admin/:token"
+                path="Admin"
                 element={<AdminDashboard />}
               />
               <Route

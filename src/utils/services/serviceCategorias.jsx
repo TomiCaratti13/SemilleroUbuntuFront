@@ -3,24 +3,23 @@ import { store } from "../redux/store";
 import { getCategorias } from "./axiosConfig";
 
 export const serviceCategorias = async () => {
-  const CategoriasStorage = store.getState().category.lista;
-  console.log(CategoriasStorage)
+  const CategoriasStorage = store.getState().category.categoryLista;
+  console.log("serviceCategorias",CategoriasStorage)
 
   if (CategoriasStorage.length === 0) {
     //Llamar a Categorias
     const CategoriasAPI = await getCategorias();
     const CategoriasRedux = CategoriasAPI?.map(categoria => {
+      console.log("CategoriasAPI",categoria)
       return {
-        title: categoria.title,
+        title: categoria.nombre,
         identifier: categoria.identifier,
-        // cantidad: categoria.cantidad,
+        id: categoria.id,
         img: categoria.img,
-        // description: categoria.description,
       };
-
     });
 
-    //Guardar Categorias en el estado de redux
+    // Guardar Categorias en el estado de redux
     CategoriasRedux.forEach(categoria => {
       store.dispatch(addCategory(categoria));
     });
