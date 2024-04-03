@@ -125,7 +125,7 @@ export const DetalleContacto = ({ contacto }) => {
             />
             {contacto.gestionado ? 'Gestionada' : 'No gestionada'}
           </Typography>
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+          {contacto.gestionado ? null : <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
             <FormControl
               sx={{
                 width: '200px',
@@ -162,7 +162,7 @@ export const DetalleContacto = ({ contacto }) => {
                 </MenuItem>
               </Select>
             </FormControl>
-          </Box>
+          </Box>}
           <Typography
             sx={{
               fontSize: '22px',

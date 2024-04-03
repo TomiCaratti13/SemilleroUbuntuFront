@@ -27,6 +27,7 @@ export const AdminContactos = () => {
 
   //Esto necesita el evento no borrar
   const handleChange = (event, newValue) => {
+    setSelectedContacto(null);
     if (newValue === '1') {
       setContactos(solContactos.filter(contacto => contacto.gestionado === true));
     } else if (newValue === '2') {
