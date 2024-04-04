@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Card,
   CardContent,
   CardActions,
   Collapse,
   Button,
+  Box,
   Typography,
+  Popper,
+  Fade,
 } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { styled } from '@mui/material/styles';
 import { SliderSwipper } from './SliderSwipper';
 import { agregarVisualizacion } from '../utils/services/axiosConfig';
@@ -21,8 +25,14 @@ const ExpandMoreInfo = styled(props => {
   }),
 }));
 
-export default function CardPublicacion({ publicacion }) {
+export default function CardPublicacion({
+  publicacion,
+  setEditar,
+  isActive,
+  handlePopper,
+}) {
   const [expanded, setExpanded] = useState(false);
+  const [placement, setPlacement] = useState();
 
   //hasSee es para saber si ya se vio la publicacion y no agregar de nuevo
   const [hasSee, setHasSee] = useState(false);
@@ -32,15 +42,44 @@ export default function CardPublicacion({ publicacion }) {
 
   const descriptionSplit = publicacion.description.split('  ');
 
+  //Popper
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = newPlacement => event => {
+    setAnchorEl(event.currentTarget);
+    setOpen(previousOpen => !previousOpen);
+    setPlacement(newPlacement);
+
+    handlePopper(publicacion.id);
+  };
+  const canBeOpen = isActive && Boolean(anchorEl);
+  const id = canBeOpen ? 'transition-popper' : undefined;
+
+  ////Cerrar el popper si se hace clic fuera de él
+  const popperRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popperRef.current && !popperRef.current.contains(event.target)) {
+        setOpen(false); // Cierra el Popper si se hace clic fuera de él
+      }
+    }
+    // Agrega el evento de escucha al montar el componente
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Elimina el evento de escucha al desmontar el componente
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [popperRef]);
+
   return (
     <Card
-      onClick={() => {
-        if (!hasSee) {
-          console.log('Agregando visualizacion', publicacion.id);
-          agregarVisualizacion(publicacion.id);
-          setHasSee(true);
-        }
-      }}
+      // onClick={() => {
+      //   if (!hasSee) {
+      //     console.log('Agregando visualizacion', publicacion.id);
+      //     agregarVisualizacion(publicacion.id);
+      //     setHasSee(true);
+      //   }
+      // }}
       sx={{
         bgcolor: 'gris.claro',
         borderRadius: 4,
@@ -49,19 +88,102 @@ export default function CardPublicacion({ publicacion }) {
         width: '100%',
         maxWidth: '500px',
       }}>
-      <Typography
+      <Box
         sx={{
-          fontSize: '17px',
-          fontFamily: 'Lato',
-          fontWeight: 600,
-          lineHeight: '25px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           width: '100%',
-          textAlign: 'left',
-          marginBottom: '16px',
-          marginLeft: '16px',
+          height: '100%',
         }}>
-        {publicacion.title}
-      </Typography>
+        <Typography
+          sx={{
+            fontSize: '17px',
+            fontFamily: 'Lato',
+            fontWeight: 600,
+            lineHeight: '25px',
+            width: '100%',
+            textAlign: 'left',
+            marginBottom: '16px',
+            marginLeft: '16px',
+          }}>
+          {publicacion.title}
+        </Typography>
+        <MoreVertIcon
+          onClick={handleClick('bottom-end')}
+          aria-describedby={id}
+          sx={{
+            cursor: 'pointer',
+            width: '30px',
+            height: '30px',
+            borderRadius: '50%',
+            marginBottom: '16px',
+            marginRight: '16px',
+            '&:hover': {
+              bgcolor: 'azul.main',
+              color: '#fff',
+            },
+          }}
+        />
+        <Popper
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          placement={placement}
+          ref={popperRef}
+          sx={{
+            zIndex: 1000,
+          }}
+          transition>
+          {({ TransitionProps }) => (
+            <Fade
+              {...TransitionProps}
+              timeout={350}>
+              <Box
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  p: '0',
+                  m: '0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}>
+                <Button
+                  sx={{
+                    backgroundColor: 'blanco.main',
+                    opacity: 1,
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    lineHeight: '25px',
+                    textTransform: 'none',
+                    color: 'negro.main',
+                    width: '200px',
+                    '&:hover': {
+                      bgcolor: 'gris.claro',
+                    },
+                  }}>
+                  Editar
+                </Button>
+                <Button
+                  sx={{
+                    bgcolor: 'blanco.main',
+                    opacity: 1,
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    lineHeight: '25px',
+                    textTransform: 'none',
+                    color: 'negro.main',
+                    '&:hover': {
+                      bgcolor: 'gris.claro',
+                    },
+                  }}>
+                  Ocultar
+                </Button>
+              </Box>
+            </Fade>
+          )}
+        </Popper>
+      </Box>
       <SliderSwipper
         imgs={[publicacion.img0, publicacion.img1, publicacion.img2]}
       />

@@ -12,18 +12,18 @@ import { getPublicaciones } from '../utils/services/axiosConfig';
 import { addCategory } from '../utils/redux/categorySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCategorias } from '../utils/hooks/useCategorias';
-
+import { useNavigate } from 'react-router-dom';
 
 //Si usamos redux esto ya estaria en el store
-// const Categorias = categoriasAPI.map(categoria => {
-//   return {
-//     title: categoria.title,
-//     identifier: categoria.identifier,
-//     cantidad: categoria.cantidad,
-//     img: categoria.img,
-//     description: categoria.description,
-//   };
-// });
+const categorias = categoriasAPI.map(categoria => {
+  return {
+    title: categoria.title,
+    identifier: categoria.identifier,
+    cantidad: categoria.cantidad,
+    img: categoria.img,
+    description: categoria.description,
+  };
+});
 
 //Preguntar si meter esto en redux para hacer menos llamadas a la api
 const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
@@ -38,7 +38,7 @@ const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
     description: microemprendimiento.description,
     moreinfo: microemprendimiento.moreinfo,
     id: microemprendimiento.id,
-  }
+  };
 });
 
 const heroPublicaciones = {
@@ -53,7 +53,7 @@ export const SectionMicroemprendmientos = () => {
   const [categoryURL, setCategoryURL] = useState('');
   // const Categorias = useSelector(state => state.category.lista);
 
-  const categorias = useCategorias();
+  // const categorias = useCategorias();
 
   const { categoryUrl } = useParams();
   const location = useLocation();
@@ -79,12 +79,14 @@ export const SectionMicroemprendmientos = () => {
   useEffect(() => {
     setCategoryURL('');
     if (categoryUrl !== 'categorias') {
-      const category = Categorias.filter(
+      const category = categorias.filter(
         categoria => categoria.identifier === categoryUrl
       )[0];
       setCategoryURL({ ...category });
     }
   }, [categoryUrl, location.pathname]);
+
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -115,7 +117,7 @@ export const SectionMicroemprendmientos = () => {
         <Typography
           onClick={() => {
             setCategoryURL('');
-            window.location.href = '/microemprendimientos/categorias';
+            navigate('/microemprendimientos/categorias');
           }}
           variant="h4"
           sx={{

@@ -1,7 +1,7 @@
 import { Avatar, Button, Popper, Fade } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../utils/redux/userSlice';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function PerfilAdmin() {
@@ -41,6 +41,22 @@ export default function PerfilAdmin() {
   const canBeOpen = open && Boolean(anchorEl);
   const id = canBeOpen ? 'transition-popper' : undefined;
 
+  ////Cerrar el popper si se hace clic fuera de él
+  const popperRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popperRef.current && !popperRef.current.contains(event.target)) {
+        setOpen(false); // Cierra el Popper si se hace clic fuera de él
+      }
+    }
+    // Agrega el evento de escucha al montar el componente
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Elimina el evento de escucha al desmontar el componente
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [popperRef]);
+
   //Cerrar sesión
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,6 +84,10 @@ export default function PerfilAdmin() {
         id={id}
         open={open}
         anchorEl={anchorEl}
+        ref={popperRef}
+        sx={{
+          zIndex: 1000,
+        }}
         transition>
         {({ TransitionProps }) => (
           <Fade

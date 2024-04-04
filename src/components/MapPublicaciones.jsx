@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import CardPublicaciones from './CardPublicacion';
 import { Container } from '@mui/material';
 
-export const MapPublicaciones = ({ publicaciones, cantidad }) => {
+export const MapPublicaciones = ({ publicaciones, cantidad, setEditar }) => {
   const publicacionesMutable = [...publicaciones];
+  const [activePopperId, setActivePopperId] = useState(null);
 
+  const handlePopper = id => {
+    setActivePopperId(activePopperId === id ? null : id);
+  };
   return (
     <Container
       component="section"
@@ -22,10 +27,13 @@ export const MapPublicaciones = ({ publicaciones, cantidad }) => {
           return dateB - dateA;
         })
         ?.slice(0, cantidad)
-        ?.map((publicacion, index) => (
+        ?.map(publicacion => (
           <CardPublicaciones
-            key={index}
+            key={publicacion.id}
             publicacion={publicacion}
+            setEditar={setEditar}
+            handlePopper={handlePopper}
+            isActive={activePopperId === publicacion.id}
           />
         ))}
     </Container>
