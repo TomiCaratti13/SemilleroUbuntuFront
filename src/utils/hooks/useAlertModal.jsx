@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const useAlertModal = onSubmit => {
+  const navigate = useNavigate();
   const [alertModal, setAlertModal] = useState({
     open: false,
     icon: true,
@@ -17,11 +19,12 @@ export const useAlertModal = onSubmit => {
     });
   };
 
-  const closeAlert = () => {
+  const closeAlert = (returnTo = '') => {
     setAlertModal(prevState => ({
       ...prevState,
       open: false,
     }));
+    navigate(returnTo);
   };
 
   const resendAlert = () => {

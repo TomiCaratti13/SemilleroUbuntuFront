@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 export const publicacionSlice = createSlice({
   name: 'publicacion',
   initialState: {
-    lista: [],
+    Publicacionlista: [],
   },
   reducers: {
     addPublicacion: (state, action) => {
       const { id, title, description, date, visualizaciones } = action.payload;
-      const existe = state.lista.find(p => p.id === action.payload.id);
+      const existe = state.Publicacionlista.find(p => p.id === action.payload.id);
       if (!existe) {
-        state.lista.push({
+        state.Publicacionlista.push({
           id: id,
           title: title,
           description: description,

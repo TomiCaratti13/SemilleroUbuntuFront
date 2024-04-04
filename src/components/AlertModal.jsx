@@ -2,7 +2,14 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Box, Button, Modal, Typography } from '@mui/material';
 
-export const AlertModal = ({ alert, closeAlert, resendAlert }) => {
+export const AlertModal = ({
+  alert,
+  closeAlert,
+  resendAlert,
+  returnTo,
+  setSelectedContacto,
+  setValue,
+}) => {
   return (
     <div>
       <Modal
@@ -55,16 +62,18 @@ export const AlertModal = ({ alert, closeAlert, resendAlert }) => {
             }}>
             {alert.title}
           </Typography>
-          <Typography
-            sx={{
-              fontSize: '14px',
-              lineHeight: '20px',
-              fontWeight: 400,
-              color: 'negro.main',
-              textAlign: 'start',
-            }}>
-            {alert.info}
-          </Typography>
+          {alert.info && (
+            <Typography
+              sx={{
+                fontSize: '14px',
+                lineHeight: '20px',
+                fontWeight: 400,
+                color: 'negro.main',
+                textAlign: 'start',
+              }}>
+              {alert.info}
+            </Typography>
+          )}
           <Box
             sx={{
               display: 'flex',
@@ -84,7 +93,11 @@ export const AlertModal = ({ alert, closeAlert, resendAlert }) => {
                   bgcolor: 'gris.medio',
                 },
               }}
-              onClick={closeAlert}>
+              onClick={() => {
+                setSelectedContacto(null);
+                setValue('1');
+                closeAlert(returnTo);
+              }}>
               {alert.icon ? 'Aceptar' : 'Cancelar'}
             </Button>
             {!alert.icon ? (

@@ -58,6 +58,11 @@ export default function PerfilAdmin() {
           : { alt: user.nombre, src: user.foto })}
         onClick={handleClick}
         aria-describedby={id}
+        sx={{
+          cursor: 'pointer',
+          width: '40px',
+          height: '40px',
+        }}
       />
       <Popper
         id={id}

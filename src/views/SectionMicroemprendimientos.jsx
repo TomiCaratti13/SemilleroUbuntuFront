@@ -6,7 +6,7 @@ import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
 import categoriasAPI from '../utils/mocks/Categorias';
 import microemprendmietosAPI from '../utils/mocks/Microemprendimientos';
 import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getCategorias } from '../utils/services/axiosConfig';
 import { getPublicaciones } from '../utils/services/axiosConfig';
 import { addCategory } from '../utils/redux/categorySlice';
@@ -15,15 +15,15 @@ import { useCategorias } from '../utils/hooks/useCategorias';
 
 
 //Si usamos redux esto ya estaria en el store
-// const Categorias = categoriasAPI.map(categoria => {
-//   return {
-//     title: categoria.title,
-//     identifier: categoria.identifier,
-//     cantidad: categoria.cantidad,
-//     img: categoria.img,
-//     description: categoria.description,
-//   };
-// });
+const categorias = categoriasAPI.map(categoria => {
+  return {
+    title: categoria.title,
+    identifier: categoria.identifier,
+    cantidad: categoria.cantidad,
+    img: categoria.img,
+    description: categoria.description,
+  };
+});
 
 //Preguntar si meter esto en redux para hacer menos llamadas a la api
 const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
@@ -50,36 +50,19 @@ const heroPublicaciones = {
 };
 
 export const SectionMicroemprendmientos = () => {
+  
+  // const categorias = useCategorias();
   const [categoryURL, setCategoryURL] = useState('');
-  // const Categorias = useSelector(state => state.category.lista);
-
-  const categorias = useCategorias();
-
   const { categoryUrl } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   //async
-  //   const categoriasAPI = getCategorias();
-  //   const categoriasRedux = categoriasAPI?.map(categoria => {
-  //     return {
-  //       title: categoria.title,
-  //       identifier: categoria.identifier,
-  //       cantidad: categoria.cantidad,
-  //       img: categoria.img,
-  //       description: categoria.description,
-  //     };
-  //   })
-  //   dispatch(addCategory(categoriasRedux));
-  //   getPublicaciones();
-  // },[])
 
   //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryURL
   useEffect(() => {
     setCategoryURL('');
     if (categoryUrl !== 'categorias') {
-      const category = Categorias.filter(
+      const category = categorias.filter(
         categoria => categoria.identifier === categoryUrl
       )[0];
       setCategoryURL({ ...category });
@@ -115,7 +98,7 @@ export const SectionMicroemprendmientos = () => {
         <Typography
           onClick={() => {
             setCategoryURL('');
-            window.location.href = '/microemprendimientos/categorias';
+            navigate('/microemprendimientos/categorias');
           }}
           variant="h4"
           sx={{

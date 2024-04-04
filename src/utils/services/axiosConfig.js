@@ -9,8 +9,10 @@ const URL_SERVIDOR = axios.create({
 // Función para obtener las categorías
 export const getCategorias = async () => {
   try {
-    const response = await URL_SERVIDOR.get('/rubro/listarRubros');
-    console.log(response.data);
+    const response = await URL_SERVIDOR.get('/rubro/listarRubros',
+    {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error('Error al obtener las categorías:', error);
@@ -43,11 +45,26 @@ export const agregarVisualizacion = async id => {
 // Función para obtener los microemprendimientos
 export const getMicroemprendimientos = async () => {
   try {
-    const response = await URL_SERVIDOR.get('/microEmprendimiento/listar');
-    return response.data;
+    return URL_SERVIDOR.get(`/microEmprendimiento/listar`)
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
   } catch (error) {
-    console.error('Error al obtener los microemprendimientos:', error);
-    throw error;
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 
@@ -81,10 +98,9 @@ export const buscarMicroemprendimientos = async nombre => {
 // Función para enviar un formulario
 export const enviarFormulario = async (formulario, id) => {
   try {
-    return URL_SERVIDOR
-      .post(`/contacto/${id}`, formulario, {
-        withCredentials: true,
-      })
+    return URL_SERVIDOR.post(`/contacto/${id}`, formulario, {
+      withCredentials: true,
+    })
       .then(response => {
         console.log('Respuesta del servidor', response);
         return response;
@@ -103,9 +119,121 @@ export const enviarFormulario = async (formulario, id) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error(
-      'Error al buscar microemprendimientos en componente:',
-      error
-    );
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+// Función para traer todos los contactos
+export const getContactos = async () => {
+  try {
+    return URL_SERVIDOR.get(`/contacto/all`, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+// Función para editar un formulario
+export const putFormulario = async (formulario, id) => {
+  try {
+    return URL_SERVIDOR.put(`/contacto/gestionar/${id}`, formulario, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+// Funcion para traer microemprendmientos por categoria
+export const getMicroCategoria = async () => {
+  try {
+    return URL_SERVIDOR.get(`microEmprendimiento/cantidades_por_rubro`, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+//Funcion para traer visualizaciones de las publicaciones del MES
+export const getPublisMes = async () => {
+  try {
+    return URL_SERVIDOR.get(
+      `/publicacion/visualizaciones_publicaciones_total`,
+      {
+        withCredentials: true,
+      }
+    )
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
