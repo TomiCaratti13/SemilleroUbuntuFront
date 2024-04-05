@@ -15,8 +15,6 @@ export const userSlice = createSlice({
       state.nombre = nombre;
       state.foto = foto;
       state.isAdmin = isAdmin;
-
-      console.log('state', state.nombre , state.foto, state.isAdmin)
     }
   }
 });
