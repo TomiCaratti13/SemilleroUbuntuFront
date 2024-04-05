@@ -3,23 +3,32 @@ import { store } from "../redux/store";
 import { getCategorias } from "./axiosConfig";
 
 export const serviceCategorias = async () => {
-  const CategoriasStorage = store.getState().category.categoryLista;
-  console.log("serviceCategorias",CategoriasStorage)
+  const CategoriasStorage = store.getState().category.Categorylista;
+
+  const limpiarNombreCategoria = (nombre) => {
+    const nombreLimpio = nombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const primeraPalabra = nombreLimpio.split(' ')[0];
+    const primeraPalabraMinuscula = primeraPalabra.toLowerCase();
+    const primeraPalabraSinÑ = primeraPalabraMinuscula.replace(/ñ/g, 'n');
+    return primeraPalabraSinÑ;
+  };
 
   if (CategoriasStorage.length === 0) {
     //Llamar a Categorias
     const CategoriasAPI = await getCategorias();
+    console.log(CategoriasAPI);
+
     const CategoriasRedux = CategoriasAPI?.map(categoria => {
-      console.log("CategoriasAPI",categoria)
+      const identifier = limpiarNombreCategoria(categoria.nombre);
       return {
-        title: categoria.nombre,
-        identifier: categoria.identifier,
         id: categoria.id,
+        title: categoria.nombre,
+        identifier: identifier,
+        // cantidad: categoria.cantidad,
         img: categoria.img,
       };
     });
 
-    // Guardar Categorias en el estado de redux
     CategoriasRedux.forEach(categoria => {
       store.dispatch(addCategory(categoria));
     });
@@ -29,3 +38,5 @@ export const serviceCategorias = async () => {
     return CategoriasStorage;
   }
 };
+
+

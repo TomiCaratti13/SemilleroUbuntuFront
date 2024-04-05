@@ -10,19 +10,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../utils/redux/userSlice';
 
 export default function Login() {
-  const user = useSelector(state => state.user);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const linkToAdmin = () => {
     window.location.href = GOOGLE_AUTH;
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const redirectGoogle = () => {
-    dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', isAdmin: true }));
-    navigate(`/Admin`);
-  };
+  // const redirectGoogle = () => {
+  //   dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
+  //   navigate(`/Admin`);
+  // };
 
   return (
     <Box
@@ -92,8 +91,8 @@ export default function Login() {
             pb: '32px',
           }}>
           <LoginButton
-            onClick={redirectGoogle}
-            // onClick={linkToAdmin}
+            // onClick={redirectGoogle}
+            onClick={linkToAdmin}
             name="Continuá con Google"
             avatar={avatarGoogle}
           />

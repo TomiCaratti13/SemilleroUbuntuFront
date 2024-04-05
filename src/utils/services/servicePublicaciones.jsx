@@ -3,7 +3,7 @@ import { store } from '../redux/store';
 import { getPublicaciones } from './axiosConfig';
 
 export const servicePublicaciones = async () => {
-  const publicacionesStorage = store.getState().publicacion.publicacionLista;
+  const publicacionesStorage = store.getState().publicacion.Publicacionlista;
 
   if (publicacionesStorage.length === 0) {
     //Llamar a publicaciones

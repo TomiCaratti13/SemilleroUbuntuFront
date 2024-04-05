@@ -6,7 +6,7 @@ import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
 import categoriasAPI from '../utils/mocks/Categorias';
 import microemprendmietosAPI from '../utils/mocks/Microemprendimientos';
 import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getCategorias } from '../utils/services/axiosConfig';
 import { getPublicaciones } from '../utils/services/axiosConfig';
 import { addCategory } from '../utils/redux/categorySlice';
@@ -50,30 +50,13 @@ const heroPublicaciones = {
 };
 
 export const SectionMicroemprendmientos = () => {
-  const [categoryURL, setCategoryURL] = useState('');
-  // const Categorias = useSelector(state => state.category.lista);
-
+  
   // const categorias = useCategorias();
-
+  const [categoryURL, setCategoryURL] = useState('');
   const { categoryUrl } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   //async
-  //   const categoriasAPI = getCategorias();
-  //   const categoriasRedux = categoriasAPI?.map(categoria => {
-  //     return {
-  //       title: categoria.title,
-  //       identifier: categoria.identifier,
-  //       cantidad: categoria.cantidad,
-  //       img: categoria.img,
-  //       description: categoria.description,
-  //     };
-  //   })
-  //   dispatch(addCategory(categoriasRedux));
-  //   getPublicaciones();
-  // },[])
 
   //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryURL
   useEffect(() => {

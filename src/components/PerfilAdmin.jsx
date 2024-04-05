@@ -2,7 +2,7 @@ import { Avatar, Button, Popper, Fade } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../utils/redux/userSlice';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function PerfilAdmin() {
   const user = useSelector(state => state.user);
@@ -22,12 +22,30 @@ export default function PerfilAdmin() {
     return color;
   };
 
+  // const stringAvatar = name => {
+
+  //   return {
+  //     sx: {
+  //       bgcolor: stringToColor(name),
+  //     },
+  //     children: name.length > 1 ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : name[0],
+  //   };
+  // };
+
   const stringAvatar = name => {
+    let names = name.split(' ');
+    let initials = names[0][0];
+
+    if (names.length > 1) {
+      initials += names[1][0];
+    }
+
     return {
       sx: {
         bgcolor: stringToColor(name),
       },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+
+      children: initials,
     };
   };
 
@@ -58,20 +76,36 @@ export default function PerfilAdmin() {
   }, [popperRef]);
 
   //Cerrar sesión
+
+  function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const closeSesion = () => {
+    deleteAllCookies();
+    localStorage.removeItem('google_access_token');
     dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
     localStorage.clear();
-    navigate(`/`);
+    window.location.href=`http://localhost:8080/logout`;
   };
+
 
   return (
     <div>
       <Avatar
-        {...(user.foto === ''
+        {...(localStorage.getItem('foto') === ''
           ? stringAvatar(user.nombre)
-          : { alt: user.nombre, src: user.foto })}
+          : { alt: user.nombre, src: localStorage.getItem('foto') })}
         onClick={handleClick}
         aria-describedby={id}
         sx={{
@@ -107,8 +141,7 @@ export default function PerfilAdmin() {
                 '&:hover': {
                   bgcolor: 'gris.claro',
                 },
-              }}
-              onClick={closeSesion}>
+              }} onClick={closeSesion}>
               Cerrar sesión
             </Button>
           </Fade>

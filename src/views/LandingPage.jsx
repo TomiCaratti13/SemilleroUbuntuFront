@@ -29,7 +29,7 @@ export const LandingPage = () => {
   const publicaciones = usePublicaciones();
 
   //Llamar a Categorias
-  const categorias = useCategorias();
+  const Categorias = useCategorias();
 
   return (
     <Box
@@ -71,7 +71,7 @@ export const LandingPage = () => {
           }}>
           Categorias
         </Typography>
-        <MapCategorias categorias={categorias} />
+        <MapCategorias categorias={Categorias} />
         <ButtonBlue
           text="Ver más Categorias"
           link="/microemprendimientos/categorias"

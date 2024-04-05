@@ -3,6 +3,7 @@ export const HEADER_HEIGHT = '60px';
 
 // URL backend google login
 export const GOOGLE_AUTH = 'http://localhost:8080/oauth2/authorize/google'
+export const GOOGLE_LOGOUT = 'http://localhost:8080/logout'
 
 // URL del backend local
 export const LOCAL_URL = 'http://localhost:8080';
