@@ -3,23 +3,23 @@ import { store } from '../redux/store';
 import { getMicroemprendimientos } from './axiosConfig';
 
 export const serviceMicro = async () => {
-  const microStorage = store.getState().microemprendimiento.Microlista;
+  const microStorage = store.getState().microemprendimiento.microLista;
 
   if (microStorage.length === 0) {
 
     const microAPI = await getMicroemprendimientos();
     const microRedux = microAPI?.map(microemprendimiento => {
       return {
-        title: microemprendimiento.title,
-        category: microemprendimiento.category,
-        subcategory: microemprendimiento.subcategory,
-        ubication: microemprendimiento.ubication,
-        img0: microemprendimiento.img0,
-        img1: microemprendimiento.img1,
-        img2: microemprendimiento.img2,
-        description: microemprendimiento.description,
-        moreinfo: microemprendimiento.moreinfo,
         id: microemprendimiento.id,
+        title: microemprendimiento.nombre,
+        description: microemprendimiento.descripcion,
+        moreinfo: microemprendimiento.masInformacion,
+        category: microemprendimiento.rubro,
+        subcategory: microemprendimiento.subRubro,
+        ubication: + microemprendimiento.ciudad + microemprendimiento.provincia + microemprendimiento.pais,
+        // img0: microemprendimiento.img0,
+        // img1: microemprendimiento.img1,
+        // img2: microemprendimiento.img2,
       };
     });
 

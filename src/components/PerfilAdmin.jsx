@@ -1,7 +1,7 @@
 import { Avatar, Button, Popper, Fade } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../utils/redux/userSlice';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 export default function PerfilAdmin() {
@@ -22,16 +22,6 @@ export default function PerfilAdmin() {
     return color;
   };
 
-  // const stringAvatar = name => {
-
-  //   return {
-  //     sx: {
-  //       bgcolor: stringToColor(name),
-  //     },
-  //     children: name.length > 1 ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : name[0],
-  //   };
-  // };
-
   const stringAvatar = name => {
     let names = name.split(' ');
     let initials = names[0][0];
@@ -44,8 +34,7 @@ export default function PerfilAdmin() {
       sx: {
         bgcolor: stringToColor(name),
       },
-
-      children: initials,
+      children: `${initials}`,
     };
   };
 
@@ -59,37 +48,50 @@ export default function PerfilAdmin() {
   const canBeOpen = open && Boolean(anchorEl);
   const id = canBeOpen ? 'transition-popper' : undefined;
 
+  ////Cerrar el popper si se hace clic fuera de él
+  const popperRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popperRef.current && !popperRef.current.contains(event.target)) {
+        setOpen(false); // Cierra el Popper si se hace clic fuera de él
+      }
+    }
+    // Agrega el evento de escucha al montar el componente
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Elimina el evento de escucha al desmontar el componente
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [popperRef]);
+
   //Cerrar sesión
 
   function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
-
+    var cookies = document.cookie.split(';');
     for (var i = 0; i < cookies.length; i++) {
       var cookie = cookies[i];
-      var eqPos = cookie.indexOf("=");
+      var eqPos = cookie.indexOf('=');
       var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
     }
   }
-
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const closeSesion = () => {
     deleteAllCookies();
-    localStorage.removeItem('google_access_token');
     dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
     localStorage.clear();
-    window.location.href=`http://localhost:8080/logout`;
+    window.location.href = `http://localhost:8080/logout`;
   };
-
 
   return (
     <div>
       <Avatar
-        {...(localStorage.getItem('foto') === ''
+        {...(!user.foto
           ? stringAvatar(user.nombre)
-          : { alt: user.nombre, src: localStorage.getItem('foto') })}
+          : { alt: user.nombre, src: user.foto })}
+        alt={user.nombre}
         onClick={handleClick}
         aria-describedby={id}
         sx={{
@@ -102,6 +104,10 @@ export default function PerfilAdmin() {
         id={id}
         open={open}
         anchorEl={anchorEl}
+        ref={popperRef}
+        sx={{
+          zIndex: 1000,
+        }}
         transition>
         {({ TransitionProps }) => (
           <Fade
@@ -121,7 +127,8 @@ export default function PerfilAdmin() {
                 '&:hover': {
                   bgcolor: 'gris.claro',
                 },
-              }} onClick={closeSesion}>
+              }}
+              onClick={closeSesion}>
               Cerrar sesión
             </Button>
           </Fade>

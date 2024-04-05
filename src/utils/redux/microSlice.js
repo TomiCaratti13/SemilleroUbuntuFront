@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const microSlice = createSlice({
   name: 'microemprendimiento',
   initialState: {
-    Microlista: [],
+    microLista: [],
   },
   reducers: {
     addMicro: (state, action) => {

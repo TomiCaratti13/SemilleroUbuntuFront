@@ -32,7 +32,6 @@ export const FormContact = ({ idMic }) => {
 
         enviarFormulario(formEnviar, idMic)
           .then(response => {
-            console.log('RESPUESTA COMPONENETE', response);
             //MANEJO DE ALERTAS
             if (response && response.status === 200) {
               openAlert(

@@ -21,7 +21,7 @@ const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
     description: microemprendimiento.description,
     moreinfo: microemprendimiento.moreinfo,
     id: microemprendimiento.id,
-  }
+  };
 });
 
 const heroPublicaciones = {
@@ -51,6 +51,7 @@ export const SectionMicroemprendmientos = () => {
       setCategoryURL({ ...category });
     }
   }, [categoryUrl, location.pathname]);
+
 
   return (
     <Box
