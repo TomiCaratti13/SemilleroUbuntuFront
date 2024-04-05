@@ -27,6 +27,7 @@ function Header(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const user = useSelector(state => state.user);
+  console.log(user);
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
@@ -120,7 +121,7 @@ function Header(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  return user.nombre !== '' && location.pathname.includes('/Admin') ? (
+  return localStorage.getItem('isAdmin') !== true && location.pathname.includes('/Admin') ? (
     <AdminHeader />
   ) : (
     <Box sx={{ display: 'flex', position: 'relative' }}>

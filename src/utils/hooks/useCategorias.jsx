@@ -6,7 +6,6 @@ export const useCategorias = () => {
 
   useEffect(() => {
     serviceCategorias().then(categorias => {
-      console.log(categorias)
       setCategorias(categorias);
     });
   }, []);

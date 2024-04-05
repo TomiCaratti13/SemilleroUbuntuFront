@@ -139,7 +139,7 @@ function AdminHeader(props) {
             {mobileOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
           <Link
-            to="/Admin"
+            // to="/Admin/:token"
             style={{
               display: 'flex',
               justifyContent: 'center',

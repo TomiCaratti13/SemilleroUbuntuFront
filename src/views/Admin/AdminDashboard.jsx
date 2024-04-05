@@ -32,12 +32,12 @@ export const AdminDashboard = () => {
   });
   //traerCosas
   
-  const { token } = useParams();
-
+  // const { token } = useParams();
+  // serviceUser({token});
+  
   useEffect(() => {
-
-    serviceUser({ token });
-
+    
+    
     const contactos = getContactos().then(response => {
       let gestionados = 0;
       let noGestionados = 0;

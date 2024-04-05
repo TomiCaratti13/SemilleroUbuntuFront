@@ -17,6 +17,7 @@ import { AdminMicroemprendimientos } from './views/Admin/AdminMicroemprendimient
 import { AdminContactos } from './views/Admin/AdminContactos.jsx';
 import { AdminPublicaciones } from './views/Admin/AdminPublicaciones.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
+import { RutaAdmin } from './views/Admin/components/RutaAdmin.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -54,8 +55,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="buscar/:search"
                 element={<SectionBuscarMicroemprendimiento />}
               />
+              {/* <Route
+                path="Admin/:token"
+                element={<AdminDashboard />}
+              /> */}
               <Route
                 path="Admin/:token"
+                element={<RutaAdmin />}
+              />
+              <Route
+                path="Admin"
                 element={<AdminDashboard />}
               />
               <Route
