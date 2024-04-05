@@ -5,6 +5,24 @@ import { Link } from 'react-router-dom';
 function CardCategoria({ title, identifier, img }) {
   const theme = useTheme();
 
+  //Hardcode para imagenes luego usar solo img en donde se llama esta funcion
+  const imagen = () => {
+    if (identifier === 'economia') {
+      return '/economiaSocial.webp';
+    }
+    if (identifier === 'agroecologia') {
+      return '/agroecologia.webp';
+    }
+    if (identifier === 'conservacion') {
+      return '/conservacion.webp';
+    }
+    if (identifier === 'empresas') {
+      return '/empresas.webp';
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Link
       to={`/microemprendimientos/${identifier}`}
@@ -27,7 +45,7 @@ function CardCategoria({ title, identifier, img }) {
           },
         }}>
         <Avatar
-          src={img}
+          src={imagen()}
           sx={{
             width: '40px',
             height: '40px',

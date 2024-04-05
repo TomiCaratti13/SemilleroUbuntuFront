@@ -18,9 +18,6 @@ export const publicacionSlice = createSlice({
           description: description,
           date: date,
           visualizaciones: visualizaciones,
-          img0: "/publicacion1.webp",
-          img1: "/publicacion2.webp",
-          img2: "/publicacion3.webp",
         });
       }
     },

@@ -190,7 +190,12 @@ export default function CardPublicacion({
         )}
       </Box>
       <SliderSwipper
-        imgs={[publicacion.img0, publicacion.img1, publicacion.img2]}
+        // imgs={[publicacion.img0, publicacion.img1, publicacion.img2]}
+        imgs={[
+          '/publicacion1.webp',
+          '/publicacion2.webp',
+          '/publicacion3.webp',
+        ]}
       />
       <CardContent style={{ paddingBottom: 0 }}>
         <Typography

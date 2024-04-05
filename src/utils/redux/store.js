@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from './userSlice';
@@ -29,8 +29,14 @@ const publicacionPersistConfig = {
 
 const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
 const persistedTokenReducer = persistReducer(tokenPersistConfig, tokenReducer);
-const persistedCategoryReducer = persistReducer(categoryPersistConfig, categoryReducer);
-const persistedPublicacionReducer = persistReducer(publicacionPersistConfig, publicacionReducer);
+const persistedCategoryReducer = persistReducer(
+  categoryPersistConfig,
+  categoryReducer
+);
+const persistedPublicacionReducer = persistReducer(
+  publicacionPersistConfig,
+  publicacionReducer
+);
 
 export const store = configureStore({
   reducer: {
@@ -39,7 +45,7 @@ export const store = configureStore({
     category: persistedCategoryReducer,
     publicacion: persistedPublicacionReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
