@@ -3,27 +3,10 @@ import { Typography, Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';
 import { MapCategorias } from '../components/MapCategorias';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
-import categoriasAPI from '../utils/mocks/Categorias';
 import microemprendmietosAPI from '../utils/mocks/Microemprendimientos';
 import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { getCategorias } from '../utils/services/axiosConfig';
-import { getPublicaciones } from '../utils/services/axiosConfig';
-import { addCategory } from '../utils/redux/categorySlice';
-import { useDispatch, useSelector } from 'react-redux';
 import { useCategorias } from '../utils/hooks/useCategorias';
-
-
-//Si usamos redux esto ya estaria en el store
-const categorias = categoriasAPI.map(categoria => {
-  return {
-    title: categoria.title,
-    identifier: categoria.identifier,
-    cantidad: categoria.cantidad,
-    img: categoria.img,
-    description: categoria.description,
-  };
-});
 
 //Preguntar si meter esto en redux para hacer menos llamadas a la api
 const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
@@ -51,7 +34,7 @@ const heroPublicaciones = {
 
 export const SectionMicroemprendmientos = () => {
   
-  // const categorias = useCategorias();
+  const categorias = useCategorias();
   const [categoryURL, setCategoryURL] = useState('');
   const { categoryUrl } = useParams();
   const location = useLocation();
