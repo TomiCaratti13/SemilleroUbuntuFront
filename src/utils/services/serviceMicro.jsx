@@ -16,7 +16,7 @@ export const serviceMicro = async () => {
         moreinfo: microemprendimiento.masInformacion,
         category: microemprendimiento.rubro,
         subcategory: microemprendimiento.subRubro,
-        ubication: + microemprendimiento.ciudad + microemprendimiento.provincia + microemprendimiento.pais,
+        ubication: `${microemprendimiento.ciudad}, ${microemprendimiento.provincia}, ${microemprendimiento.pais}`,
         // img0: microemprendimiento.img0,
         // img1: microemprendimiento.img1,
         // img2: microemprendimiento.img2,

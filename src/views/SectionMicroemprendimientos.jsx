@@ -7,8 +7,9 @@ import microemprendmietosAPI from '../utils/mocks/Microemprendimientos';
 import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useCategorias } from '../utils/hooks/useCategorias';
+import { useMicro } from '../utils/hooks/useMicro';
 
-//Preguntar si meter esto en redux para hacer menos llamadas a la api
+// Preguntar si meter esto en redux para hacer menos llamadas a la api
 const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
   return {
     title: microemprendimiento.title,
@@ -35,6 +36,9 @@ const heroPublicaciones = {
 export const SectionMicroemprendmientos = () => {
   
   const categorias = useCategorias();
+  const microemprendimiento = useMicro();
+  console.log(microemprendimiento);
+
   const [categoryURL, setCategoryURL] = useState('');
   const { categoryUrl } = useParams();
   const location = useLocation();

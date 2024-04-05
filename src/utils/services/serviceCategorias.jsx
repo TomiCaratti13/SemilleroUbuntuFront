@@ -11,7 +11,6 @@ export const serviceCategorias = async () => {
     const primeraPalabraMinuscula = primeraPalabra.toLowerCase();
     const primeraPalabraSinÑ = primeraPalabraMinuscula.replace(/ñ/g, 'n');
     const primeraPalabraSinBarra = primeraPalabraSinÑ.split('/')[0];
-    console.log(primeraPalabraSinBarra)
     return primeraPalabraSinBarra;
   };
 
