@@ -8,13 +8,18 @@ export const categorySlice = createSlice({
   reducers: {
     addCategory: (state, action) => {
       const { title, identifier, cantidad, img, description } = action.payload;
-      state.categoryLista?.push({
-        title: title,
-        identifier: identifier,
-        // cantidad: cantidad,
-        img: img,
-        // description: description,
-      });
+      const existe = state.categoryLista?.find(
+        category => category.title === title
+      );
+      if (!existe) {
+        state.categoryLista?.push({
+          title: title,
+          identifier: identifier,
+          // cantidad: cantidad,
+          img: img,
+          // description: description,
+        });
+      }
     },
   },
 });
