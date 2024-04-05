@@ -2,7 +2,12 @@ import { useState } from 'react';
 import CardPublicaciones from './CardPublicacion';
 import { Container } from '@mui/material';
 
-export const MapPublicaciones = ({ publicaciones, cantidad, setEditar }) => {
+export const MapPublicaciones = ({
+  publicaciones,
+  cantidad,
+  setEditar,
+  isAdmin,
+}) => {
   const publicacionesMutable = [...publicaciones];
   const [activePopperId, setActivePopperId] = useState(null);
 
@@ -34,6 +39,7 @@ export const MapPublicaciones = ({ publicaciones, cantidad, setEditar }) => {
             setEditar={setEditar}
             handlePopper={handlePopper}
             isActive={activePopperId === publicacion.id}
+            isAdmin={isAdmin}
           />
         ))}
     </Container>

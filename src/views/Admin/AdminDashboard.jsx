@@ -17,26 +17,26 @@ const Publicaciones = PublicacionesInfo;
 
 export const AdminDashboard = () => {
   const AdminInfo = useAdminDashboard();
-  // const getCookie = () => {
-  //   const token = Cookies.get('token');
-  //   const decodedToken = jwtDecode(token);
-  //   dispatch(addUser(decodedToken))
-  // }
-  // useEffect(()=>{
-  //   getCookie();
-  // }, []);
+  const getCookie = () => {
+    const token = Cookies.get('token');
+    const decodedToken = jwtDecode(token);
+    dispatch(addUser(decodedToken))
+  }
+  useEffect(()=>{
+    getCookie();
+  }, []);
 
-  // const dispatch = useDispatch();
-  // const user = useSelector(state => state.user);
-  // const getParams = () => {
-  //   const { token } = useParams();
-  //   const decodedToken = jwtDecode(token);
-  //   dispatch(addUser(decodedToken));
-  // };
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  const getParams = () => {
+    const { token } = useParams();
+    const decodedToken = jwtDecode(token);
+    dispatch(addUser(decodedToken));
+  };
 
-  // useEffect(() => {
-  //   getParams();
-  // }, [user]);
+  useEffect(() => {
+    getParams();
+  }, [user]);
 
   return (
     <Container

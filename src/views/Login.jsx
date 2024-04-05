@@ -15,7 +15,7 @@ export default function Login() {
 
   const linkToAdmin = () => {
     window.location.href = GOOGLE_AUTH;
-}
+  };
 
   const navigate = useNavigate();
 

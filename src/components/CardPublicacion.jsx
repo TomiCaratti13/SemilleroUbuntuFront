@@ -30,6 +30,7 @@ export default function CardPublicacion({
   setEditar,
   isActive,
   handlePopper,
+  isAdmin,
 }) {
   const [expanded, setExpanded] = useState(false);
   const [placement, setPlacement] = useState();
@@ -49,7 +50,7 @@ export default function CardPublicacion({
     setAnchorEl(event.currentTarget);
     setOpen(previousOpen => !previousOpen);
     setPlacement(newPlacement);
-
+    setEditar(publicacion);
     handlePopper(publicacion.id);
   };
   const canBeOpen = isActive && Boolean(anchorEl);
@@ -109,6 +110,8 @@ export default function CardPublicacion({
           }}>
           {publicacion.title}
         </Typography>
+        {!isAdmin ? null : 
+        <>
         <MoreVertIcon
           onClick={handleClick('bottom-end')}
           aria-describedby={id}
@@ -124,7 +127,7 @@ export default function CardPublicacion({
               color: '#fff',
             },
           }}
-        />
+          />
         <Popper
           id={id}
           open={open}
@@ -137,8 +140,8 @@ export default function CardPublicacion({
           transition>
           {({ TransitionProps }) => (
             <Fade
-              {...TransitionProps}
-              timeout={350}>
+            {...TransitionProps}
+            timeout={350}>
               <Box
                 sx={{
                   width: '100%',
@@ -183,6 +186,7 @@ export default function CardPublicacion({
             </Fade>
           )}
         </Popper>
+        </>}
       </Box>
       <SliderSwipper
         imgs={[publicacion.img0, publicacion.img1, publicacion.img2]}
