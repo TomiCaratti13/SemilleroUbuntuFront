@@ -139,7 +139,8 @@ function AdminHeader(props) {
             {mobileOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
           <Link
-            to="/Admin"
+            //Cambiar Por /Admin es más intuitivo y no genera preguntas
+            to="/"
             style={{
               display: 'flex',
               justifyContent: 'center',

@@ -93,7 +93,7 @@ function Header(props) {
             ))}
           </Box>
           <Link
-            to="/login"
+            to={user.isAdmin ? '/Admin' : '/login'}
             style={{
               width: '100%',
               textDecoration: 'none',

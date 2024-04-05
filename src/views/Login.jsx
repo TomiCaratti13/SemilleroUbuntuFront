@@ -10,11 +10,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../utils/redux/userSlice';
 
 export default function Login() {
-  
+  const user = useSelector(state => state.user);
+
   const linkToAdmin = () => {
-    window.location.href = GOOGLE_AUTH;
+    if (user.isAdmin) {
+      navigate(`/Admin`);
+    } else {
+      window.location.href = GOOGLE_AUTH;
+    }
   };
-  
+
   //Redireccion sin pasar por back
   const navigate = useNavigate();
   const dispatch = useDispatch();
