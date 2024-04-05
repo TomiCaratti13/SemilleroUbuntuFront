@@ -74,13 +74,13 @@ export default function CardPublicacion({
 
   return (
     <Card
-      // onClick={() => {
-      //   if (!hasSee) {
-      //     console.log('Agregando visualizacion', publicacion.id);
-      //     agregarVisualizacion(publicacion.id);
-      //     setHasSee(true);
-      //   }
-      // }}
+      onClick={() => {
+        if (!hasSee && !isAdmin) {
+          console.log('Agregando visualizacion', publicacion.id);
+          agregarVisualizacion(publicacion.id);
+          setHasSee(true);
+        }
+      }}
       sx={{
         bgcolor: 'gris.claro',
         borderRadius: 4,
@@ -110,83 +110,84 @@ export default function CardPublicacion({
           }}>
           {publicacion.title}
         </Typography>
-        {!isAdmin ? null : 
-        <>
-        <MoreVertIcon
-          onClick={handleClick('bottom-end')}
-          aria-describedby={id}
-          sx={{
-            cursor: 'pointer',
-            width: '30px',
-            height: '30px',
-            borderRadius: '50%',
-            marginBottom: '16px',
-            marginRight: '16px',
-            '&:hover': {
-              bgcolor: 'azul.main',
-              color: '#fff',
-            },
-          }}
-          />
-        <Popper
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          placement={placement}
-          ref={popperRef}
-          sx={{
-            zIndex: 1000,
-          }}
-          transition>
-          {({ TransitionProps }) => (
-            <Fade
-            {...TransitionProps}
-            timeout={350}>
-              <Box
-                sx={{
-                  width: '100%',
-                  height: '100%',
-                  p: '0',
-                  m: '0',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}>
-                <Button
-                  sx={{
-                    backgroundColor: 'blanco.main',
-                    opacity: 1,
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    lineHeight: '25px',
-                    textTransform: 'none',
-                    color: 'negro.main',
-                    width: '200px',
-                    '&:hover': {
-                      bgcolor: 'gris.claro',
-                    },
-                  }}>
-                  Editar
-                </Button>
-                <Button
-                  sx={{
-                    bgcolor: 'blanco.main',
-                    opacity: 1,
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    lineHeight: '25px',
-                    textTransform: 'none',
-                    color: 'negro.main',
-                    '&:hover': {
-                      bgcolor: 'gris.claro',
-                    },
-                  }}>
-                  Ocultar
-                </Button>
-              </Box>
-            </Fade>
-          )}
-        </Popper>
-        </>}
+        {!isAdmin ? null : (
+          <>
+            <MoreVertIcon
+              onClick={handleClick('bottom-end')}
+              aria-describedby={id}
+              sx={{
+                cursor: 'pointer',
+                width: '30px',
+                height: '30px',
+                borderRadius: '50%',
+                marginBottom: '16px',
+                marginRight: '16px',
+                '&:hover': {
+                  bgcolor: 'azul.main',
+                  color: '#fff',
+                },
+              }}
+            />
+            <Popper
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              placement={placement}
+              ref={popperRef}
+              sx={{
+                zIndex: 1000,
+              }}
+              transition>
+              {({ TransitionProps }) => (
+                <Fade
+                  {...TransitionProps}
+                  timeout={350}>
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      p: '0',
+                      m: '0',
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}>
+                    <Button
+                      sx={{
+                        backgroundColor: 'blanco.main',
+                        opacity: 1,
+                        fontWeight: 600,
+                        fontSize: '14px',
+                        lineHeight: '25px',
+                        textTransform: 'none',
+                        color: 'negro.main',
+                        width: '200px',
+                        '&:hover': {
+                          bgcolor: 'gris.claro',
+                        },
+                      }}>
+                      Editar
+                    </Button>
+                    <Button
+                      sx={{
+                        bgcolor: 'blanco.main',
+                        opacity: 1,
+                        fontWeight: 600,
+                        fontSize: '14px',
+                        lineHeight: '25px',
+                        textTransform: 'none',
+                        color: 'negro.main',
+                        '&:hover': {
+                          bgcolor: 'gris.claro',
+                        },
+                      }}>
+                      Ocultar
+                    </Button>
+                  </Box>
+                </Fade>
+              )}
+            </Popper>
+          </>
+        )}
       </Box>
       <SliderSwipper
         imgs={[publicacion.img0, publicacion.img1, publicacion.img2]}

@@ -16,7 +16,6 @@ export const serviceCategorias = async () => {
   if (CategoriasStorage.length === 0) {
     //Llamar a Categorias
     const CategoriasAPI = await getCategorias();
-    console.log(CategoriasAPI);
 
     const CategoriasRedux = CategoriasAPI?.map(categoria => {
       const identifier = limpiarNombreCategoria(categoria.nombre);

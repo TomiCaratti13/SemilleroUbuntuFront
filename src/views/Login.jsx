@@ -10,18 +10,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../utils/redux/userSlice';
 
 export default function Login() {
-  // const dispatch = useDispatch();
-
+  
   const linkToAdmin = () => {
     window.location.href = GOOGLE_AUTH;
   };
-
-  // const navigate = useNavigate();
-
-  // const redirectGoogle = () => {
-  //   dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
-  //   navigate(`/Admin`);
-  // };
+  
+  //Redireccion sin pasar por back
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const redirectGoogle = () => {
+    localStorage.setItem('nombre', 'Lautaro Gonzalez');
+    localStorage.setItem('foto', '');
+    localStorage.setItem('isAdmin', true);
+    dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
+    navigate(`/Admin`);
+  };
 
   return (
     <Box

@@ -12,7 +12,6 @@ import { getPublicaciones } from '../utils/services/axiosConfig';
 import { addCategory } from '../utils/redux/categorySlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCategorias } from '../utils/hooks/useCategorias';
-import { useNavigate } from 'react-router-dom';
 
 //Si usamos redux esto ya estaria en el store
 const categorias = categoriasAPI.map(categoria => {
@@ -69,7 +68,6 @@ export const SectionMicroemprendmientos = () => {
     }
   }, [categoryUrl, location.pathname]);
 
-  const navigate = useNavigate();
 
   return (
     <Box

@@ -94,8 +94,10 @@ export const AlertModal = ({
                 },
               }}
               onClick={() => {
-                setSelectedContacto(null);
-                setValue('1');
+                if (setSelectedContacto && setValue) {
+                  setSelectedContacto(null);
+                  setValue('1');
+                }
                 closeAlert(returnTo);
               }}>
               {alert.icon ? 'Aceptar' : 'Cancelar'}

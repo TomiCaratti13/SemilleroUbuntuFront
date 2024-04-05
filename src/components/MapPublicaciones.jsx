@@ -32,9 +32,9 @@ export const MapPublicaciones = ({
           return dateB - dateA;
         })
         ?.slice(0, cantidad)
-        ?.map(publicacion => (
+        ?.map((publicacion, index) => (
           <CardPublicaciones
-            key={publicacion.id}
+            key={index}
             publicacion={publicacion}
             setEditar={setEditar}
             handlePopper={handlePopper}

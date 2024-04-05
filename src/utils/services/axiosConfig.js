@@ -14,7 +14,7 @@ export const getCategorias = async () => {
       withCredentials: true,
     })
       .then(response => {
-        console.log('Respuesta del servidor', response);
+        // console.log('Respuesta del servidor', response);
         return response.data;
       })
       .catch(error => {
@@ -127,7 +127,7 @@ export const enviarFormulario = async (formulario, id) => {
       withCredentials: true,
     })
       .then(response => {
-        console.log('Respuesta del servidor', response);
+        // console.log('Respuesta del servidor', response);
         return response;
       })
       .catch(error => {

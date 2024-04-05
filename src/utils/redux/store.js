@@ -7,15 +7,30 @@ import categoryReducer from './categorySlice';
 import publicacionReducer from './publicacionSlice';
 // import microReducer from './microSlice';
 
-const persistConfig = {
-  key: 'root',
-  storage,// Cosas del estado que no quieres persistir
+const userPersistConfig = {
+  key: 'user',
+  storage,
 };
 
-const persistedUserReducer = persistReducer(persistConfig, userReducer);
-const persistedTokenReducer = persistReducer(persistConfig, tokenReducer);
-const persistedCategoryReducer = persistReducer(persistConfig, categoryReducer);
-const persistedPublicacionReducer = persistReducer(persistConfig, publicacionReducer);
+const tokenPersistConfig = {
+  key: 'token',
+  storage,
+};
+
+const categoryPersistConfig = {
+  key: 'category',
+  storage,
+};
+
+const publicacionPersistConfig = {
+  key: 'publicacion',
+  storage,
+};
+
+const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
+const persistedTokenReducer = persistReducer(tokenPersistConfig, tokenReducer);
+const persistedCategoryReducer = persistReducer(categoryPersistConfig, categoryReducer);
+const persistedPublicacionReducer = persistReducer(publicacionPersistConfig, publicacionReducer);
 
 export const store = configureStore({
   reducer: {

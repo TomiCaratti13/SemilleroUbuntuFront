@@ -6,7 +6,7 @@ import { usePublicaciones } from '../../utils/hooks/usePublicaciones';
 
 export const AdminPublicaciones = () => {
   const [crear, setCrear] = useState(false);
-  const [editar, setEditar] = useState('asd');
+  const [editar, setEditar] = useState([]);
 
   const publicaciones = usePublicaciones();
   return (
