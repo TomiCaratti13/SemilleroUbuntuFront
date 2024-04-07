@@ -96,7 +96,15 @@ export const LandingPage = () => {
           Finanzas con impacto
         </Typography>
       </Container>
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '16px',
+          padding: '0 16px',
+        }}>
         <MapPublicaciones
           publicaciones={publicaciones}
           cantidad={3}

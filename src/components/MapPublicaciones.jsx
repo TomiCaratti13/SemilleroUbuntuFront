@@ -23,6 +23,7 @@ export const MapPublicaciones = ({
         placeItems: 'center',
         gap: '16px',
         width: '100%',
+        padding: '0',
       }}>
       {publicacionesMutable
         //Convertimos Date a fechas para poder ordenarlas
