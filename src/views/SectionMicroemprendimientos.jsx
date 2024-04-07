@@ -57,6 +57,7 @@ export const SectionMicroemprendmientos = () => {
 
   //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryURL
   useEffect(() => {
+    console.log(categoryUrl)
     setCategoryURL('');
     if (categoryUrl !== 'categorias') {
       const category = categorias.filter(
