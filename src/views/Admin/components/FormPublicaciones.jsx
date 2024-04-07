@@ -1,33 +1,32 @@
+import { useState } from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import formContact from '../../utils/schemas/schemaFormContact';
-import { enviarFormulario } from '../../utils/services/axiosConfig';
-import { AlertModal } from '../../components/AlertModal';
-import { useAlertModal } from '../../utils/hooks/useAlertModal';
+import { useAlertModal } from '../../../utils/hooks/useAlertModal';
+import { AlertModal } from '../../../components/AlertModal';
+import formPublicaciones from '../../../utils/schemas/schemaFormPublicaciones';
+import { UploadImages } from './UploadImages';
 
-export const FormContact = ({ idMic }) => {
+export const FormPublicaciones = ({ publicacion }) => {
+  const [images, setImages] = useState(publicacion.images || []);
+
   const formik = useFormik({
     initialValues: {
-      nombre: '',
-      email: '',
-      telefono: '',
-      mensaje: '',
+      titulo: publicacion.title || '',
+      contenido: publicacion.description || '',
     },
-    validationSchema: formContact,
+    validationSchema: formPublicaciones,
     onSubmit: formData => {
       try {
         formik.setSubmitting(true);
 
         const formEnviar = {
-          descripcion: formData.mensaje,
+          descripcion: formData.contenido,
           usuarioSolicitante: {
-            nombre: formData.nombre,
-            email: formData.email,
-            telefono: formData.telefono,
+            titulo: formData.titulo,
           },
         };
 
-        enviarFormulario(formEnviar, idMic)
+        enviarFormularioPublis(formEnviar, idMic)
           .then(response => {
             //MANEJO DE ALERTAS
             if (response && response.status === 200) {
@@ -85,16 +84,20 @@ export const FormContact = ({ idMic }) => {
         }}>
         <TextField
           fullWidth
-          id="nombre"
-          name="nombre"
-          label="Nombre y Apellido"
+          id="titulo"
+          name="titulo"
+          label="Titulo*"
           variant="outlined"
-          value={formik.values.nombre}
+          value={formik.values.titulo}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
-          error={formik.touched.nombre && Boolean(formik.errors.nombre)}
-          helperText={formik.touched.nombre && formik.errors.nombre}
+          error={formik.touched.titulo && Boolean(formik.errors.titulo)}
+          helperText={
+            formik.touched.titulo && formik.errors.titulo
+              ? formik.errors.titulo
+              : 'Se visualizará en el titulo de la publicación'
+          }
           sx={{
             '& .MuiOutlinedInput-input': {
               fontWeight: '400',
@@ -107,7 +110,7 @@ export const FormContact = ({ idMic }) => {
 
             '& .MuiFormLabel-root': {
               color: theme =>
-                formik.touched.nombre && formik.errors.nombre
+                formik.touched.titulo && formik.errors.titulo
                   ? theme.palette.gestion.error
                   : '#090909 !important',
               fontWeight: '400',
@@ -115,125 +118,18 @@ export const FormContact = ({ idMic }) => {
 
             '& .MuiInputLabel-root.Mui-focused': {
               color: theme =>
-                formik.touched.nombre && formik.errors.nombre
+                formik.touched.titulo && formik.errors.titulo
                   ? theme.palette.gestion.error
                   : `${theme.palette.primary.main} !important`,
             },
 
             '& .MuiFormHelperText-root': {
               color: theme =>
-                formik.touched.nombre && formik.errors.nombre
+                formik.touched.titulo && formik.errors.titulo
                   ? theme.palette.gestion.error
                   : '#090909 !important',
               fontWeight: '400',
-            },
-
-            '& .Mui-disabled': {
-              color: theme => `${theme.palette.primary.main} !important`,
-            },
-          }}
-          InputProps={{
-            sx: {
-              '& .Mui-disabled': {
-                WebkitTextFillColor: '#090909 !important',
-              },
-            },
-          }}
-        />
-        <TextField
-          fullWidth
-          id="email"
-          name="email"
-          label="Correo electrónico"
-          variant="outlined"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-          sx={{
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.email && formik.errors.email
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.email && formik.errors.email
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.email && formik.errors.email
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .Mui-disabled': {
-              color: theme => `${theme.palette.primary.main} !important`,
-            },
-          }}
-          InputProps={{
-            sx: {
-              '& .Mui-disabled': {
-                WebkitTextFillColor: '#090909 !important',
-              },
-            },
-          }}
-        />
-        <TextField
-          fullWidth
-          id="telefono"
-          name="telefono"
-          label="Teléfono"
-          variant="outlined"
-          value={formik.values.telefono}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-          helperText={
-            formik.touched.telefono && formik.errors.telefono
-              ? formik.errors.telefono
-              : 'Con el siguiente formato +54 9 261 002 002'
-          }
-          sx={{
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
+              fontSize: '13px',
             },
 
             '& .Mui-disabled': {
@@ -251,25 +147,25 @@ export const FormContact = ({ idMic }) => {
         <Box>
           <TextField
             fullWidth
-            id="mensaje"
-            name="mensaje"
-            label="Mensaje"
+            id="contenido"
+            name="contenido"
+            label="Ingresá el contenido de la publicación*"
             variant="outlined"
             multiline
-            rows={4}
-            value={formik.values.mensaje}
+            rows={16}
+            value={formik.values.contenido}
             inputProps={{
-              maxLength: 300,
+              maxLength: 2000,
             }}
             onChange={e => {
-              if (e.target.value.length <= 300) {
+              if (e.target.value.length <= 2000) {
                 formik.handleChange(e);
               }
             }}
             onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}
-            error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
-            helperText={formik.touched.mensaje && formik.errors.mensaje}
+            error={formik.touched.contenido && Boolean(formik.errors.contenido)}
+            helperText={formik.touched.contenido && formik.errors.contenido}
             sx={{
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#090909',
@@ -277,7 +173,7 @@ export const FormContact = ({ idMic }) => {
 
               '& .MuiFormLabel-root': {
                 color: theme =>
-                  formik.touched.mensaje && formik.errors.mensaje
+                  formik.touched.contenido && formik.errors.contenido
                     ? theme.palette.gestion.error
                     : '#090909 !important',
                 fontWeight: '400',
@@ -285,17 +181,18 @@ export const FormContact = ({ idMic }) => {
 
               '& .MuiInputLabel-root.Mui-focused': {
                 color: theme =>
-                  formik.touched.mensaje && formik.errors.mensaje
+                  formik.touched.contenido && formik.errors.contenido
                     ? theme.palette.gestion.error
                     : `${theme.palette.primary.main} !important`,
               },
 
               '& .MuiFormHelperText-root': {
                 color: theme =>
-                  formik.touched.mensaje && formik.errors.mensaje
+                  formik.touched.contenido && formik.errors.contenido
                     ? theme.palette.gestion.error
                     : '#090909 !important',
                 fontWeight: '400',
+                fontSize: '13px',
               },
 
               '& .Mui-disabled': {
@@ -328,23 +225,29 @@ export const FormContact = ({ idMic }) => {
             <Typography
               component="p"
               color={theme =>
-                formik.touched.mensaje && formik.errors.mensaje
+                formik.touched.contenido && formik.errors.contenido
                   ? theme.palette.gestion.error
                   : '#090909'
               }>
-              Máximo 300 caracteres
+              Máximo 2000 caracteres
             </Typography>
             <Typography
               component="p"
               color={theme =>
-                formik.touched.mensaje && formik.errors.mensaje
+                formik.touched.contenido && formik.errors.contenido
                   ? theme.palette.gestion.error
                   : '#090909'
               }>
-              {formik.values.mensaje.length}/300
+              {formik.values.contenido.length}/2000
             </Typography>
           </Box>
         </Box>
+
+        <UploadImages
+          images={images}
+          setImages={setImages}
+        />
+
         <Button
           type="submit"
           sx={{
@@ -368,7 +271,7 @@ export const FormContact = ({ idMic }) => {
               lineHeight: '30px',
               textAlign: 'center',
             }}>
-            Enviar
+            Crear publicación
           </Typography>
         </Button>
       </Container>

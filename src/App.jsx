@@ -10,7 +10,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <SnackbarProvider
         maxSnack={3}
-        autoHideDuration={5000}
+        autoHideDuration={2000}
+        hideOnMouseLeave={true}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
         <CssBaseline />
         <Header />

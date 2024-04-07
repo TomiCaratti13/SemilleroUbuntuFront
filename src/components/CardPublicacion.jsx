@@ -50,7 +50,6 @@ export default function CardPublicacion({
     setAnchorEl(event.currentTarget);
     setOpen(previousOpen => !previousOpen);
     setPlacement(newPlacement);
-    setEditar(publicacion);
     handlePopper(publicacion.id);
   };
   const canBeOpen = isActive && Boolean(anchorEl);
@@ -152,6 +151,10 @@ export default function CardPublicacion({
                       flexDirection: 'column',
                     }}>
                     <Button
+                      onClick={() => {
+                        console.log('Publicaciones en card', publicacion);
+                        setEditar(publicacion);
+                      }}
                       sx={{
                         backgroundColor: 'blanco.main',
                         opacity: 1,

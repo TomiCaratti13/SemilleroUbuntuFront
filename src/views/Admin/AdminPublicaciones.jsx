@@ -1,14 +1,28 @@
 import { Typography, Box } from '@mui/material';
 import { ButtonBlue } from '../../components/ButtonBlue';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapPublicaciones } from '../../components/MapPublicaciones';
 import { usePublicaciones } from '../../utils/hooks/usePublicaciones';
+import { FormPublicaciones } from './components/FormPublicaciones';
 
 export const AdminPublicaciones = () => {
   const [crear, setCrear] = useState(false);
   const [editar, setEditar] = useState([]);
 
   const publicaciones = usePublicaciones();
+
+  const handdleCrear = () => {
+    setEditar([]);
+    setCrear(true);
+    console.log('crear', crear);
+  };
+
+  useEffect(() => {
+    if (editar.length !== 0) {
+      setCrear(true);
+    }
+  }, [editar]);
+
   return (
     <Box
       sx={{
@@ -22,6 +36,7 @@ export const AdminPublicaciones = () => {
       }}>
       <Typography
         variant="h4"
+        onClick={() => setCrear(false)}
         sx={{
           fontSize: '28px',
           lineHeight: '35px',
@@ -30,9 +45,13 @@ export const AdminPublicaciones = () => {
           width: '100%',
           pt: '30px',
         }}>
-        {editar.length > 0 ? 'Carga de publicación' : 'Publicaciones'}
+        {crear
+          ? editar.length !== 0
+            ? 'Edición de publicación'
+            : 'Carga de Publicación'
+          : 'Publicaciones'}
       </Typography>
-      {editar.length > 0 ? (
+      {crear ? (
         <>
           <Box
             sx={{
@@ -53,8 +72,11 @@ export const AdminPublicaciones = () => {
                 textAlign: 'center',
                 width: '100%',
               }}>
-              Completá los datos para crear una nueva publicación
+              {editar.length !== 0
+                ? 'Modificá los datos de la publicación'
+                : 'Completá los datos para crear una nueva publicación'}
             </Typography>
+            <FormPublicaciones publicacion={editar} />
           </Box>
         </>
       ) : (
@@ -72,9 +94,7 @@ export const AdminPublicaciones = () => {
             <ButtonBlue
               text={'Crear publicacion'}
               width="100%"
-              onClick={() => {
-                setCrear(!crear);
-              }}
+              onClick={handdleCrear}
             />
             <Typography
               variant="h4"
