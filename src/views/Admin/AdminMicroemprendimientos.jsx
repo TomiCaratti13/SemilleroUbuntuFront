@@ -3,7 +3,7 @@ import { ButtonBlue } from '../../components/ButtonBlue';
 import { useEffect, useState } from 'react';
 import { MapPublicaciones } from '../../components/MapPublicaciones';
 import { usePublicaciones } from '../../utils/hooks/usePublicaciones';
-import { FormMicroemprendimientos } from './components/FormMicroemprendimientos';
+import { FormMicro } from './Microemprendimientos/FormMicro';
 
 export const AdminMicroemprendimientos = () => {
   const [crear, setCrear] = useState(false);
@@ -76,7 +76,7 @@ export const AdminMicroemprendimientos = () => {
                 ? 'Editá el formulario de carga del Microemprendmiento'
                 : 'Completá los datos para crear un nuevo Microemprendimiento'}
             </Typography>
-            <FormMicroemprendimientos microemprendimiento={editar} />
+            <FormMicro microemprendimiento={editar} />
           </Box>
         </>
       ) : (

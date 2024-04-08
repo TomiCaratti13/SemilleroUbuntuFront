@@ -3,7 +3,7 @@ import { ButtonBlue } from '../../components/ButtonBlue';
 import { useEffect, useState } from 'react';
 import { MapPublicaciones } from '../../components/MapPublicaciones';
 import { usePublicaciones } from '../../utils/hooks/usePublicaciones';
-import { FormPublicaciones } from './components/FormPublicaciones';
+import { FormPublicaciones } from './Publicaciones/FormPublicaciones';
 
 export const AdminPublicaciones = () => {
   const [crear, setCrear] = useState(false);

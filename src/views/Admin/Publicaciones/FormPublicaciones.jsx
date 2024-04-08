@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useAlertModal } from '../../../utils/hooks/useAlertModal';
 import { AlertModal } from '../../../components/AlertModal';
 import formPublicaciones from '../../../utils/schemas/schemaFormPublicaciones';
-import { UploadImages } from './UploadImages';
+import { UploadImages } from '../components/UploadImages';
 
 export const FormPublicaciones = ({ publicacion }) => {
   const [images, setImages] = useState(publicacion.images || []);

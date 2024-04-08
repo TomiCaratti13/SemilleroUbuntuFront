@@ -19,6 +19,12 @@ import { AdminPublicaciones } from './views/Admin/AdminPublicaciones.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
 import { RutaAdmin } from './views/Admin/components/RutaAdmin.jsx';
 
+import { AdminMicro } from './views/Admin/AdminMicro.jsx';
+import { MapAdminMicros } from './views/Admin/Microemprendimientos/MapAdminMicros.jsx';
+import { EditarMicro } from './views/Admin/Microemprendimientos/EditarMicro.jsx';
+import { CargarMicro } from './views/Admin/Microemprendimientos/CargarMicro.jsx';
+import { MostrarMicro } from './views/Admin/Microemprendimientos/MostrarMicro.jsx';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
@@ -55,10 +61,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="buscar/:search"
                 element={<SectionBuscarMicroemprendimiento />}
               />
-              {/* <Route
-                path="Admin/:token"
-                element={<AdminDashboard />}
-              /> */}
               <Route
                 path="Admin/:token"
                 element={<RutaAdmin />}
@@ -71,6 +73,26 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="Admin/microemprendimientos"
                 element={<AdminMicroemprendimientos />}
               />
+              {/* Rutas de Microemprendimientos para cargar componentes */}
+              <Route
+                path="Admin/microemprendimientos2"
+                element={<AdminMicro />}>
+                <Route
+                  index
+                  element={<MapAdminMicros />}
+                />
+                  <Route 
+                  path="ver/:nombre"
+                  element={<MostrarMicro />}/>
+                <Route
+                  path="editar"
+                  element={<EditarMicro />}
+                />
+                <Route
+                  path="crear"
+                  element={<CargarMicro />}
+                />
+              </Route>
               <Route
                 path="Admin/contactos"
                 element={<AdminContactos />}
