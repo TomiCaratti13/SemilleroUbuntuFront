@@ -17,6 +17,7 @@ export const CardAdminMicros = ({
   isActive,
   handlePopper,
   isAdmin,
+  setVer,
 }) => {
   const microemprendimientoMap = {
     nombre: microemprendimiento.title,
@@ -163,10 +164,6 @@ export const CardAdminMicros = ({
                     }}>
                     <Button
                       onClick={() => {
-                        console.log(
-                          'microemicroemprendimientoes en card',
-                          microemprendimiento
-                        );
                         setEditar(microemprendimiento);
                       }}
                       sx={{
@@ -208,7 +205,9 @@ export const CardAdminMicros = ({
           </>
         </Box>
         <Box
-          onClick={onClick}
+          onClick={() => {
+            setVer(microemprendimiento);
+          }}
           style={{
             display: 'flex',
             justifyContent: 'flex-end',

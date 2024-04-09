@@ -85,7 +85,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   path="ver/:nombre"
                   element={<MostrarMicro />}/>
                 <Route
-                  path="editar"
+                  path="editar/:nombre"
                   element={<EditarMicro />}
                 />
                 <Route

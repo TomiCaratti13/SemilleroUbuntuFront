@@ -6,6 +6,7 @@ import { FormMicro } from './Microemprendimientos/FormMicro';
 
 import microemprendmietosAPI from '../../utils/mocks/Microemprendimientos.json';
 import { CardAdminMicros } from './Microemprendimientos/CardAdminMicros';
+import { VerMicro } from './Microemprendimientos/VerMicro';
 
 //Preguntar si meter esto en redux para hacer menos llamadas a la api
 const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
@@ -26,8 +27,10 @@ const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
 export const AdminMicroemprendimientos = () => {
   const [crear, setCrear] = useState(false);
   const [editar, setEditar] = useState([]);
+  const [ver, setVer] = useState([]);
 
   const handdleCrear = () => {
+    setVer([]);
     setEditar([]);
     setCrear(true);
   };
@@ -35,6 +38,7 @@ export const AdminMicroemprendimientos = () => {
   useEffect(() => {
     if (editar.length !== 0) {
       setCrear(true);
+      setVer([]);
     }
   }, [editar]);
 
@@ -56,7 +60,10 @@ export const AdminMicroemprendimientos = () => {
       }}>
       <Typography
         variant="h4"
-        onClick={() => setCrear(false)}
+        onClick={() => {
+          setCrear(false);
+          setVer([]);
+        }}
         sx={{
           fontSize: '28px',
           lineHeight: '35px',
@@ -98,7 +105,7 @@ export const AdminMicroemprendimientos = () => {
             </Typography>
             <FormMicro microemprendimiento={editar} />
           </>
-        ) : (
+        ) : ver.length === 0 ? (
           <>
             <ButtonBlue
               text={'Crear Microemprendimiento'}
@@ -110,12 +117,18 @@ export const AdminMicroemprendimientos = () => {
                 key={index}
                 microemprendimiento={microemprendimiento}
                 setEditar={setEditar}
+                setVer={setVer}
                 handlePopper={handlePopper}
                 isActive={activePopperId === microemprendimiento.id}
                 isAdmin={true}
               />
             ))}
           </>
+        ) : (
+          <VerMicro
+            microemprendimiento={ver}
+            setVer={setVer}
+          />
         )}
       </Box>
     </Box>

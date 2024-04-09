@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useFormik } from 'formik';
 import {
   Box,
   Button,
@@ -11,14 +11,13 @@ import {
   InputLabel,
   FormHelperText,
 } from '@mui/material';
-import { useFormik } from 'formik';
-import { useAlertModal } from '../../../utils/hooks/useAlertModal';
-import { AlertModal } from '../../../components/AlertModal';
-import { UploadImages } from '../components/UploadImages';
 import formMicros from '../../../utils/schemas/schemaFormMicros';
+import { UploadImages } from '../components/UploadImages';
+import { useState } from 'react';
 import categoriasAPI from '../../../utils/mocks/Categorias.json';
 
-export const FormMicro = ({ microemprendimiento }) => {
+export const VerMicro = ({ microemprendimiento, setVer }) => {
+  console.log('ACACACA', microemprendimiento);
   const [images, setImages] = useState([]);
   // Array Pais
   const paisAPI = [
@@ -65,62 +64,10 @@ export const FormMicro = ({ microemprendimiento }) => {
       masInfo: '' || microemprendimiento.moreinfo,
     },
     validationSchema: formMicros,
-    onSubmit: formData => {
-      try {
-        formik.setSubmitting(true);
-
-        const formEnviar = {
-          descripcion: formData.contenido,
-          usuarioSolicitante: {
-            nombre: formData.nombre,
-          },
-        };
-
-        enviarFormularioPublis(formEnviar, idMic)
-          .then(response => {
-            //MANEJO DE ALERTAS
-            if (response && response.status === 200) {
-              openAlert(
-                true,
-                'Formulario enviado con éxito',
-                'Gracias por contactarnos, nos comunicaremos en breve'
-              );
-            } else {
-              openAlert(
-                false,
-                'Error al enviar el formulario',
-                'Por favor, volvé a intentarlo'
-              );
-            }
-          })
-          .catch(error => {
-            console.error('Error al enviar el formulario:', error);
-            openAlert(
-              false,
-              'Error al enviar el formulario',
-              'Por favor, volvé a intentarlo'
-            );
-          });
-
-        formik.setSubmitting(false);
-      } catch (error) {
-        formik.setSubmitting(false);
-        console.log(error);
-      }
-    },
   });
-
-  const [alertModal, openAlert, closeAlert, resendAlert] = useAlertModal(
-    formik.handleSubmit
-  );
 
   return (
     <>
-      <AlertModal
-        closeAlert={closeAlert}
-        resendAlert={resendAlert}
-        alert={alertModal}
-      />
       <Container
         component="form"
         onSubmit={formik.handleSubmit}
@@ -130,7 +77,7 @@ export const FormMicro = ({ microemprendimiento }) => {
           gap: '16px',
           width: '100%',
           maxWidth: '600px',
-          margin: '0 auto',
+          margin: '10px auto',
           padding: '0',
         }}>
         {/* FORMULARIO NOMBRE */}
@@ -631,7 +578,7 @@ export const FormMicro = ({ microemprendimiento }) => {
                   ? theme.palette.gestion.error
                   : '#090909'
               }>
-              {formik.values.descripcion?.length}/300
+              {formik.values.descripcion.length}/300
             </Typography>
           </Box>
         </Box>
@@ -734,7 +681,7 @@ export const FormMicro = ({ microemprendimiento }) => {
                   ? theme.palette.gestion.error
                   : '#090909'
               }>
-              {formik.values.masInfo?.length}/300
+              {formik.values.masInfo.length}/300
             </Typography>
           </Box>
         </Box>
@@ -743,34 +690,8 @@ export const FormMicro = ({ microemprendimiento }) => {
           images={images}
           setImages={setImages}
           direction={'row'}
+          zoom={true}
         />
-
-        <Button
-          type="submit"
-          sx={{
-            width: '100%',
-            padding: '0 20px',
-            height: '40px',
-            my: '10px',
-            justifyContent: 'space-evenly',
-            borderRadius: '100px',
-            color: 'blanco.main',
-            backgroundColor: 'azul.main',
-            textTransform: 'none',
-            '&:hover': {
-              backgroundColor: 'azul.main',
-            },
-          }}>
-          <Typography
-            sx={{
-              fontWeight: '700',
-              fontSize: '16px',
-              lineHeight: '30px',
-              textAlign: 'center',
-            }}>
-            Crear publicación
-          </Typography>
-        </Button>
       </Container>
     </>
   );

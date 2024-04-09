@@ -24,9 +24,6 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const redirectGoogle = () => {
-    localStorage.setItem('nombre', 'Lautaro Gonzalez');
-    localStorage.setItem('foto', '');
-    localStorage.setItem('isAdmin', true);
     dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
     navigate(`/Admin`);
   };
