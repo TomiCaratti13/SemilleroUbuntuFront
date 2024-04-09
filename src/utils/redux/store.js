@@ -44,7 +44,7 @@ export const store = configureStore({
     token: persistedTokenReducer,
     category: persistedCategoryReducer,
     publicacion: persistedPublicacionReducer,
-    microemprendimeinto: persistedMicroReducer,
+    microemprendimiento: persistedMicroReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

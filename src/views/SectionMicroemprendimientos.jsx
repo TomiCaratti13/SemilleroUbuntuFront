@@ -3,27 +3,10 @@ import { Typography, Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';
 import { MapCategorias } from '../components/MapCategorias';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
-import microemprendmietosAPI from '../utils/mocks/Microemprendimientos';
 import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useCategorias } from '../utils/hooks/useCategorias';
 import { useMicro } from '../utils/hooks/useMicro';
-
-// Preguntar si meter esto en redux para hacer menos llamadas a la api
-const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
-  return {
-    title: microemprendimiento.title,
-    category: microemprendimiento.category,
-    subcategory: microemprendimiento.subcategory,
-    ubication: microemprendimiento.ubication,
-    img0: microemprendimiento.img0,
-    img1: microemprendimiento.img1,
-    img2: microemprendimiento.img2,
-    description: microemprendimiento.description,
-    moreinfo: microemprendimiento.moreinfo,
-    id: microemprendimiento.id,
-  };
-});
 
 const heroPublicaciones = {
   category: 'MICROEMPRENDIMIENTOS',
@@ -36,8 +19,8 @@ const heroPublicaciones = {
 export const SectionMicroemprendmientos = () => {
   
   const categorias = useCategorias();
-  const microemprendimiento = useMicro();
-  console.log(microemprendimiento);
+  const Microemprendimientos = useMicro();
+  console.log(Microemprendimientos);
 
   const [categoryURL, setCategoryURL] = useState('');
   const { categoryUrl } = useParams();

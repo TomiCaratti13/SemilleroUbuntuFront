@@ -72,7 +72,7 @@ export const getMicroemprendimientos = async () => {
   try {
     return URL_SERVIDOR.get(`/microEmprendimiento/listar`)
       .then(response => {
-        // console.log('Respuesta del servidor', response);
+        console.log('Respuesta del servidor', response.data);
         return response.data;
       })
       .catch(error => {
