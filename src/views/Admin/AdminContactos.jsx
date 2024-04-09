@@ -5,7 +5,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-import { MapSolContactos } from './components/MapSolContactos';
+import { CardSolContactos } from './components/CardSolContactos';
 import { DetalleContacto } from './components/DetalleContacto';
 import { getContactos } from '../../utils/services/axiosConfig';
 
@@ -112,7 +112,7 @@ export const AdminContactos = () => {
             <TabPanel value={value}>
               {selectedContacto === null ? (
                 contactos.map((contacto, index) => (
-                  <MapSolContactos
+                  <CardSolContactos
                     contacto={contacto}
                     key={index}
                     onClick={() => setSelectedContacto(contacto)}

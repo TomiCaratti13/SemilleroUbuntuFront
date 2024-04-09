@@ -51,18 +51,18 @@ export const AdminPublicaciones = () => {
             : 'Carga de Publicación'
           : 'Publicaciones'}
       </Typography>
-      {crear ? (
-        <>
-          <Box
-            sx={{
-              display: 'flex',
-              overflow: 'hidden',
-              flexDirection: 'column',
-              gap: '20px',
-              width: '100%',
-              height: '100%',
-              padding: '0 16px',
-            }}>
+      <Box
+        sx={{
+          display: 'flex',
+          overflow: 'hidden',
+          flexDirection: 'column',
+          gap: '20px',
+          width: '100%',
+          height: '100%',
+          padding: '0 16px',
+        }}>
+        {crear ? (
+          <>
             <Typography
               variant="h4"
               sx={{
@@ -77,20 +77,9 @@ export const AdminPublicaciones = () => {
                 : 'Completá los datos para crear una nueva publicación'}
             </Typography>
             <FormPublicaciones publicacion={editar} />
-          </Box>
-        </>
-      ) : (
-        <>
-          <Box
-            sx={{
-              display: 'flex',
-              overflow: 'hidden',
-              flexDirection: 'column',
-              gap: '20px',
-              width: '100%',
-              height: '100%',
-              padding: '0 16px',
-            }}>
+          </>
+        ) : (
+          <>
             <ButtonBlue
               text={'Crear publicacion'}
               width="100%"
@@ -112,9 +101,9 @@ export const AdminPublicaciones = () => {
               setEditar={setEditar}
               isAdmin={true}
             />
-          </Box>
-        </>
-      )}
+          </>
+        )}
+      </Box>
     </Box>
   );
 };

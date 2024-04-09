@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Button, Typography, Box } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
-export const UploadImages = ({ images, setImages }) => {
+export const UploadImages = ({ images, setImages, direction }) => {
   //Manejar alertas
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = (mensaje, color) => {
@@ -69,7 +69,7 @@ export const UploadImages = ({ images, setImages }) => {
         width: '100%',
         alignItems: 'flex-end',
       }}>
-      {
+      {images.length < 3 && (
         <Button
           component="label"
           sx={{
@@ -114,7 +114,7 @@ export const UploadImages = ({ images, setImages }) => {
             onChange={handleUploadImage}
           />
         </Button>
-      }
+      )}
       {images.length === 0 && (
         <Typography
           sx={{
@@ -133,7 +133,7 @@ export const UploadImages = ({ images, setImages }) => {
         sx={{
           width: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: { direction } || 'column',
           gap: '10px',
           justifyContent: 'center',
           alignItems: 'center',
@@ -151,7 +151,7 @@ export const UploadImages = ({ images, setImages }) => {
               alt={image.name}
               style={{
                 width: '100%',
-                maxHeight: '148px',
+                maxHeight: direction == 'row' ? '120px' : '148px',
                 objectFit: 'cover',
                 borderRadius: '4px',
               }}

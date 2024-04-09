@@ -3,7 +3,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Link } from 'react-router-dom';
 
-export const MapSolContactos = ({ contacto, onClick }) => {
+export const CardSolContactos = ({ contacto, onClick }) => {
   let timestamp = contacto.fechaCreacion;
   let date = new Date(timestamp);
   const contactoMap = {

@@ -80,7 +80,8 @@ export const FormPublicaciones = ({ publicacion }) => {
           gap: '16px',
           width: '100%',
           maxWidth: '600px',
-          margin: 'auto',
+          margin: '0 auto',
+          padding: '0',
         }}>
         <TextField
           fullWidth
@@ -246,6 +247,7 @@ export const FormPublicaciones = ({ publicacion }) => {
         <UploadImages
           images={images}
           setImages={setImages}
+          direction={'column'}
         />
 
         <Button

@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Typography, Button } from '@mui/material';
 
-export const ButtonBlue = ({ link, text, width = 'fitContent',onClick = null }) => {
+export const ButtonBlue = ({
+  link,
+  text,
+  width = 'fitContent',
+  onClick = null,
+}) => {
   //Me encantaria crear un tipo para width que pueda ser 'fitContent' o '100%'
   return (
     <Link
@@ -18,6 +23,7 @@ export const ButtonBlue = ({ link, text, width = 'fitContent',onClick = null }) 
         sx={{
           minWidth: '140px',
           width: { width },
+          maxWidth: '500px',
           padding: '0 20px',
           height: '40px',
           my: '10px',

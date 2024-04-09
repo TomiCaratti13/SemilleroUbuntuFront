@@ -19,11 +19,11 @@ import { AdminPublicaciones } from './views/Admin/AdminPublicaciones.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
 import { RutaAdmin } from './views/Admin/components/RutaAdmin.jsx';
 
-import { AdminMicro } from './views/Admin/AdminMicro.jsx';
-import { MapAdminMicros } from './views/Admin/Microemprendimientos/MapAdminMicros.jsx';
-import { EditarMicro } from './views/Admin/Microemprendimientos/EditarMicro.jsx';
-import { CargarMicro } from './views/Admin/Microemprendimientos/CargarMicro.jsx';
-import { MostrarMicro } from './views/Admin/Microemprendimientos/MostrarMicro.jsx';
+// import { AdminMicro } from './views/Admin/AdminMicro.jsx';
+// import { MapAdminMicros } from './views/Admin/Microemprendimientos/MapAdminMicros.jsx';
+// import { EditarMicro } from './views/Admin/Microemprendimientos/EditarMicro.jsx';
+// import { CargarMicro } from './views/Admin/Microemprendimientos/CargarMicro.jsx';
+// import { MostrarMicro } from './views/Admin/Microemprendimientos/MostrarMicro.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -74,7 +74,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 element={<AdminMicroemprendimientos />}
               />
               {/* Rutas de Microemprendimientos para cargar componentes */}
-              <Route
+              {/* <Route
                 path="Admin/microemprendimientos2"
                 element={<AdminMicro />}>
                 <Route
@@ -92,7 +92,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   path="crear"
                   element={<CargarMicro />}
                 />
-              </Route>
+              </Route> */}
               <Route
                 path="Admin/contactos"
                 element={<AdminContactos />}
