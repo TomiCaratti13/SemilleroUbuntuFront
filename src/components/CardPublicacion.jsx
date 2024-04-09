@@ -164,6 +164,7 @@ export default function CardPublicacion({
                         textTransform: 'none',
                         color: 'negro.main',
                         width: '200px',
+                        borderRadius: '0',
                         '&:hover': {
                           bgcolor: 'gris.claro',
                         },
@@ -179,6 +180,7 @@ export default function CardPublicacion({
                         lineHeight: '25px',
                         textTransform: 'none',
                         color: 'negro.main',
+                        borderRadius: '0 0 4px 4px',
                         '&:hover': {
                           bgcolor: 'gris.claro',
                         },

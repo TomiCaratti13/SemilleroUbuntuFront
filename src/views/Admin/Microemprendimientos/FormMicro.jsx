@@ -18,7 +18,7 @@ import { UploadImages } from '../components/UploadImages';
 import formMicros from '../../../utils/schemas/schemaFormMicros';
 import categoriasAPI from '../../../utils/mocks/Categorias.json';
 
-export const FormMicro = ({ microemprendmiento }) => {
+export const FormMicro = ({ microemprendimiento }) => {
   const [images, setImages] = useState([]);
   // Array Pais
   const paisAPI = [
@@ -55,14 +55,14 @@ export const FormMicro = ({ microemprendmiento }) => {
 
   const formik = useFormik({
     initialValues: {
-      nombre: '',
-      categoria: '',
-      subcategoria: '',
-      pais: '',
-      provincia: '',
-      ciudad: '',
-      descripcion: '',
-      masInfo: '',
+      nombre: microemprendimiento.title || '',
+      categoria: microemprendimiento.category || '',
+      subcategoria: microemprendimiento.subcategory || '',
+      pais: microemprendimiento.pais || '',
+      provincia: microemprendimiento.provincia || '',
+      ciudad: microemprendimiento.ciudad || '',
+      descripcion: microemprendimiento.descripcion || '',
+      masInfo: microemprendimiento.masInfo || '',
     },
     validationSchema: formMicros,
     onSubmit: formData => {

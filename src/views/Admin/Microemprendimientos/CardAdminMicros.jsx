@@ -178,6 +178,7 @@ export const CardAdminMicros = ({
                         textTransform: 'none',
                         color: 'negro.main',
                         width: '200px',
+                        borderRadius: '0',
                         '&:hover': {
                           bgcolor: 'gris.claro',
                         },
@@ -193,6 +194,7 @@ export const CardAdminMicros = ({
                         lineHeight: '25px',
                         textTransform: 'none',
                         color: 'negro.main',
+                        borderRadius: '0 0 4px 4px',
                         '&:hover': {
                           bgcolor: 'gris.claro',
                         },

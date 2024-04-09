@@ -30,7 +30,6 @@ export const AdminMicroemprendimientos = () => {
   const handdleCrear = () => {
     setEditar([]);
     setCrear(true);
-    console.log('crear', crear);
   };
 
   useEffect(() => {
@@ -106,17 +105,6 @@ export const AdminMicroemprendimientos = () => {
               width="100%"
               onClick={handdleCrear}
             />
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: '22px',
-                lineHeight: '25px',
-                fontWeight: 600,
-                textAlign: 'center',
-                width: '100%',
-              }}>
-              Microemprendimientos Cargados
-            </Typography>
             {Microemprendimientos.map((microemprendimiento, index) => (
               <CardAdminMicros
                 key={index}
