@@ -10,6 +10,7 @@ export const AlertModal = ({
   setSelectedContacto,
   setValue,
   setCrear,
+  setEditar,
 }) => {
   return (
     <div>
@@ -98,6 +99,7 @@ export const AlertModal = ({
                 if (setSelectedContacto) setSelectedContacto(null);
                 if (setValue) setValue('1');
                 if (setCrear) setCrear(false);
+                if (setEditar) setEditar([]);
                 closeAlert(returnTo);
               }}>
               {alert.icon ? 'Aceptar' : 'Cancelar'}

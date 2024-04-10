@@ -40,7 +40,10 @@ export const AdminPublicaciones = () => {
       }}>
       <Typography
         variant="h4"
-        onClick={() => setCrear(false)}
+        onClick={() => {
+          setCrear(false);
+          setEditar([]);
+        }}
         sx={{
           fontSize: '28px',
           lineHeight: '35px',
@@ -83,6 +86,7 @@ export const AdminPublicaciones = () => {
             <FormPublicaciones
               publicacion={editar}
               setCrear={setCrear}
+              setEditar={setEditar}
             />
           </>
         ) : (

@@ -158,8 +158,7 @@ export const UploadImages = ({
               maxWidth: '400px',
             }}>
             <img
-              src={URL.createObjectURL(image)}
-              alt={image.name}
+              src={image.cloudinaryUrl || URL.createObjectURL(image)}
               style={{
                 width: '100%',
                 maxHeight: direction == 'row' ? '120px' : '148px',

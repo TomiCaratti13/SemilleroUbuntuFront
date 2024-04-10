@@ -8,12 +8,151 @@ import { UploadImages } from '../components/UploadImages';
 import {
   postFormularioPublicacion,
   postImagenesPublicacion,
+  putFormularioPublicacion,
+  putImagenesPublicacion,
 } from '../../../utils/services/axiosConfig';
 import { useSnackbar } from 'notistack';
 
 const MAX_SIZE = 3 * 1024 * 1024; // 3 MB
 
-export const FormPublicaciones = ({ publicacion, setCrear }) => {
+export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
+  const crearPublicacion = async (formEnviar, images) => {
+    //Crear publicacion
+    postFormularioPublicacion(formEnviar)
+      .then(response => {
+        if (response && response.status === 200) {
+          //ENVIO ARRAY DE IMAGENES
+          const formImages = new FormData();
+          images.forEach((image, index) => {
+            formImages.append('imagenes', image, `image-${index}`);
+          });
+          // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
+          Promise.all(formImages.getAll('imagenes')).then(() => {
+            postImagenesPublicacion(formImages, response.data.body.id)
+              .then(response => {
+                if (response && response.status === 200) {
+                  openAlert(
+                    true,
+                    'Publicación creada',
+                    'La publicación se ha creado correctamente'
+                  );
+                } else {
+                  openAlert(
+                    false,
+                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    `Por favor, volvé a intentarlo`
+                  );
+                }
+              })
+              .catch(error => {
+                // Hubo un error al subir una o más imágenes
+                console.error('Error al enviar el formulario:', error);
+                openAlert(
+                  false,
+                  'Lo sentimos, la Publicación no pudo ser creada.',
+                  `Por favor, volvé a intentarlo`
+                );
+              });
+          });
+        } else {
+          openAlert(
+            false,
+            'Lo sentimos, la Publicación no pudo ser creada.',
+            `Por favor, volvé a intentarlo`
+          );
+        }
+      })
+      .catch(error => {
+        // Hubo un error al enviar el formulario
+        console.error('Error al enviar el formulario:', error);
+        openAlert(
+          false,
+          'Lo sentimos, la Publicación no pudo ser creada.',
+          `Por favor, volvé a intentarlo`
+        );
+      });
+  };
+
+  const editarPublicacion = async (formEnviar, images, idPubli) => {
+    //Editar publicacion
+    putFormularioPublicacion(formEnviar, idPubli)
+      .then(response => {
+        if (response && response.status === 200) {
+          //ENVIO ARRAY DE IMAGENES
+          const formImages = new FormData();
+
+          // Creamos un array para almacenar todas las promesas
+          const promises = [];
+
+          images.forEach((image, index) => {
+            if (image instanceof File) {
+              formImages.append('imagenes', image, `image-${index}`);
+            } else if (image.cloudinaryUrl) {
+              // Agregamos la promesa al array
+              promises.push(
+                fetch(image.cloudinaryUrl)
+                  .then(response => response.blob())
+                  .then(blob => {
+                    const file = new File([blob], `image-${index}.jpg`, {
+                      type: 'image/jpeg',
+                    });
+                    formImages.append('imagenes', file, `image-${index}`);
+                  })
+              );
+            }
+          });
+
+          // Esperamos a que todas las promesas se resuelvan
+          Promise.all(promises).then(() => {
+            console.log('FormImages', formImages.getAll('imagenes'));
+          });
+          // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
+          Promise.all(promises).then(() => {
+            putImagenesPublicacion(formImages, idPubli)
+              .then(response => {
+                if (response && response.status === 200) {
+                  openAlert(
+                    true,
+                    'Publicación creada',
+                    'La publicación se ha creado correctamente'
+                  );
+                } else {
+                  openAlert(
+                    false,
+                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    `Por favor, volvé a intentarlo`
+                  );
+                }
+              })
+              .catch(error => {
+                // Hubo un error al subir una o más imágenes
+                console.error('Error al enviar el formulario:', error);
+                openAlert(
+                  false,
+                  'Lo sentimos, la Publicación no pudo ser creada.',
+                  `Por favor, volvé a intentarlo`
+                );
+              });
+          });
+        } else {
+          openAlert(
+            false,
+            'Lo sentimos, la Publicación no pudo ser creada.',
+            `Por favor, volvé a intentarlo`
+          );
+        }
+      })
+      .catch(error => {
+        // Hubo un error al enviar el formulario
+        console.error('Error al enviar el formulario:', error);
+        openAlert(
+          false,
+          'Lo sentimos, la Publicación no pudo ser creada.',
+          `Por favor, volvé a intentarlo`
+        );
+      });
+  };
+
   //Manejar alertas Snackbar
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = (mensaje, color) => {
@@ -51,96 +190,11 @@ export const FormPublicaciones = ({ publicacion, setCrear }) => {
           descripcion: formData.contenido,
         };
 
-        postFormularioPublicacion(formEnviar)
-          .then(response => {
-            if (response && response.status === 200) {
-              //LLAMADO UNO POR UNO
-              //     // Crear un array de promesas para la subida de las imágenes
-              //     const uploadPromises = images.map((image, index) => {
-              //       // Verificar el tamaño de la imagen
-              //       if (image.size > MAX_SIZE) {
-              //         // La imagen es demasiado grande
-              //         throw new Error(
-              //           `La imagen ${
-              //             index + 1
-              //           } es demasiado grande. El tamaño máximo permitido es ${
-              //             MAX_SIZE / 1024 / 1024
-              //           } MB.`
-              //         );
-              //       }
-              //       const formData = new FormData();
-              //       formData.append('imagenes', image, `image-${index}`);
-              //       return postImagenesPublicacion(formData, response.data.body.id);
-              //     });
-              //     // Esperar a que todas las imágenes se hayan subido
-              //     Promise.all(uploadPromises)
-              //       .then(responses => {
-              //         // Todas las imágenes se han subido
-              //         if (responses && responses.length > 0) {
-              //           openAlert(
-              //             true,
-              //             'Publicación creada',
-              //             'La publicación se ha creado correctamente'
-              //           );
-              //         } else {
-              //           openAlert(
-              //             false,
-              //             'Error al enviar el formulario',
-              //             `Una imagen es demasiado grande. El tamaño máximo permitido es ${
-              //               MAX_SIZE / 1024 / 1024
-              //             } MB.`
-              //           );
-              //         }
-              //       })
-
-              //ENVIO ARRAY DE IMAGENES
-              const formImages = new FormData();
-              images.forEach((image, index) => {
-                formImages.append('imagenes', image, `image-${index}`);
-              });
-
-              postImagenesPublicacion(formImages, response.data.body.id)
-                .then(response => {
-                  if (response && response.status === 200) {
-                    openAlert(
-                      true,
-                      'Publicación creada',
-                      'La publicación se ha creado correctamente'
-                    );
-                  } else {
-                    openAlert(
-                      false,
-                      'Lo sentimos, la Publicación no pudo ser creada.',
-                      `Por favor, volvé a intentarlo`
-                    );
-                  }
-                })
-                .catch(error => {
-                  // Hubo un error al subir una o más imágenes
-                  console.error('Error al enviar el formulario:', error);
-                  openAlert(
-                    false,
-                    'Lo sentimos, la Publicación no pudo ser creada.',
-                    `Por favor, volvé a intentarlo`
-                  );
-                });
-            } else {
-              openAlert(
-                false,
-                'Lo sentimos, la Publicación no pudo ser creada.',
-                `Por favor, volvé a intentarlo`
-              );
-            }
-          })
-          .catch(error => {
-            // Hubo un error al enviar el formulario
-            console.error('Error al enviar el formulario:', error);
-            openAlert(
-              false,
-              'Lo sentimos, la Publicación no pudo ser creada.',
-              `Por favor, volvé a intentarlo`
-            );
-          });
+        {
+          publicacion.id !== undefined
+            ? editarPublicacion(formEnviar, formData.imagenes, publicacion.id)
+            : crearPublicacion(formEnviar, formData.imagenes);
+        }
 
         formik.setSubmitting(false);
       } catch (error) {
@@ -160,6 +214,7 @@ export const FormPublicaciones = ({ publicacion, setCrear }) => {
         resendAlert={resendAlert}
         alert={alertModal}
         setCrear={setCrear}
+        setEditar={setEditar}
       />
       <Container
         component="form"
@@ -368,7 +423,7 @@ export const FormPublicaciones = ({ publicacion, setCrear }) => {
               lineHeight: '30px',
               textAlign: 'center',
             }}>
-            Crear publicación
+            {publicacion.title ? 'Editar Publicación' : 'Crear Publicación'}
           </Typography>
         </Button>
       </Container>
