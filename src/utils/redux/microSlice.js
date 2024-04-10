@@ -7,16 +7,17 @@ export const microSlice = createSlice({
   },
   reducers: {
     addMicro: (state, action) => {
-      const { id, nombre, descripcion, masInformacion, rubro, subRubro, ubication, } = action.payload;
+      const { id, title, description, moreinfo, category, identifier, subcategory, ubication, } = action.payload;
       const existe = state.microLista.find(p => p.id === action.payload.id);
       if (!existe) {
         state.microLista.push({
           id: id,
-          title: nombre,
-          description: descripcion,
-          moreinfo: masInformacion,
-          category: rubro,
-          subcategory: subRubro,
+          title: title,
+          description: description,
+          moreinfo: moreinfo,
+          category: category,
+          identifier: identifier,
+          subcategory: subcategory,
           ubication: ubication,
         });
       }

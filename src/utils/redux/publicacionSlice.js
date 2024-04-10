@@ -8,8 +8,7 @@ export const publicacionSlice = createSlice({
   reducers: {
     addPublicacion: (state, action) => {
       const { id, title, description, date, visualizaciones } = action.payload;
-      const existe = state.publicacionLista?.find(p => p.id === action.payload.id
-      );
+      const existe = state.publicacionLista?.find(p => p.id === action.payload.id);
       if (!existe) {
         state.publicacionLista.push({
           id: id,

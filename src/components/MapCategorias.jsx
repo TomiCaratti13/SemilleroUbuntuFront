@@ -3,7 +3,6 @@ import CardCategoria from './CardCategoria';
 import { Container, Box } from '@mui/material';
 
 export const MapCategorias = ({ categorias }) => (
- 
   <Container
     sx={{
       display: 'flex',
@@ -13,12 +12,12 @@ export const MapCategorias = ({ categorias }) => (
       gap: '4px',
     }}>
     <Box>
-      {categorias.map((categorias, index) => (
+      {categorias?.map((categoria, index) => (
         <CardCategoria
           key={index}
-          title={categorias.title}
-          identifier={categorias.identifier}
-          img={categorias.img}
+          title={categoria.title}
+          identifier={categoria.identifier}
+          img={categoria.img}
         />
       ))}
     </Box>

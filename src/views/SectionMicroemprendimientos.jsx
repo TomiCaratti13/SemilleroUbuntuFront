@@ -3,12 +3,12 @@ import { Typography, Box } from '@mui/material';
 import { VectorGreen } from '../components/VectorGreen';
 import { MapCategorias } from '../components/MapCategorias';
 import { MapMicroemprendimientos } from '../components/MapMicroemprendmientos';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useCategorias } from '../utils/hooks/useCategorias';
 import { useMicro } from '../utils/hooks/useMicro';
 
-const heroPublicaciones = {
+const heroMicroemprendimiento = {
   category: 'MICROEMPRENDIMIENTOS',
   title: 'Invertí sostenible',
   description:
@@ -17,28 +17,27 @@ const heroPublicaciones = {
 };
 
 export const SectionMicroemprendmientos = () => {
-  
-  const categorias = useCategorias();
-  const Microemprendimientos = useMicro();
-  console.log(Microemprendimientos);
 
-  const [categoryURL, setCategoryURL] = useState('');
+  const categorias = useCategorias();
+  const microemprendimientos = useMicro();
   const { categoryUrl } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-
-  //Se busca en la lista de categorías la que coincida con el identificador de la url y se setea la categoria en el estado categoryURL
-  useEffect(() => {
-    setCategoryURL('');
+  const getTitle = () => {
     if (categoryUrl !== 'categorias') {
-      const category = categorias.filter(
+      const category = categorias.find(
         categoria => categoria.identifier === categoryUrl
-      )[0];
-      setCategoryURL({ ...category });
+      );
+      return category ? category.title : '';
     }
-  }, [categoryUrl, location.pathname]);
+    return '';
+  }
 
+  const title = getTitle(categoryUrl);
+
+  useEffect(() => {
+  }, [categoryUrl, location.pathname]);
 
   return (
     <Box
@@ -52,10 +51,10 @@ export const SectionMicroemprendmientos = () => {
         paddingBottom: '30px',
       }}>
       <SectionHero
-        category={heroPublicaciones.category}
-        title={heroPublicaciones.title}
-        description={heroPublicaciones.description}
-        img={heroPublicaciones.img}
+        category={heroMicroemprendimiento.category}
+        title={heroMicroemprendimiento.title}
+        description={heroMicroemprendimiento.description}
+        img={heroMicroemprendimiento.img}
       />
       <Box
         sx={{
@@ -68,7 +67,6 @@ export const SectionMicroemprendmientos = () => {
         }}>
         <Typography
           onClick={() => {
-            setCategoryURL('');
             navigate('/microemprendimientos/categorias');
           }}
           variant="h4"
@@ -81,12 +79,9 @@ export const SectionMicroemprendmientos = () => {
           }}>
           Categorías
         </Typography>
-        <VectorGreen text={categoryURL === '' ? false : true} />
-        {location.pathname === '/microemprendimientos/categorias' ||
-        categoryURL === '' ? (
-          <>
-            <MapCategorias categorias={categorias} />
-          </>
+        <VectorGreen text={location.pathname === '/microemprendimientos/categorias' ? false : true} />
+        {location.pathname === '/microemprendimientos/categorias' ? (
+          <MapCategorias categorias={categorias} />
         ) : (
           <Box
             sx={{
@@ -107,24 +102,11 @@ export const SectionMicroemprendmientos = () => {
                 color: 'azul.main',
                 textWrap: 'balance',
               }}>
-              {categoryURL.title}
-            </Typography>
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: '16px',
-                lineHeight: '25px',
-                fontWeight: 400,
-                textAlign: 'center',
-                width: '100%',
-                padding: '0 16px',
-              }}>
-              {categoryURL.description}
+              {title}
             </Typography>
             <MapMicroemprendimientos
-              microemprendimientos={Microemprendimientos.filter(
-                microemprendimiento =>
-                  microemprendimiento.category === categoryURL.title
+              microemprendimientos={microemprendimientos.filter(
+                microemprendimiento => microemprendimiento.identifier === categoryUrl
               )}
             />
           </Box>
