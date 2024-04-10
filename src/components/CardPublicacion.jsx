@@ -152,7 +152,6 @@ export default function CardPublicacion({
                     }}>
                     <Button
                       onClick={() => {
-                        console.log('Publicaciones en card', publicacion);
                         setEditar(publicacion);
                       }}
                       sx={{
@@ -194,14 +193,7 @@ export default function CardPublicacion({
           </>
         )}
       </Box>
-      <SliderSwipper
-        // imgs={[publicacion.img0, publicacion.img1, publicacion.img2]}
-        imgs={[
-          '/publicacion1.webp',
-          '/publicacion2.webp',
-          '/publicacion3.webp',
-        ]}
-      />
+      <SliderSwipper imgs={publicacion.imagenes} />
       <CardContent style={{ paddingBottom: 0 }}>
         <Typography
           variant="body2"

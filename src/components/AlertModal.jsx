@@ -9,6 +9,7 @@ export const AlertModal = ({
   returnTo,
   setSelectedContacto,
   setValue,
+  setCrear,
 }) => {
   return (
     <div>
@@ -94,10 +95,9 @@ export const AlertModal = ({
                 },
               }}
               onClick={() => {
-                if (setSelectedContacto && setValue) {
-                  setSelectedContacto(null);
-                  setValue('1');
-                }
+                if (setSelectedContacto) setSelectedContacto(null);
+                if (setValue) setValue('1');
+                if (setCrear) setCrear(false);
                 closeAlert(returnTo);
               }}>
               {alert.icon ? 'Aceptar' : 'Cancelar'}

@@ -1,61 +1,150 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useAlertModal } from '../../../utils/hooks/useAlertModal';
 import { AlertModal } from '../../../components/AlertModal';
 import formPublicaciones from '../../../utils/schemas/schemaFormPublicaciones';
 import { UploadImages } from '../components/UploadImages';
+import {
+  postFormularioPublicacion,
+  postImagenesPublicacion,
+} from '../../../utils/services/axiosConfig';
+import { useSnackbar } from 'notistack';
 
-export const FormPublicaciones = ({ publicacion }) => {
-  const [images, setImages] = useState(publicacion.images || []);
+const MAX_SIZE = 3 * 1024 * 1024; // 3 MB
+
+export const FormPublicaciones = ({ publicacion, setCrear }) => {
+  //Manejar alertas Snackbar
+  const { enqueueSnackbar } = useSnackbar();
+  const handleAlert = (mensaje, color) => {
+    enqueueSnackbar(mensaje, {
+      variant: color,
+    });
+  };
+
+  const [images, setImages] = useState(publicacion.imagenes || []);
+
+  useEffect(() => {
+    formik.setFieldValue('imagenes', images);
+  }, [images]);
 
   const formik = useFormik({
     initialValues: {
       titulo: publicacion.title || '',
       contenido: publicacion.description || '',
+      imagenes: images,
     },
     validationSchema: formPublicaciones,
-    onSubmit: formData => {
+    onSubmit: async formData => {
       try {
         formik.setSubmitting(true);
 
+        // Verificar que se haya subido al menos una imagen
+        if (formData.imagenes.length === 0) {
+          handleAlert('Debes subir al menos una imagen', 'error');
+          formik.setSubmitting(false);
+          return;
+        }
+
         const formEnviar = {
+          titulo: formData.titulo,
           descripcion: formData.contenido,
-          usuarioSolicitante: {
-            titulo: formData.titulo,
-          },
         };
 
-        enviarFormularioPublis(formEnviar, idMic)
+        postFormularioPublicacion(formEnviar)
           .then(response => {
-            //MANEJO DE ALERTAS
             if (response && response.status === 200) {
-              openAlert(
-                true,
-                'Formulario enviado con éxito',
-                'Gracias por contactarnos, nos comunicaremos en breve'
-              );
+              //LLAMADO UNO POR UNO
+              //     // Crear un array de promesas para la subida de las imágenes
+              //     const uploadPromises = images.map((image, index) => {
+              //       // Verificar el tamaño de la imagen
+              //       if (image.size > MAX_SIZE) {
+              //         // La imagen es demasiado grande
+              //         throw new Error(
+              //           `La imagen ${
+              //             index + 1
+              //           } es demasiado grande. El tamaño máximo permitido es ${
+              //             MAX_SIZE / 1024 / 1024
+              //           } MB.`
+              //         );
+              //       }
+              //       const formData = new FormData();
+              //       formData.append('imagenes', image, `image-${index}`);
+              //       return postImagenesPublicacion(formData, response.data.body.id);
+              //     });
+              //     // Esperar a que todas las imágenes se hayan subido
+              //     Promise.all(uploadPromises)
+              //       .then(responses => {
+              //         // Todas las imágenes se han subido
+              //         if (responses && responses.length > 0) {
+              //           openAlert(
+              //             true,
+              //             'Publicación creada',
+              //             'La publicación se ha creado correctamente'
+              //           );
+              //         } else {
+              //           openAlert(
+              //             false,
+              //             'Error al enviar el formulario',
+              //             `Una imagen es demasiado grande. El tamaño máximo permitido es ${
+              //               MAX_SIZE / 1024 / 1024
+              //             } MB.`
+              //           );
+              //         }
+              //       })
+
+              //ENVIO ARRAY DE IMAGENES
+              const formImages = new FormData();
+              images.forEach((image, index) => {
+                formImages.append('imagenes', image, `image-${index}`);
+              });
+
+              postImagenesPublicacion(formImages, response.data.body.id)
+                .then(response => {
+                  if (response && response.status === 200) {
+                    openAlert(
+                      true,
+                      'Publicación creada',
+                      'La publicación se ha creado correctamente'
+                    );
+                  } else {
+                    openAlert(
+                      false,
+                      'Lo sentimos, la Publicación no pudo ser creada.',
+                      `Por favor, volvé a intentarlo`
+                    );
+                  }
+                })
+                .catch(error => {
+                  // Hubo un error al subir una o más imágenes
+                  console.error('Error al enviar el formulario:', error);
+                  openAlert(
+                    false,
+                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    `Por favor, volvé a intentarlo`
+                  );
+                });
             } else {
               openAlert(
                 false,
-                'Error al enviar el formulario',
-                'Por favor, volvé a intentarlo'
+                'Lo sentimos, la Publicación no pudo ser creada.',
+                `Por favor, volvé a intentarlo`
               );
             }
           })
           .catch(error => {
+            // Hubo un error al enviar el formulario
             console.error('Error al enviar el formulario:', error);
             openAlert(
               false,
-              'Error al enviar el formulario',
-              'Por favor, volvé a intentarlo'
+              'Lo sentimos, la Publicación no pudo ser creada.',
+              `Por favor, volvé a intentarlo`
             );
           });
 
         formik.setSubmitting(false);
       } catch (error) {
         formik.setSubmitting(false);
-        console.log(error);
       }
     },
   });
@@ -70,6 +159,7 @@ export const FormPublicaciones = ({ publicacion }) => {
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
+        setCrear={setCrear}
       />
       <Container
         component="form"
@@ -168,6 +258,10 @@ export const FormPublicaciones = ({ publicacion }) => {
             error={formik.touched.contenido && Boolean(formik.errors.contenido)}
             helperText={formik.touched.contenido && formik.errors.contenido}
             sx={{
+              '& .MuiOutlinedInput-input': {
+                fontWeight: '400',
+              },
+
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#090909',
               },
@@ -248,6 +342,7 @@ export const FormPublicaciones = ({ publicacion }) => {
           images={images}
           setImages={setImages}
           direction={'column'}
+          maxSize={MAX_SIZE}
         />
 
         <Button

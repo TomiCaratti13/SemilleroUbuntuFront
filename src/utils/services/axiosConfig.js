@@ -9,8 +9,7 @@ const URL_SERVIDOR = axios.create({
 // Función para obtener las categorías
 export const getCategorias = async () => {
   try {
-    return URL_SERVIDOR.get(`/rubro/listarRubros`,
-    {
+    return URL_SERVIDOR.get(`/rubro/listarRubros`, {
       withCredentials: true,
     })
       .then(response => {
@@ -243,6 +242,64 @@ export const getPublisMes = async () => {
     )
       .then(response => {
         // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+export const postFormularioPublicacion = async formulario => {
+  try {
+    return URL_SERVIDOR.post(`/publicacion/save`, formulario, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor en POST PUBLICACIONES', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al enviar el formulario en axios:', error);
+  }
+};
+
+export const postImagenesPublicacion = async (imagenes, id) => {
+  try {
+    console.log('IMAGENES en post', imagenes);
+    return URL_SERVIDOR.post(`publicacion/${id}/imagenes`, imagenes, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then(response => {
+        console.log('Respuesta del servidor imagenes', response);
         return response;
       })
       .catch(error => {

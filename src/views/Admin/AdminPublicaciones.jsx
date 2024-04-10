@@ -2,26 +2,30 @@ import { Typography, Box } from '@mui/material';
 import { ButtonBlue } from '../../components/ButtonBlue';
 import { useEffect, useState } from 'react';
 import { MapPublicaciones } from '../../components/MapPublicaciones';
-import { usePublicaciones } from '../../utils/hooks/usePublicaciones';
 import { FormPublicaciones } from './Publicaciones/FormPublicaciones';
+import { servicePublicaciones } from '../../utils/services/servicePublicaciones';
 
 export const AdminPublicaciones = () => {
   const [crear, setCrear] = useState(false);
   const [editar, setEditar] = useState([]);
 
-  const publicaciones = usePublicaciones();
+  // const publicaciones = usePublicaciones();
+  const [publicaciones, setPublicaciones] = useState([]);
 
   const handdleCrear = () => {
     setEditar([]);
     setCrear(true);
-    console.log('crear', crear);
   };
 
   useEffect(() => {
+    //Llamo al servicio sin pasar por el hook
+    servicePublicaciones().then(publicaciones => {
+      setPublicaciones(publicaciones);
+    });
     if (editar.length !== 0) {
       setCrear(true);
     }
-  }, [editar]);
+  }, [editar, crear]);
 
   return (
     <Box
@@ -76,7 +80,10 @@ export const AdminPublicaciones = () => {
                 ? 'Modificá los datos de la publicación'
                 : 'Completá los datos para crear una nueva publicación'}
             </Typography>
-            <FormPublicaciones publicacion={editar} />
+            <FormPublicaciones
+              publicacion={editar}
+              setCrear={setCrear}
+            />
           </>
         ) : (
           <>

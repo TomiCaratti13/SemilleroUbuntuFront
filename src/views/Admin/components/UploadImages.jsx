@@ -7,8 +7,9 @@ export const UploadImages = ({
   setImages,
   direction,
   zoom = false,
+  maxSize = 3000000,
 }) => {
-  //Manejar alertas
+  //Manejar alertasSnackbar
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = (mensaje, color) => {
     enqueueSnackbar(mensaje, {
@@ -19,7 +20,7 @@ export const UploadImages = ({
   const handleUploadImage = e => {
     if (e.target.files && images.length <= 2) {
       const selectedImages = Array.from(e.target.files);
-      if (selectedImages.every(file => file.size <= 3000000)) {
+      if (selectedImages.every(file => file.size <= maxSize)) {
         for (let i = 0; i < selectedImages.length; i++) {
           if (images.some(image => image.name === selectedImages[i].name)) {
             handleAlert('Imágen ya existente', 'warning');
@@ -29,7 +30,12 @@ export const UploadImages = ({
         setImages([...images, ...selectedImages]);
         handleAlert('Imágen subida correctamente', 'success');
       } else {
-        handleAlert('Cada imágenes debe ser de 3MB o menos', 'error');
+        handleAlert(
+          `La imágen debe tener un tamaño de ${
+            maxSize / 1024 / 1024
+          }MB o menos`,
+          'error'
+        );
       }
     } else {
       handleAlert('Puedes seleccionar hasta 3 imágenes', 'error');
@@ -47,7 +53,7 @@ export const UploadImages = ({
     tempFileInput.onchange = e => {
       if (e.target.files && e.target.files.length === 1) {
         const file = e.target.files[0];
-        if (file.size <= 3000000) {
+        if (file.size <= maxSize) {
           if (
             images.some((image, i) => i !== index && image.name === file.name)
           ) {
