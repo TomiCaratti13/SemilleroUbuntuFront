@@ -5,14 +5,13 @@ import { getCategorias } from "./axiosConfig";
 export const serviceCategorias = async () => {
   const CategoriasStorage = store.getState().category.categoryLista;
 
-  const limpiarNombreCategoria = (nombre) => {
-    const nombreLimpio = nombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const primeraPalabra = nombreLimpio.split(' ')[0];
-    const primeraPalabraMinuscula = primeraPalabra.toLowerCase();
-    const primeraPalabraSinÑ = primeraPalabraMinuscula.replace(/ñ/g, 'n');
-    const primeraPalabraSinBarra = primeraPalabraSinÑ.split('/')[0];
-    console.log(primeraPalabraSinBarra)
-    return primeraPalabraSinBarra;
+  const generarIdentifier = (nombre) => {
+    const normalizado = nombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const primera = normalizado.split(' ')[0];
+    const sinBarra = primera.split('/')[0];
+    const minuscula = sinBarra.toLowerCase();
+    const sinÑ = minuscula.replace(/ñ/g, 'n');
+    return sinÑ;
   };
 
   if (CategoriasStorage.length === 0) {
@@ -20,7 +19,7 @@ export const serviceCategorias = async () => {
     const CategoriasAPI = await getCategorias();
 
     const CategoriasRedux = CategoriasAPI?.map(categoria => {
-      const identifier = limpiarNombreCategoria(categoria.nombre);
+      const identifier = generarIdentifier(categoria.nombre);
       return {
         id: categoria.id,
         title: categoria.nombre,

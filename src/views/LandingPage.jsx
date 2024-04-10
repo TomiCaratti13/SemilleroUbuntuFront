@@ -1,4 +1,4 @@
-import categoriasAPI from '../utils/mocks/Categorias.json';
+
 import Objetivos from '../components/Objetivos';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
