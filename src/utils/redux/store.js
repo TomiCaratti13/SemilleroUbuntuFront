@@ -5,7 +5,7 @@ import userReducer from './userSlice';
 import tokenReducer from './tokenSlice';
 import categoryReducer from './categorySlice';
 import publicacionReducer from './publicacionSlice';
-// import microReducer from './microSlice';
+import microReducer from './microSlice';
 
 const userPersistConfig = {
   key: 'user',
@@ -27,16 +27,16 @@ const publicacionPersistConfig = {
   storage,
 };
 
+const microPersistConfig = {
+  key: 'microemprendimiento',
+  storage,
+};
+
 const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
 const persistedTokenReducer = persistReducer(tokenPersistConfig, tokenReducer);
-const persistedCategoryReducer = persistReducer(
-  categoryPersistConfig,
-  categoryReducer
-);
-const persistedPublicacionReducer = persistReducer(
-  publicacionPersistConfig,
-  publicacionReducer
-);
+const persistedCategoryReducer = persistReducer(categoryPersistConfig,categoryReducer);
+const persistedPublicacionReducer = persistReducer(publicacionPersistConfig,publicacionReducer);
+const persistedMicroReducer = persistReducer(microPersistConfig, microReducer);
 
 export const store = configureStore({
   reducer: {
@@ -44,6 +44,7 @@ export const store = configureStore({
     token: persistedTokenReducer,
     category: persistedCategoryReducer,
     publicacion: persistedPublicacionReducer,
+    microemprendimiento: persistedMicroReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
