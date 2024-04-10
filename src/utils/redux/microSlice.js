@@ -22,8 +22,11 @@ export const microSlice = createSlice({
         });
       }
     },
+    clearMicro: (state) => {
+      state.microLista = [];
+    },
   },
 });
 
-export const { addMicro } = microSlice.actions;
+export const { addMicro , clearMicro } = microSlice.actions;
 export default microSlice.reducer;
