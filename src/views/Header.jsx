@@ -225,7 +225,7 @@ function Header(props) {
                 </Link>
               ))}
               <Link
-                to="/login"
+                to={user.isAdmin ? '/Admin' : '/login'}
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',
