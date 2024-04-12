@@ -1,33 +1,17 @@
 import { Typography, Box } from '@mui/material';
 import { ButtonBlue } from '../../components/ButtonBlue';
 import { useEffect, useState } from 'react';
-import { MapMicroemprendimientos } from '../../components/MapMicroemprendmientos';
 import { FormMicro } from './Microemprendimientos/FormMicro';
-
-import microemprendmietosAPI from '../../utils/mocks/Microemprendimientos.json';
 import { CardAdminMicros } from './Microemprendimientos/CardAdminMicros';
 import { VerMicro } from './Microemprendimientos/VerMicro';
-
-//Preguntar si meter esto en redux para hacer menos llamadas a la api
-const Microemprendimientos = microemprendmietosAPI.map(microemprendimiento => {
-  return {
-    title: microemprendimiento.title,
-    category: microemprendimiento.category,
-    subcategory: microemprendimiento.subcategory,
-    ubication: microemprendimiento.ubication,
-    img0: microemprendimiento.img0,
-    img1: microemprendimiento.img1,
-    img2: microemprendimiento.img2,
-    description: microemprendimiento.description,
-    moreinfo: microemprendimiento.moreinfo,
-    id: microemprendimiento.id,
-  };
-});
+import { serviceMicro } from '../../utils/services/serviceMicro';
 
 export const AdminMicroemprendimientos = () => {
   const [crear, setCrear] = useState(false);
   const [editar, setEditar] = useState([]);
   const [ver, setVer] = useState([]);
+
+  const [microemprendimientos, setMicroemprendimientos] = useState([]);
 
   const handdleCrear = () => {
     setVer([]);
@@ -36,11 +20,15 @@ export const AdminMicroemprendimientos = () => {
   };
 
   useEffect(() => {
+    //Llamo al servicio sin pasar por el hook
+    serviceMicro().then(microemprendimientos => {
+      setMicroemprendimientos(microemprendimientos);
+    });
     if (editar.length !== 0) {
       setCrear(true);
       setVer([]);
     }
-  }, [editar]);
+  }, [editar, crear]);
 
   const [activePopperId, setActivePopperId] = useState(null);
 
@@ -61,6 +49,7 @@ export const AdminMicroemprendimientos = () => {
       <Typography
         variant="h4"
         onClick={() => {
+          setEditar([]);
           setCrear(false);
           setVer([]);
         }}
@@ -103,7 +92,11 @@ export const AdminMicroemprendimientos = () => {
                 ? 'Editá el formulario de carga del Microemprendmiento'
                 : 'Completá los datos para crear un nuevo Microemprendimiento'}
             </Typography>
-            <FormMicro microemprendimiento={editar} />
+            <FormMicro
+              microemprendimiento={editar}
+              setCrear={setCrear}
+              setEditar={setEditar}
+            />
           </>
         ) : ver.length === 0 ? (
           <>
@@ -112,17 +105,28 @@ export const AdminMicroemprendimientos = () => {
               width="100%"
               onClick={handdleCrear}
             />
-            {Microemprendimientos.map((microemprendimiento, index) => (
-              <CardAdminMicros
-                key={index}
-                microemprendimiento={microemprendimiento}
-                setEditar={setEditar}
-                setVer={setVer}
-                handlePopper={handlePopper}
-                isActive={activePopperId === microemprendimiento.id}
-                isAdmin={true}
-              />
-            ))}
+            <Box
+              sx={{
+                display: 'flex',
+                //Para ordenarlos de mas reciente a antiguo
+                flexDirection: 'column-reverse',
+                gap: '16px',
+                width: '100%',
+                height: '100%',
+                padding: '0',
+              }}>
+              {microemprendimientos.map((microemprendimiento, index) => (
+                <CardAdminMicros
+                  key={index}
+                  microemprendimiento={microemprendimiento}
+                  setEditar={setEditar}
+                  setVer={setVer}
+                  handlePopper={handlePopper}
+                  isActive={activePopperId === microemprendimiento.id}
+                  isAdmin={true}
+                />
+              ))}
+            </Box>
           </>
         ) : (
           <VerMicro

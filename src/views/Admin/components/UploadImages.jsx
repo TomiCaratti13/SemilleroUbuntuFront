@@ -2,12 +2,13 @@ import React, { useRef } from 'react';
 import { Button, Typography, Box } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
+const MAX_SIZE_IMAGE = 3 * 1024 * 1024; // 3 MB
+
 export const UploadImages = ({
   images,
   setImages,
   direction,
   zoom = false,
-  maxSize = 3000000,
 }) => {
   //Manejar alertasSnackbar
   const { enqueueSnackbar } = useSnackbar();
@@ -20,7 +21,7 @@ export const UploadImages = ({
   const handleUploadImage = e => {
     if (e.target.files && images.length <= 2) {
       const selectedImages = Array.from(e.target.files);
-      if (selectedImages.every(file => file.size <= maxSize)) {
+      if (selectedImages.every(file => file.size <= MAX_SIZE_IMAGE)) {
         for (let i = 0; i < selectedImages.length; i++) {
           if (images.some(image => image.name === selectedImages[i].name)) {
             handleAlert('Imágen ya existente', 'warning');
@@ -32,7 +33,7 @@ export const UploadImages = ({
       } else {
         handleAlert(
           `La imágen debe tener un tamaño de ${
-            maxSize / 1024 / 1024
+            MAX_SIZE_IMAGE / 1024 / 1024
           }MB o menos`,
           'error'
         );
@@ -53,7 +54,7 @@ export const UploadImages = ({
     tempFileInput.onchange = e => {
       if (e.target.files && e.target.files.length === 1) {
         const file = e.target.files[0];
-        if (file.size <= maxSize) {
+        if (file.size <= MAX_SIZE_IMAGE) {
           if (
             images.some((image, i) => i !== index && image.name === file.name)
           ) {

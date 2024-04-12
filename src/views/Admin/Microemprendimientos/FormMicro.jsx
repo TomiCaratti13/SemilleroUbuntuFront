@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -16,91 +16,258 @@ import { useAlertModal } from '../../../utils/hooks/useAlertModal';
 import { AlertModal } from '../../../components/AlertModal';
 import { UploadImages } from '../components/UploadImages';
 import formMicros from '../../../utils/schemas/schemaFormMicros';
-import categoriasAPI from '../../../utils/mocks/Categorias.json';
+import {
+  getAllProvincias,
+  getCategorias,
+  getPais,
+  getProvinciasPais,
+  postFormularioMicro,
+  postImagenesMicro,
+  putFormularioMicro,
+  putImagenesMicro,
+} from '../../../utils/services/axiosConfig';
+import { useSnackbar } from 'notistack';
 
-export const FormMicro = ({ microemprendimiento }) => {
-  const [images, setImages] = useState([]);
-  // Array Pais
-  const paisAPI = [
-    {
-      id: 1,
-      nombre: 'Argentina',
-    },
-    { id: 2, nombre: 'Brasil' },
-    { id: 3, nombre: 'Chile' },
-    { id: 4, nombre: 'Uruguay' },
-  ];
-  const [pais, setPais] = useState('');
-  const handlePais = event => {
-    setPais(event.target.value);
+export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
+  const crearMicro = async (formEnviar, images, paisId, provinciaId) => {
+    //Crear publicacion
+    postFormularioMicro(formEnviar, paisId, provinciaId)
+      .then(response => {
+        if (response && (response.status === 200 || response.status === 201)) {
+          //ENVIO ARRAY DE IMAGENES
+          const formImages = new FormData();
+          images.forEach((image, index) => {
+            formImages.append('imagenes', image, `image-${index}`);
+          });
+          // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
+          Promise.all(formImages.getAll('imagenes')).then(() => {
+            postImagenesMicro(formImages, response.data)
+              .then(response => {
+                if (
+                  response &&
+                  (response.status === 200 || response.status === 201)
+                ) {
+                  openAlert(
+                    true,
+                    'Publicación creada',
+                    'La publicación se ha creado correctamente'
+                  );
+                } else {
+                  openAlert(
+                    false,
+                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    `Por favor, volvé a intentarlo`
+                  );
+                }
+              })
+              .catch(error => {
+                // Hubo un error al subir una o más imágenes
+                console.error('Error al enviar el formulario:', error);
+                openAlert(
+                  false,
+                  'Lo sentimos, la Publicación no pudo ser creada.',
+                  `Por favor, volvé a intentarlo`
+                );
+              });
+          });
+        } else {
+          openAlert(
+            false,
+            'Lo sentimos, la Publicación no pudo ser creada.',
+            `Por favor, volvé a intentarlo`
+          );
+        }
+      })
+      .catch(error => {
+        // Hubo un error al enviar el formulario
+        console.error('Error al enviar el formulario:', error);
+        openAlert(
+          false,
+          'Lo sentimos, la Publicación no pudo ser creada.',
+          `Por favor, volvé a intentarlo`
+        );
+      });
   };
 
-  //Array Categorias importadas
-  const [categoria, setCategoria] = useState('');
-  const handleCategoria = event => {
-    setCategoria(event.target.value);
+  const editarMicro = async (formEnviar, images, idMicro) => {
+    //Editar publicacion
+    putFormularioMicro(formEnviar, idMicro)
+      .then(response => {
+        if (response && (response.status === 200 || response.status === 201)) {
+          //ENVIO ARRAY DE IMAGENES
+          const formImages = new FormData();
+
+          // Creamos un array para almacenar todas las promesas
+          const promises = [];
+
+          images.forEach((image, index) => {
+            if (image instanceof File) {
+              formImages.append('imagenes', image, `image-${index}`);
+            } else if (image.cloudinaryUrl) {
+              // Agregamos la promesa al array
+              promises.push(
+                fetch(image.cloudinaryUrl)
+                  .then(response => response.blob())
+                  .then(blob => {
+                    const file = new File([blob], `image-${index}.jpg`, {
+                      type: 'image/jpeg',
+                    });
+                    formImages.append('imagenes', file, `image-${index}`);
+                  })
+              );
+            }
+          });
+
+          // Esperamos a que todas las promesas se resuelvan
+          Promise.all(promises).then(() => {
+            console.log('FormImages', formImages.getAll('imagenes'));
+          });
+          // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
+          Promise.all(promises).then(() => {
+            putImagenesMicro(formImages, idMicro)
+              .then(response => {
+                if (
+                  response &&
+                  (response.status === 200 || response.status === 201)
+                ) {
+                  openAlert(
+                    true,
+                    'Publicación creada',
+                    'La publicación se ha creado correctamente'
+                  );
+                } else {
+                  openAlert(
+                    false,
+                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    `Por favor, volvé a intentarlo`
+                  );
+                }
+              })
+              .catch(error => {
+                // Hubo un error al subir una o más imágenes
+                console.error('Error al enviar el formulario:', error);
+                openAlert(
+                  false,
+                  'Lo sentimos, la Publicación no pudo ser creada.',
+                  `Por favor, volvé a intentarlo`
+                );
+              });
+          });
+        } else {
+          openAlert(
+            false,
+            'Lo sentimos, la Publicación no pudo ser creada.',
+            `Por favor, volvé a intentarlo`
+          );
+        }
+      })
+      .catch(error => {
+        // Hubo un error al enviar el formulario
+        console.error('Error al enviar el formulario:', error);
+        openAlert(
+          false,
+          'Lo sentimos, la Publicación no pudo ser creada.',
+          `Por favor, volvé a intentarlo`
+        );
+      });
+  };
+  //Manejar alertas Snackbar
+  const { enqueueSnackbar } = useSnackbar();
+  const handleAlert = (mensaje, color) => {
+    enqueueSnackbar(mensaje, {
+      variant: color,
+    });
   };
 
-  //Array Provincias importadas
-  const provinciasAPI = [
-    { id: 1, nombre: 'Buenos Aires' },
-    { id: 2, nombre: 'Córdoba' },
-    { id: 3, nombre: 'Santa Fe' },
-    { id: 4, nombre: 'Mendoza' },
-  ];
-  const [provincia, setProvincia] = useState('');
-  const handleProvincia = event => {
-    setProvincia(event.target.value);
-  };
+  //Llamar informacion de los selects
+  const [images, setImages] = useState(microemprendimiento.imagenes || []);
+  const [categorias, setCategorias] = useState([]);
+  const [paises, setPaises] = useState([]);
+  const [provincias, setProvincias] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [provinciasData, paisData, categoriasData] = await Promise.all([
+          getAllProvincias(),
+          getPais(),
+          getCategorias(),
+        ]);
+
+        setProvincias(provinciasData.data);
+        setPaises(paisData.data);
+        setCategorias(categoriasData);
+
+        if (microemprendimiento) {
+          if (categoriasData.length > 0) {
+            formik.setFieldValue('categoria', microemprendimiento.rubroId || "");
+          }
+          if (paisData.data.length > 0) {
+            formik.setFieldValue('pais', microemprendimiento.paisId || "");
+          }
+        }
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [microemprendimiento]);
+
+  useEffect(() => {
+    formik.setFieldValue('imagenes', images);
+  }, [images]);
 
   const formik = useFormik({
     initialValues: {
-      nombre: '' || microemprendimiento.title,
-      categoria: '' || microemprendimiento.category,
-      subcategoria: '' || microemprendimiento.subcategory,
-      pais: '' || microemprendimiento.pais,
-      provincia: '' || microemprendimiento.provincia,
-      ciudad: '' || microemprendimiento.ubication,
-      descripcion: '' || microemprendimiento.description,
-      masInfo: '' || microemprendimiento.moreinfo,
+      nombre: microemprendimiento.title || '',
+      categoria: '',
+      subcategoria: microemprendimiento.subcategory || '',
+      pais: '',
+      provincia: '',
+      ciudad: microemprendimiento.ciudad || '',
+      descripcion: microemprendimiento.description || '',
+      masInfo: microemprendimiento.moreinfo || '',
+      imagenes: images,
     },
     validationSchema: formMicros,
-    onSubmit: formData => {
+    onSubmit: async formData => {
+      console.log('Formulario', formData);
       try {
         formik.setSubmitting(true);
 
+        console.log('Enviando formulario');
+
+        // Verificar que se haya subido al menos una imagen
+        if (formData.imagenes.length <= 0) {
+          handleAlert('Debes subir al menos una imagen', 'error');
+          formik.setSubmitting(false);
+          return;
+        }
+
         const formEnviar = {
-          descripcion: formData.contenido,
-          usuarioSolicitante: {
-            nombre: formData.nombre,
+          nombre: formData.nombre,
+          descripcion: formData.descripcion,
+          masInformacion: formData.masInfo,
+          ciudad: formData.ciudad,
+          rubro: {
+            id: formData.categoria,
           },
+          subRubro: formData.subcategoria,
         };
 
-        enviarFormularioPublis(formEnviar, idMic)
-          .then(response => {
-            //MANEJO DE ALERTAS
-            if (response && response.status === 200) {
-              openAlert(
-                true,
-                'Formulario enviado con éxito',
-                'Gracias por contactarnos, nos comunicaremos en breve'
+        {
+          microemprendimiento.id
+            ? editarMicro(formEnviar, formData.imagenes, microemprendimiento.id)
+            : crearMicro(
+                formEnviar,
+                formData.imagenes,
+                formData.pais,
+                formData.provincia
               );
-            } else {
-              openAlert(
-                false,
-                'Error al enviar el formulario',
-                'Por favor, volvé a intentarlo'
-              );
-            }
-          })
-          .catch(error => {
-            console.error('Error al enviar el formulario:', error);
-            openAlert(
-              false,
-              'Error al enviar el formulario',
-              'Por favor, volvé a intentarlo'
-            );
-          });
+        }
 
         formik.setSubmitting(false);
       } catch (error) {
@@ -109,6 +276,20 @@ export const FormMicro = ({ microemprendimiento }) => {
       }
     },
   });
+
+  useEffect(() => {
+    if (formik.values.pais) {
+      getProvinciasPais(formik.values.pais).then(provincias => {
+        setProvincias(provincias.data);
+        //Verifica que haya micro, haya provincias, y el id de la provincia este en el array sino ""
+        if (microemprendimiento && provincias.data.length > 0 && provincias.data.find(provincia => provincia.id === microemprendimiento.provinciaId)) {
+          formik.setFieldValue('provincia', microemprendimiento.provinciaId);
+        } else {
+          formik.setFieldValue('provincia', '');
+        }
+      });
+    }
+  }, [formik.values.pais]);
 
   const [alertModal, openAlert, closeAlert, resendAlert] = useAlertModal(
     formik.handleSubmit
@@ -120,6 +301,8 @@ export const FormMicro = ({ microemprendimiento }) => {
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
+        setCrear={setCrear}
+        setEditar={setEditar}
       />
       <Container
         component="form"
@@ -239,25 +422,25 @@ export const FormMicro = ({ microemprendimiento }) => {
             id="demo-simple-select-label">
             Categoría*
           </InputLabel>
+          {/* {categorias.length > 0 && ( */}
           <Select
             labelId="demo-simple-select-label"
             id="categoria"
             name="categoria"
-            value={formik.values.categoria}
+            value={formik.values.categoria || ''}
             label="Categoría"
-            onChange={e => {
-              handleCategoria(e), formik.handleChange(e);
-            }}
+            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}>
-            {categoriasAPI.map(categoria => (
+            {categorias.map(categoria => (
               <MenuItem
-                key={categoria.identifier}
-                value={categoria.identifier}>
-                {categoria.title}
+                key={categoria.id}
+                value={categoria.id || ''}>
+                {categoria.nombre || ''}
               </MenuItem>
             ))}
           </Select>
+          {/* )} */}
           <FormHelperText>
             {formik.touched.categoria && formik.errors.categoria
               ? formik.errors.categoria
@@ -373,25 +556,26 @@ export const FormMicro = ({ microemprendimiento }) => {
             id="demo-simple-select-label">
             País*
           </InputLabel>
+
+          {/* {paises.length > 0 && ( */}
           <Select
             labelId="demo-simple-select-label"
             id="pais"
             name="pais"
-            value={formik.values.pais}
+            value={formik.values.pais || ''}
             label="País"
-            onChange={e => {
-              handlePais(e), formik.handleChange(e);
-            }}
+            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}>
-            {paisAPI.map(pais => (
+            {paises.map(p => (
               <MenuItem
-                key={pais.id}
-                value={pais.id}>
-                {pais.nombre}
+                key={p.id}
+                value={p.id || ''}>
+                {p.nombre || ''}
               </MenuItem>
             ))}
           </Select>
+          {/* )} */}
           <FormHelperText>
             {formik.touched.pais && formik.errors.pais
               ? formik.errors.pais
@@ -441,25 +625,26 @@ export const FormMicro = ({ microemprendimiento }) => {
             id="demo-simple-select-label">
             Provincia/Estado*
           </InputLabel>
+
+          {/* {provincias.length > 0 && ( */}
           <Select
             labelId="demo-simple-select-label"
             id="provincia"
             name="provincia"
-            value={formik.values.provincia}
+            value={formik.values.provincia || ''}
             label="Provincia/Estado"
-            onChange={e => {
-              handleProvincia(e), formik.handleChange(e);
-            }}
+            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}>
-            {provinciasAPI.map(provincia => (
+            {provincias.map(provincia => (
               <MenuItem
                 key={provincia.id}
-                value={provincia.id}>
-                {provincia.nombre}
+                value={provincia.id || ''}>
+                {provincia.nombre || ''}
               </MenuItem>
             ))}
           </Select>
+          {/* )} */}
           <FormHelperText>
             {formik.touched.provincia && formik.errors.provincia
               ? formik.errors.provincia

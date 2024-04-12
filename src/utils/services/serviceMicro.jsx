@@ -30,6 +30,9 @@ export const serviceMicro = async () => {
       pais: microemprendimiento.pais,
       provincia: microemprendimiento.provincia,
       ciudad: microemprendimiento.ciudad,
+      paisId: microemprendimiento.paisId,
+      provinciaId: microemprendimiento.provinciaId,
+      rubroId: microemprendimiento.rubroId,
     };
   });
 

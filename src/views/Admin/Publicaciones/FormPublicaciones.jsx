@@ -13,7 +13,6 @@ import {
 } from '../../../utils/services/axiosConfig';
 import { useSnackbar } from 'notistack';
 
-const MAX_SIZE = 3 * 1024 * 1024; // 3 MB
 
 export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
   const crearPublicacion = async (formEnviar, images) => {
@@ -178,6 +177,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
       try {
         formik.setSubmitting(true);
 
+        console.log("Enviando formulario")
         // Verificar que se haya subido al menos una imagen
         if (formData.imagenes.length === 0) {
           handleAlert('Debes subir al menos una imagen', 'error');
@@ -397,7 +397,6 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
           images={images}
           setImages={setImages}
           direction={'column'}
-          maxSize={MAX_SIZE}
         />
 
         <Button

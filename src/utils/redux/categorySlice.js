@@ -21,8 +21,11 @@ export const categorySlice = createSlice({
         });
       }
     },
+    clearCategory: state => {
+      state.categoryLista = [];
+    },
   },
 });
 
-export const { addCategory } = categorySlice.actions;
+export const { addCategory , clearCategory } = categorySlice.actions;
 export default categorySlice.reducer;

@@ -175,6 +175,87 @@ export const getContactos = async () => {
   }
 };
 
+export const getPais = async () => {
+  try {
+    return URL_SERVIDOR.get(`/api/ubuntu/paises`, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+export const getAllProvincias = async () => {
+  try {
+    return URL_SERVIDOR.get(`/api/ubuntu/provincias`, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+export const getProvinciasPais = async (id) => {
+  try {
+    return URL_SERVIDOR.get(`/api/ubuntu/paises/${id}/provincias`, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
 // Función para editar un formulario
 export const putFormulario = async (formulario, id) => {
   try {
@@ -262,6 +343,7 @@ export const getPublisMes = async () => {
   }
 };
 
+//Funciones Admin Publis
 export const postFormularioPublicacion = async formulario => {
   try {
     return URL_SERVIDOR.post(`/publicacion/save`, formulario, {
@@ -319,7 +401,7 @@ export const postImagenesPublicacion = async (imagenes, id) => {
   }
 };
 
-export const putFormularioPublicacion = async (formulario , id)=> {
+export const putFormularioPublicacion = async (formulario, id) => {
   try {
     return URL_SERVIDOR.put(`/publicacion/${id}`, formulario, {
       withCredentials: true,
@@ -354,6 +436,135 @@ export const putImagenesPublicacion = async (imagenes, id) => {
         'Content-Type': 'multipart/form-data',
       },
     })
+      .then(response => {
+        // console.log('Respuesta del servidor imagenes', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+//Funciones Admin Micros
+export const postFormularioMicro = async (formulario, paisId, provinciaId) => {
+  try {
+    console.log('Formulario en axios POST micro:', formulario);
+    return URL_SERVIDOR.post(
+      `/microEmprendimiento/crear/${paisId}/${provinciaId}`,
+      formulario,
+      {
+        withCredentials: true,
+      }
+    )
+      .then(response => {
+        // console.log('Respuesta del servidor en POST PUBLICACIONES', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al enviar el formulario en axios:', error);
+  }
+};
+
+export const postImagenesMicro = async (imagenes, id) => {
+  try {
+    console.log('Imagenes en axios POST micro:', imagenes);
+    return URL_SERVIDOR.post(
+      `microEmprendimiento/crearImagenes/${id}`,
+      imagenes,
+      {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    )
+      .then(response => {
+        // console.log('Respuesta del servidor imagenes', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
+
+export const putFormularioMicro = async (formulario, id) => {
+  try {
+    return URL_SERVIDOR.put(`/microEmprendimiento/editar/${id}`, formulario, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor en POST PUBLICACIONES', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al enviar el formulario en axios:', error);
+  }
+};
+
+export const putImagenesMicro = async (imagenes, id) => {
+  try {
+    return URL_SERVIDOR.put(
+      `microEmprendimiento/editarImagenes/${id}`,
+      imagenes,
+      {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    )
       .then(response => {
         // console.log('Respuesta del servidor imagenes', response);
         return response;
