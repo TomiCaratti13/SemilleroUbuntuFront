@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { FormMicro } from './FormMicro';
+import { FormMicro } from '../FormMicro';
 
 export const EditarMicro = () => {
   return (

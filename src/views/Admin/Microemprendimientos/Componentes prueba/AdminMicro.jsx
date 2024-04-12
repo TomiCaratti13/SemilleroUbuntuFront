@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-import { ButtonBlue } from '../../components/ButtonBlue';
-import { FormMicro } from './Microemprendimientos/FormMicro';
-import { usePublicaciones } from '../../utils/hooks/usePublicaciones';
-import { MapPublicaciones } from '../../components/MapPublicaciones';
+import { ButtonBlue } from '../../../../components/ButtonBlue';
+import { FormMicro } from '../FormMicro';
+import { usePublicaciones } from '../../../../utils/hooks/usePublicaciones';
+import { MapPublicaciones } from '../../../../components/MapPublicaciones';
 
 export function AdminMicro() {
   const [crear, setCrear] = useState(false);
