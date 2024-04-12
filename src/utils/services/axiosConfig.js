@@ -618,3 +618,33 @@ export const putImagenesMicro = async (imagenes, id, token) => {
     console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
+
+export const deleteOcultaMicro = async (id, token) => {
+  try {
+    return URL_SERVIDOR.delete(`microEmprendimiento/ocultar/${id}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
