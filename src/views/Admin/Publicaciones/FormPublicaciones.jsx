@@ -200,6 +200,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
             : await crearPublicacion(formEnviar, formData.imagenes);
         }
 
+        console.log('formulario enviado');
         formik.setSubmitting(false);
       } catch (error) {
         formik.setSubmitting(false);
@@ -211,10 +212,29 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
     formik.handleSubmit
   );
 
-  const disabledButton =
-    Object.keys(formik.errors).length > 0 ||
-    formik.isSubmitting ||
-    images.length === 0;
+  //Desabilitar boton de enviar
+  const [sending, setSending] = useState(false);
+  const [disabledButton, setDisableButton] = useState(false);
+  useEffect(() => {
+    if (
+      Object.keys(formik.errors).length > 0 ||
+      formik.isSubmitting ||
+      images.length === 0 ||
+      sending
+    ) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [formik.errors, formik.isSubmitting, images, sending]);
+
+  const handleDisableButton = () => {
+    setSending(true);
+    handleAlert("La publicación se está enviando, por favor espera", "info");
+    setTimeout(() => {
+      setSending(false);
+    }, 4000);
+  };
 
   return (
     <>
@@ -431,11 +451,17 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
             },
           }}>
           <Typography
+            onClick={handleDisableButton}
             sx={{
               fontWeight: '700',
               fontSize: '16px',
               lineHeight: '30px',
               textAlign: 'center',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
               '&:disabled': {
                 color: theme => theme.palette.white,
                 cursor: 'not-allowed',

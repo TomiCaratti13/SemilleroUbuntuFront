@@ -302,6 +302,30 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
     formik.handleSubmit
   );
 
+  //Desabilitar boton de enviar
+  const [sending, setSending] = useState(false);
+  const [disabledButton, setDisableButton] = useState(false);
+  useEffect(() => {
+    if (
+      Object.keys(formik.errors).length > 0 ||
+      formik.isSubmitting ||
+      images.length === 0 ||
+      sending
+    ) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [formik.errors, formik.isSubmitting, images, sending]);
+
+  const handleDisableButton = () => {
+    setSending(true);
+    handleAlert('La publicación se está enviando, por favor espera', 'info');
+    setTimeout(() => {
+      setSending(false);
+    }, 4000);
+  };
+
   return (
     <>
       <AlertModal
@@ -939,6 +963,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
 
         <Button
           type="submit"
+          disabled={disabledButton}
           sx={{
             width: '100%',
             padding: '0 20px',
@@ -947,20 +972,37 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
             justifyContent: 'space-evenly',
             borderRadius: '100px',
             color: 'blanco.main',
-            backgroundColor: 'azul.main',
+            backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
             textTransform: 'none',
             '&:hover': {
               backgroundColor: 'azul.main',
             },
+            '&:disabled': {
+              brackgoundColor: 'gris.medio',
+              color: 'gris.oscuro',
+              cursor: 'not-allowed',
+            },
           }}>
           <Typography
+            onClick={handleDisableButton}
             sx={{
               fontWeight: '700',
               fontSize: '16px',
               lineHeight: '30px',
               textAlign: 'center',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              '&:disabled': {
+                color: theme => theme.palette.white,
+                cursor: 'not-allowed',
+              },
             }}>
-            Crear publicación
+            {microemprendimiento.title
+              ? 'Editar Microemprendimiento'
+              : 'Crear Microemprendimiento'}
           </Typography>
         </Button>
       </Container>
