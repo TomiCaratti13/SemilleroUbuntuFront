@@ -37,22 +37,56 @@ export const getCategorias = async () => {
 // Función para obtener las publicaciones VISITANTE
 export const getPublicaciones = async () => {
   try {
-    const response = await URL_SERVIDOR.get('/publicacion/activas');
-    return response.data;
+    return URL_SERVIDOR.get(`/publicacion/activas`, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
   } catch (error) {
-    console.error('Error al obtener las publicaciones:', error);
-    throw error;
+    console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 
 // Agregar visualizacion a la publicacion VISITANTE
 export const agregarVisualizacion = async id => {
   try {
-    const response = await URL_SERVIDOR.put(`/publicacion/visualizacion/${id}`);
-    return response.data;
+    return URL_SERVIDOR.put(`/publicacion/visualizacion/${id}`, {
+      withCredentials: true,
+    })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
   } catch (error) {
-    console.error('Error al agregar visualización:', error);
-    throw error;
+    console.error('Error al agregar visualización', error);
   }
 };
 
@@ -133,7 +167,7 @@ export const enviarFormulario = async (formulario, id) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al enviar formulario:', error);
   }
 };
 
@@ -164,7 +198,7 @@ export const getContactos = async token => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al obtener categorias:', error);
   }
 };
 
@@ -194,7 +228,7 @@ export const getPais = async token => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al obtener paises:', error);
   }
 };
 
@@ -224,7 +258,7 @@ export const getAllProvincias = async token => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al obtener todas las provincias:', error);
   }
 };
 
@@ -254,7 +288,7 @@ export const getProvinciasPais = async (id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al obtener provincias:', error);
   }
 };
 
@@ -285,7 +319,7 @@ export const putFormulario = async (formulario, id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al enviar formulario:', error);
   }
 };
 
@@ -316,7 +350,7 @@ export const getMicroCategoria = async token => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al buscar microemprendimientos por categoria:', error);
   }
 };
 
@@ -350,7 +384,7 @@ export const getPublisMes = async token => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al buscar publicaciones del mes', error);
   }
 };
 
@@ -381,7 +415,7 @@ export const postFormularioPublicacion = async (formulario, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al enviar el formulario en axios:', error);
+    console.error('Error al enviar el formulario:', error);
   }
 };
 
@@ -412,7 +446,7 @@ export const postImagenesPublicacion = async (imagenes, id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al cargar imagenes en publicacion:', error);
   }
 };
 
@@ -442,7 +476,7 @@ export const putFormularioPublicacion = async (formulario, id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al enviar el formulario en axios:', error);
+    console.error('Error al enviar formulario:', error);
   }
 };
 
@@ -473,7 +507,7 @@ export const putImagenesPublicacion = async (imagenes, id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar publicacaciones en componente:', error);
+    console.error('Error al cargar imagenes en publicacion:', error);
   }
 };
 
@@ -550,7 +584,7 @@ export const postImagenesMicro = async (imagenes, id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al cagar imagenes en microemprendimiento:', error);
   }
 };
 
@@ -580,7 +614,7 @@ export const putFormularioMicro = async (formulario, id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al enviar el formulario en axios:', error);
+    console.error('Error al editar microemprendimiento en axios:', error);
   }
 };
 
@@ -615,7 +649,10 @@ export const putImagenesMicro = async (imagenes, id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error(
+      'Error al editar imagenes del microemprendmiento en componente:',
+      error
+    );
   }
 };
 
@@ -645,7 +682,7 @@ export const deleteOcultaMicro = async (id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al ocultar microemprendimiento:', error);
   }
 };
 
@@ -675,6 +712,6 @@ export const deleteOcultaPubli = async (id, token) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al ocultar publicacion:', error);
   }
 };

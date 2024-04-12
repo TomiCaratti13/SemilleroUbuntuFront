@@ -47,6 +47,9 @@ export default function CardPublicacion({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const handleAgregarVisualizacion = () => {
+    agregarVisualizacion(publicacion.id);
+  };
 
   //Cortar Parrafo si tiene mas de 100 caracteres
   let descriptionTrim = publicacion.description.trim();
@@ -128,7 +131,7 @@ export default function CardPublicacion({
         onClick={() => {
           if (!hasSee && !isAdmin) {
             console.log('Agregando visualizacion', publicacion.id);
-            agregarVisualizacion(publicacion.id);
+            handleAgregarVisualizacion(publicacion.id);
             setHasSee(true);
           }
         }}
