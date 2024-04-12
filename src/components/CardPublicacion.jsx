@@ -41,7 +41,19 @@ export default function CardPublicacion({
     setExpanded(!expanded);
   };
 
-  const descriptionSplit = publicacion.description.split('  ');
+  //Cortar Parrafo si tiene mas de 100 caracteres
+  let descriptionTrim = publicacion.description.trim();
+  let descriptionSplit = '';
+
+  const index = descriptionTrim.indexOf('  ');
+  if (index !== -1 && index > 80) {
+    descriptionSplit = [
+      descriptionTrim.substring(0, index),
+      descriptionTrim.substring(index + 1),
+    ];
+  } else {
+    descriptionSplit = [descriptionTrim];
+  }
 
   //Popper
   const [open, setOpen] = useState(false);
@@ -210,7 +222,9 @@ export default function CardPublicacion({
             lineHeight: '20px',
             color: 'negro',
           }}>
-          {descriptionSplit[0]}
+          {expanded || !descriptionSplit[1]
+            ? descriptionSplit[0]
+            : descriptionSplit[0] + ' ...'}
         </Typography>
       </CardContent>
       <Collapse
@@ -218,41 +232,40 @@ export default function CardPublicacion({
         timeout="auto"
         unmountOnExit>
         <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
-          {descriptionSplit.slice(1).map((parrafo, index) => (
-            <Typography
-              key={index}
-              paragraph
-              sx={{
-                fontSize: '16px',
-                fontFamily: 'Lato',
-                fontWeight: 400,
-                lineHeight: '20px',
-                color: 'negro',
-              }}>
-              {parrafo}
-            </Typography>
-          ))}
+          <Typography
+            paragraph
+            sx={{
+              fontSize: '16px',
+              fontFamily: 'Lato',
+              fontWeight: 400,
+              lineHeight: '20px',
+              color: 'negro',
+            }}>
+            {descriptionSplit[1]}
+          </Typography>
         </CardContent>
       </Collapse>
-      <CardActions
-        disableSpacing
-        sx={{ padding: '0px 0 0 0' }}>
-        <ExpandMoreInfo
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-          color="azul"
-          sx={{
-            textTransform: 'none',
-            fontFamily: 'Lato',
-            fontWeight: 500,
-            lineHeight: '20px',
-            width: '152px',
-            height: '40px',
-          }}>
-          {expanded ? 'Ver menos' : 'Ver más'}
-        </ExpandMoreInfo>
-      </CardActions>
+      {descriptionSplit.length > 1 && (
+        <CardActions
+          disableSpacing
+          sx={{ padding: '0px 0 0 0' }}>
+          <ExpandMoreInfo
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+            color="azul"
+            sx={{
+              textTransform: 'none',
+              fontFamily: 'Lato',
+              fontWeight: 500,
+              lineHeight: '20px',
+              width: '152px',
+              height: '40px',
+            }}>
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </ExpandMoreInfo>
+        </CardActions>
+      )}
     </Card>
   );
 }

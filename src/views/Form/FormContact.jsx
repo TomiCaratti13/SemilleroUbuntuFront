@@ -19,11 +19,11 @@ export const FormContact = ({ idMic }) => {
         formik.setSubmitting(true);
 
         const formEnviar = {
-          descripcion: formData.mensaje,
+          descripcion: formData.mensaje.trim(),
           usuarioSolicitante: {
-            nombre: formData.nombre,
-            email: formData.email,
-            telefono: formData.telefono,
+            nombre: formData.nombre.trim(),
+            email: formData.email.trim(),
+            telefono: formData.telefono.trim(),
           },
         };
 
@@ -71,6 +71,7 @@ export const FormContact = ({ idMic }) => {
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
+        returnTo={"/microemprendimientos/categorias"}
       />
       <Container
         component="form"

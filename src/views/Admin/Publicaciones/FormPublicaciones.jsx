@@ -12,7 +12,7 @@ import {
   putImagenesPublicacion,
 } from '../../../utils/services/axiosConfig';
 import { useSnackbar } from 'notistack';
-
+import { capitalizeTrim } from '../../../utils/services/capitalize';
 
 export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
   const crearPublicacion = async (formEnviar, images) => {
@@ -101,10 +101,6 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
             }
           });
 
-          // Esperamos a que todas las promesas se resuelvan
-          Promise.all(promises).then(() => {
-            console.log('FormImages', formImages.getAll('imagenes'));
-          });
           // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
           Promise.all(promises).then(() => {
             putImagenesPublicacion(formImages, idPubli)
@@ -177,7 +173,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
       try {
         formik.setSubmitting(true);
 
-        console.log("Enviando formulario")
+        console.log('Enviando formulario');
         // Verificar que se haya subido al menos una imagen
         if (formData.imagenes.length === 0) {
           handleAlert('Debes subir al menos una imagen', 'error');
@@ -186,14 +182,18 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
         }
 
         const formEnviar = {
-          titulo: formData.titulo,
+          titulo: capitalizeTrim(formData.titulo),
           descripcion: formData.contenido,
         };
 
         {
           publicacion.id !== undefined
-            ? editarPublicacion(formEnviar, formData.imagenes, publicacion.id)
-            : crearPublicacion(formEnviar, formData.imagenes);
+            ? await editarPublicacion(
+                formEnviar,
+                formData.imagenes,
+                publicacion.id
+              )
+            : await crearPublicacion(formEnviar, formData.imagenes);
         }
 
         formik.setSubmitting(false);
@@ -206,6 +206,11 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
   const [alertModal, openAlert, closeAlert, resendAlert] = useAlertModal(
     formik.handleSubmit
   );
+
+  const disabledButton =
+    Object.keys(formik.errors).length > 0 ||
+    formik.isSubmitting ||
+    images.length === 0;
 
   return (
     <>
@@ -401,6 +406,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
 
         <Button
           type="submit"
+          disabled={disabledButton}
           sx={{
             width: '100%',
             padding: '0 20px',
@@ -409,10 +415,15 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
             justifyContent: 'space-evenly',
             borderRadius: '100px',
             color: 'blanco.main',
-            backgroundColor: 'azul.main',
+            backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
             textTransform: 'none',
             '&:hover': {
               backgroundColor: 'azul.main',
+            },
+            '&:disabled': {
+              brackgoundColor: 'gris.medio',
+              color: 'gris.oscuro',
+              cursor: 'not-allowed',
             },
           }}>
           <Typography
@@ -421,6 +432,10 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
               fontSize: '16px',
               lineHeight: '30px',
               textAlign: 'center',
+              '&:disabled': {
+                color: theme => theme.palette.white,
+                cursor: 'not-allowed',
+              },
             }}>
             {publicacion.title ? 'Editar Publicación' : 'Crear Publicación'}
           </Typography>
