@@ -34,11 +34,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
             postImagenesPublicacion(formImages, response.data.body.id, token)
               .then(response => {
                 if (response && response.status === 200) {
-                  openAlert(
-                    true,
-                    'Publicación creada',
-                    'La publicación se ha creado correctamente'
-                  );
+                  openAlert(true, 'Publicación creada con éxito');
                 } else {
                   openAlert(
                     false,
@@ -110,15 +106,11 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
             putImagenesPublicacion(formImages, idPubli, token)
               .then(response => {
                 if (response && response.status === 200) {
-                  openAlert(
-                    true,
-                    'Publicación creada',
-                    'La publicación se ha creado correctamente'
-                  );
+                  openAlert(true, 'Cambios guardados con éxito');
                 } else {
                   openAlert(
                     false,
-                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    'Lo sentimos, los cambios no pudieron ser guardados.',
                     `Por favor, volvé a intentarlo`
                   );
                 }
@@ -128,7 +120,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
                 console.error('Error al enviar el formulario:', error);
                 openAlert(
                   false,
-                  'Lo sentimos, la Publicación no pudo ser creada.',
+                  'Lo sentimos, los cambios no pudieron ser guardados.',
                   `Por favor, volvé a intentarlo`
                 );
               });
@@ -136,7 +128,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
         } else {
           openAlert(
             false,
-            'Lo sentimos, la Publicación no pudo ser creada.',
+            'Lo sentimos, los cambios no pudieron ser guardados.',
             `Por favor, volvé a intentarlo`
           );
         }
@@ -146,7 +138,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
         console.error('Error al enviar el formulario:', error);
         openAlert(
           false,
-          'Lo sentimos, la Publicación no pudo ser creada.',
+          'Lo sentimos, los cambios no pudieron ser guardados.',
           `Por favor, volvé a intentarlo`
         );
       });
@@ -230,8 +222,11 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
 
   const handleDisableButton = () => {
     setSending(true);
-    handleAlert("La publicación se está enviando, por favor espera", "info");
-    openAlert("loading", 'Publicación en proceso', 'Por favor, aguarde unos segundos');
+    openAlert(
+      'loading',
+      'Publicación en proceso',
+      'Por favor, aguarde unos segundos'
+    );
   };
 
   return (

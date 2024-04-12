@@ -2,6 +2,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { keyframes } from '@emotion/react';
 
 export const AlertModal = ({
   alert,
@@ -13,6 +14,18 @@ export const AlertModal = ({
   setCrear,
   setEditar,
 }) => {
+  // Define la animación
+  const slideInFromLeft = keyframes`
+0% {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+100% {
+  transform: translateY(0);
+  opacity: 1;
+}
+`;
+
   return (
     <div>
       <Modal
@@ -24,6 +37,7 @@ export const AlertModal = ({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          animation: `${slideInFromLeft} 0.5s forwards`,
         }}>
         <Box
           sx={{

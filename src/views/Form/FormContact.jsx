@@ -92,7 +92,6 @@ export const FormContact = ({ idMic }) => {
 
   const handleDisableButton = () => {
     setSending(true);
-    handleAlert('La publicación se está enviando, por favor espera', 'info');
     openAlert(
       'loading',
       'Publicación en proceso',

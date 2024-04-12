@@ -49,15 +49,11 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
                   response &&
                   (response.status === 200 || response.status === 201)
                 ) {
-                  openAlert(
-                    true,
-                    'Publicación creada',
-                    'La publicación se ha creado correctamente'
-                  );
+                  openAlert(true, 'Microemprendimiento cargado con éxito');
                 } else {
                   openAlert(
                     false,
-                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    'Lo sentimos, el Microemprendimiento no pudo ser cargado.',
                     `Por favor, volvé a intentarlo`
                   );
                 }
@@ -67,7 +63,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
                 console.error('Error al enviar el formulario:', error);
                 openAlert(
                   false,
-                  'Lo sentimos, la Publicación no pudo ser creada.',
+                  'Lo sentimos, el Microemprendimiento no pudo ser cargado.',
                   `Por favor, volvé a intentarlo`
                 );
               });
@@ -75,7 +71,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
         } else {
           openAlert(
             false,
-            'Lo sentimos, la Publicación no pudo ser creada.',
+            'Lo sentimos, el Microemprendimiento no pudo ser cargado.',
             `Por favor, volvé a intentarlo`
           );
         }
@@ -85,7 +81,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
         console.error('Error al enviar el formulario:', error);
         openAlert(
           false,
-          'Lo sentimos, la Publicación no pudo ser creada.',
+          'Lo sentimos, el Microemprendimiento no pudo ser cargado.',
           `Por favor, volvé a intentarlo`
         );
       });
@@ -128,15 +124,11 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
                   response &&
                   (response.status === 200 || response.status === 201)
                 ) {
-                  openAlert(
-                    true,
-                    'Publicación creada',
-                    'La publicación se ha creado correctamente'
-                  );
+                  openAlert(true, 'Cambios guardados con éxito');
                 } else {
                   openAlert(
                     false,
-                    'Lo sentimos, la Publicación no pudo ser creada.',
+                    'Lo sentimos, los cambios no pudieron ser guardados.',
                     `Por favor, volvé a intentarlo`
                   );
                 }
@@ -146,7 +138,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
                 console.error('Error al enviar el formulario:', error);
                 openAlert(
                   false,
-                  'Lo sentimos, la Publicación no pudo ser creada.',
+                  'Lo sentimos, los cambios no pudieron ser guardados.',
                   `Por favor, volvé a intentarlo`
                 );
               });
@@ -154,7 +146,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
         } else {
           openAlert(
             false,
-            'Lo sentimos, la Publicación no pudo ser creada.',
+            'Lo sentimos, los cambios no pudieron ser guardados.',
             `Por favor, volvé a intentarlo`
           );
         }
@@ -164,7 +156,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
         console.error('Error al enviar el formulario:', error);
         openAlert(
           false,
-          'Lo sentimos, la Publicación no pudo ser creada.',
+          'Lo sentimos, los cambios no pudieron ser guardados.',
           `Por favor, volvé a intentarlo`
         );
       });
@@ -280,7 +272,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
 
   useEffect(() => {
     if (formik.values.pais) {
-      getProvinciasPais(formik.values.pais,token).then(provincias => {
+      getProvinciasPais(formik.values.pais, token).then(provincias => {
         setProvincias(provincias.data);
         //Verifica que haya micro, haya provincias, y el id de la provincia este en el array sino ""
         if (
@@ -320,8 +312,11 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
 
   const handleDisableButton = () => {
     setSending(true);
-    handleAlert('La publicación se está enviando, por favor espera', 'info');
-    openAlert("loading", 'Publicación en proceso', 'Por favor, aguarde unos segundos');
+    openAlert(
+      'loading',
+      'Microemprendimiento en proceso',
+      'Por favor, aguarde unos segundos'
+    );
   };
 
   return (
@@ -360,7 +355,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           helperText={
             formik.touched.nombre && formik.errors.nombre
               ? formik.errors.nombre
-              : 'Se visualizará en el título de la publicación'
+              : 'Se visualizará en el título de la Microemprendimiento'
           }
           sx={{
             '& .MuiOutlinedInput-input': {
