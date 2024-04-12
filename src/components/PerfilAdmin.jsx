@@ -2,7 +2,8 @@ import { Avatar, Button, Popper, Fade } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../utils/redux/userSlice';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { clearToken } from '../utils/redux/tokenSlice';
 
 export default function PerfilAdmin() {
   const user = useSelector(state => state.user);
@@ -80,6 +81,7 @@ export default function PerfilAdmin() {
   const navigate = useNavigate();
   const closeSesion = () => {
     deleteAllCookies();
+    dispatch(clearToken());
     dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
     localStorage.clear();
     window.location.href = `http://localhost:8080/logout`;

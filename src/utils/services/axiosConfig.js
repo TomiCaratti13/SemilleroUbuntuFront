@@ -6,7 +6,7 @@ const URL_SERVIDOR = axios.create({
   // timeout: 5000, // Tiempo máximo de espera para las peticiones en milisegundos
 });
 
-// Función para obtener las categorías
+// Función para obtener las categorías VISITANTE
 export const getCategorias = async () => {
   try {
     return URL_SERVIDOR.get(`/rubro/listarRubros`, {
@@ -33,18 +33,8 @@ export const getCategorias = async () => {
     console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
-// export const getCategorias = async () => {
-//   try {
-//     const response = await URL_SERVIDOR.get('/rubro/listarRubros');
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error al obtener las categorías:', error);
-//     throw error;
-//   }
-// };
 
-// Función para obtener las publicaciones
+// Función para obtener las publicaciones VISITANTE
 export const getPublicaciones = async () => {
   try {
     const response = await URL_SERVIDOR.get('/publicacion/activas');
@@ -55,7 +45,7 @@ export const getPublicaciones = async () => {
   }
 };
 
-// Agregar visualizacion a la publicacion
+// Agregar visualizacion a la publicacion VISITANTE
 export const agregarVisualizacion = async id => {
   try {
     const response = await URL_SERVIDOR.put(`/publicacion/visualizacion/${id}`);
@@ -66,7 +56,7 @@ export const agregarVisualizacion = async id => {
   }
 };
 
-// Función para obtener los microemprendimientos
+// Función para obtener los microemprendimientos VISITANTE
 export const getMicroemprendimientos = async () => {
   try {
     return URL_SERVIDOR.get(`/microEmprendimiento/listar`)
@@ -92,7 +82,7 @@ export const getMicroemprendimientos = async () => {
   }
 };
 
-// Buscar microemprendimientos
+// Buscar microemprendimientos VISITANTE
 export const buscarMicroemprendimientos = async nombre => {
   try {
     return URL_SERVIDOR.get(`/microEmprendimiento/buscarPorNombre/${nombre}`, {
@@ -119,7 +109,7 @@ export const buscarMicroemprendimientos = async nombre => {
   }
 };
 
-// Función para enviar un formulario
+// Función para enviar un formulario VISITANTE
 export const enviarFormulario = async (formulario, id) => {
   try {
     return URL_SERVIDOR.post(`/contacto/${id}`, formulario, {
@@ -148,10 +138,13 @@ export const enviarFormulario = async (formulario, id) => {
 };
 
 // Función para traer todos los contactos
-export const getContactos = async () => {
+export const getContactos = async token => {
   try {
     return URL_SERVIDOR.get(`/contacto/all`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor', response);
@@ -175,10 +168,13 @@ export const getContactos = async () => {
   }
 };
 
-export const getPais = async () => {
+export const getPais = async token => {
   try {
     return URL_SERVIDOR.get(`/api/ubuntu/paises`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor', response);
@@ -202,10 +198,13 @@ export const getPais = async () => {
   }
 };
 
-export const getAllProvincias = async () => {
+export const getAllProvincias = async token => {
   try {
     return URL_SERVIDOR.get(`/api/ubuntu/provincias`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor', response);
@@ -229,10 +228,13 @@ export const getAllProvincias = async () => {
   }
 };
 
-export const getProvinciasPais = async (id) => {
+export const getProvinciasPais = async (id, token) => {
   try {
     return URL_SERVIDOR.get(`/api/ubuntu/paises/${id}/provincias`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor', response);
@@ -257,10 +259,13 @@ export const getProvinciasPais = async (id) => {
 };
 
 // Función para editar un formulario
-export const putFormulario = async (formulario, id) => {
+export const putFormulario = async (formulario, id, token) => {
   try {
     return URL_SERVIDOR.put(`/contacto/gestionar/${id}`, formulario, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor', response);
@@ -285,10 +290,13 @@ export const putFormulario = async (formulario, id) => {
 };
 
 // Funcion para traer microemprendmientos por categoria
-export const getMicroCategoria = async () => {
+export const getMicroCategoria = async token => {
   try {
     return URL_SERVIDOR.get(`microEmprendimiento/cantidades_por_rubro`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor', response);
@@ -313,12 +321,15 @@ export const getMicroCategoria = async () => {
 };
 
 //Funcion para traer visualizaciones de las publicaciones del MES
-export const getPublisMes = async () => {
+export const getPublisMes = async token => {
   try {
     return URL_SERVIDOR.get(
       `/publicacion/visualizaciones_publicaciones_total`,
       {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
       }
     )
       .then(response => {
@@ -344,10 +355,13 @@ export const getPublisMes = async () => {
 };
 
 //Funciones Admin Publis
-export const postFormularioPublicacion = async formulario => {
+export const postFormularioPublicacion = async (formulario, token) => {
   try {
     return URL_SERVIDOR.post(`/publicacion/save`, formulario, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor en POST PUBLICACIONES', response);
@@ -371,11 +385,12 @@ export const postFormularioPublicacion = async formulario => {
   }
 };
 
-export const postImagenesPublicacion = async (imagenes, id) => {
+export const postImagenesPublicacion = async (imagenes, id, token) => {
   try {
     return URL_SERVIDOR.post(`publicacion/${id}/imagenes`, imagenes, {
       withCredentials: true,
       headers: {
+        Authorization: `Bearer ${token.value}`,
         'Content-Type': 'multipart/form-data',
       },
     })
@@ -401,9 +416,12 @@ export const postImagenesPublicacion = async (imagenes, id) => {
   }
 };
 
-export const putFormularioPublicacion = async (formulario, id) => {
+export const putFormularioPublicacion = async (formulario, id, token) => {
   try {
     return URL_SERVIDOR.put(`/publicacion/${id}`, formulario, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
       withCredentials: true,
     })
       .then(response => {
@@ -428,11 +446,12 @@ export const putFormularioPublicacion = async (formulario, id) => {
   }
 };
 
-export const putImagenesPublicacion = async (imagenes, id) => {
+export const putImagenesPublicacion = async (imagenes, id, token) => {
   try {
     return URL_SERVIDOR.put(`publicacion/editImagenes/${id}`, imagenes, {
       withCredentials: true,
       headers: {
+        Authorization: `Bearer ${token.value}`,
         'Content-Type': 'multipart/form-data',
       },
     })
@@ -454,12 +473,17 @@ export const putImagenesPublicacion = async (imagenes, id) => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al buscar publicacaciones en componente:', error);
   }
 };
 
 //Funciones Admin Micros
-export const postFormularioMicro = async (formulario, paisId, provinciaId) => {
+export const postFormularioMicro = async (
+  formulario,
+  paisId,
+  provinciaId,
+  token
+) => {
   try {
     console.log('Formulario en axios POST micro:', formulario);
     return URL_SERVIDOR.post(
@@ -467,6 +491,9 @@ export const postFormularioMicro = async (formulario, paisId, provinciaId) => {
       formulario,
       {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
       }
     )
       .then(response => {
@@ -491,7 +518,7 @@ export const postFormularioMicro = async (formulario, paisId, provinciaId) => {
   }
 };
 
-export const postImagenesMicro = async (imagenes, id) => {
+export const postImagenesMicro = async (imagenes, id, token) => {
   try {
     console.log('Imagenes en axios POST micro:', imagenes);
     return URL_SERVIDOR.post(
@@ -500,6 +527,7 @@ export const postImagenesMicro = async (imagenes, id) => {
       {
         withCredentials: true,
         headers: {
+          Authorization: `Bearer ${token.value}`,
           'Content-Type': 'multipart/form-data',
         },
       }
@@ -526,10 +554,13 @@ export const postImagenesMicro = async (imagenes, id) => {
   }
 };
 
-export const putFormularioMicro = async (formulario, id) => {
+export const putFormularioMicro = async (formulario, id, token) => {
   try {
     return URL_SERVIDOR.put(`/microEmprendimiento/editar/${id}`, formulario, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
     })
       .then(response => {
         // console.log('Respuesta del servidor en POST PUBLICACIONES', response);
@@ -553,7 +584,7 @@ export const putFormularioMicro = async (formulario, id) => {
   }
 };
 
-export const putImagenesMicro = async (imagenes, id) => {
+export const putImagenesMicro = async (imagenes, id, token) => {
   try {
     return URL_SERVIDOR.put(
       `microEmprendimiento/editarImagenes/${id}`,
@@ -561,6 +592,7 @@ export const putImagenesMicro = async (imagenes, id) => {
       {
         withCredentials: true,
         headers: {
+          Authorization: `Bearer ${token.value}`,
           'Content-Type': 'multipart/form-data',
         },
       }

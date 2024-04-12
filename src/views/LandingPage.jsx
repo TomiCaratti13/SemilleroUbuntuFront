@@ -1,4 +1,3 @@
-
 import Objetivos from '../components/Objetivos';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
@@ -8,6 +7,10 @@ import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
 import { usePublicaciones } from '../utils/hooks/usePublicaciones';
 import { useCategorias } from '../utils/hooks/useCategorias';
+import { useDispatch } from 'react-redux';
+import { clearToken } from '../utils/redux/tokenSlice';
+import { addUser } from '../utils/redux/userSlice';
+import { useEffect } from 'react';
 
 const heroLanding = {
   category: 'FINANCIAMIENTO SOSTENIBLE',
@@ -17,6 +20,15 @@ const heroLanding = {
 };
 
 export const LandingPage = () => {
+  //Limpiar usuario y token
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   deleteAllCookies();
+  //   dispatch(clearToken());
+  //   dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
+  //   localStorage.clear();
+  // }, []);
+
   //Manejar alertas
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = () => {

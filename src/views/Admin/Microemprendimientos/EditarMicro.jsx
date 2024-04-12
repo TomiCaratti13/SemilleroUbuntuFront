@@ -24,7 +24,7 @@ export const EditarMicro = () => {
           width: '100%',
           pt: '30px',
         }}>
-        Edición ded Microemprendimiento
+        Edición de Microemprendimiento
       </Typography>
       <Typography
         variant="h4"

@@ -8,8 +8,10 @@ import TabPanel from '@mui/lab/TabPanel';
 import { CardSolContactos } from './components/CardSolContactos';
 import { DetalleContacto } from './components/DetalleContacto';
 import { getContactos } from '../../utils/services/axiosConfig';
+import { useSelector } from 'react-redux';
 
 export const AdminContactos = () => {
+  const token = useSelector(state => state.token);
   const [value, setValue] = useState('1');
   const [solContactos, setSolContactos] = useState([]);
   const [contactos, setContactos] = useState([]);
@@ -17,13 +19,13 @@ export const AdminContactos = () => {
 
   //traerContactos
   useEffect(() => {
-    getContactos().then(response => {
+    getContactos(token).then(response => {
       const allContactos = response.data;
       setSolContactos(allContactos);
       if (value === '1') {
-        setContactos(allContactos.filter(contacto => contacto.gestionado === true));
+        setContactos(allContactos?.reverse().filter(contacto => contacto.gestionado === true));
       } else if (value === '2') {
-        setContactos(allContactos.filter(contacto => contacto.gestionado === false));
+        setContactos(allContactos?.reverse().filter(contacto => contacto.gestionado === false));
       }
     });
   }, [value, selectedContacto]);
@@ -86,6 +88,7 @@ export const AdminContactos = () => {
               }}>
               <TabList
                 onChange={handleChange}
+                onClick={() => setSelectedContacto(null)}
                 aria-label="lab API tabs example"
                 sx={{
                   width: 'fitContent',

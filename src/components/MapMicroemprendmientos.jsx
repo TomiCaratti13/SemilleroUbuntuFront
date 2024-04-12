@@ -15,7 +15,7 @@ export const MapMicroemprendimientos = ({ microemprendimientos }) => {
         padding: '0',
         width: '100%',
       }}>
-      {microemprendimientosMutable?.map((microemprendimiento, index) => (
+      {microemprendimientosMutable?.reverse().map((microemprendimiento, index) => (
         <CardMicroemprendimiento
           key={index}
           microemprendimiento={microemprendimiento}

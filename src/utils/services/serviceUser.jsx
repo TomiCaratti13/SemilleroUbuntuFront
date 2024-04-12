@@ -2,18 +2,13 @@
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../redux/userSlice';
+import { setToken } from '../redux/tokenSlice';
 
 export const serviceUser = ({ token }) => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  //   const decodedToken = jwtDecode(token);
-  //   // const decodedToken = JSON.parse(window.atob(token.split(".")[1]));
-  //   localStorage.setItem('nombre', decodedToken.nombre);
-  //   localStorage.setItem('foto', decodedToken.foto);
-  //   localStorage.setItem('isAdmin', decodedToken.isAdmin);
-  
   if (!user.isAdmin) {
     const decodedToken = jwtDecode(token);
   
@@ -24,6 +19,7 @@ export const serviceUser = ({ token }) => {
     };
   
     dispatch(addUser(UserRedux));
+    dispatch(setToken(token))
     
     return UserRedux;
   } else {

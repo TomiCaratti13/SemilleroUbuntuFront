@@ -16,12 +16,14 @@ import { useAlertModal } from '../../../utils/hooks/useAlertModal';
 import { useFormik } from 'formik';
 import formContact from '../../../utils/schemas/schemaFormContact';
 import { putFormulario } from '../../../utils/services/axiosConfig';
+import { useSelector } from 'react-redux';
 
 export const DetalleContacto = ({
   contacto,
   setSelectedContacto,
   setValue,
 }) => {
+  const token = useSelector(state => state.token);
   //Arreglo fecha Unix
   let timestamp = contacto.fechaCreacion;
   let date = new Date(timestamp);
@@ -52,9 +54,8 @@ export const DetalleContacto = ({
           gestionado: true,
         };
 
-        putFormulario(formEnviar, contacto.id)
+        putFormulario(formEnviar, contacto.id,token)
           .then(response => {
-            // console.log('RESPUESTA COMPONENETE', response);
             //MANEJO DE ALERTAS
             if (response && response.status === 200) {
               openAlert(true, 'Estado modificado con éxito');
@@ -98,7 +99,6 @@ export const DetalleContacto = ({
         setValue={setValue}
       />
       <Container
-        // onBack={onBack}
         component="form"
         onSubmit={formik.handleSubmit}
         style={{
@@ -193,7 +193,6 @@ export const DetalleContacto = ({
               width: '100%',
             }}>
             {contacto.microemprendimiento}
-            {contacto.id}
           </Typography>
           <Typography
             sx={{

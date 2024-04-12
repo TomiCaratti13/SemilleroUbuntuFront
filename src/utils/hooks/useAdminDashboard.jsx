@@ -4,8 +4,10 @@ import {
   getMicroCategoria,
   getPublisMes,
 } from '../services/axiosConfig';
+import { useSelector } from 'react-redux';
 
 export const useAdminDashboard = () => {
+  const token = useSelector((state) => state.token);
   const [AdminInfo, setAdminInfo] = useState({
     NuevosMicroemprendimientos: 0,
     Gestionados: 0,
@@ -26,7 +28,7 @@ export const useAdminDashboard = () => {
   });
   //traerCosas
   useEffect(() => {
-    const contactos = getContactos().then(response => {
+    const contactos = getContactos(token).then(response => {
       let gestionados = 0;
       let noGestionados = 0;
       response.data.forEach(contacto => {
@@ -38,7 +40,7 @@ export const useAdminDashboard = () => {
       });
       return { gestionados, noGestionados };
     });
-    const microXCat = getMicroCategoria().then(response => {
+    const microXCat = getMicroCategoria(token).then(response => {
       const categorias = response.data.map(cat => {
         return {
           title: cat.categoria,
@@ -47,7 +49,7 @@ export const useAdminDashboard = () => {
       });
       return categorias;
     });
-    const visPubli = getPublisMes().then(response => {
+    const visPubli = getPublisMes(token).then(response => {
       const publicaciones = response.data.map(publicacion => {
         //Arreglo fecha Unix
         let timestamp = publicacion.fecha_creacion;

@@ -18,6 +18,7 @@ import { AdminContactos } from './views/Admin/AdminContactos.jsx';
 import { AdminPublicaciones } from './views/Admin/AdminPublicaciones.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
 import { RutaAdmin } from './views/Admin/components/RutaAdmin.jsx';
+import { ProtectedRoute } from './views/Admin/components/ProtectedRoute.jsx';
 
 // import { AdminMicro } from './views/Admin/AdminMicro.jsx';
 // import { MapAdminMicros } from './views/Admin/Microemprendimientos/MapAdminMicros.jsx';
@@ -65,42 +66,24 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="Admin/:token"
                 element={<RutaAdmin />}
               />
-              <Route
-                path="Admin"
-                element={<AdminDashboard />}
-              />
-              <Route
-                path="Admin/microemprendimientos"
-                element={<AdminMicroemprendimientos />}
-              />
-              {/* Rutas de Microemprendimientos para cargar componentes */}
-              {/* <Route
-                path="Admin/microemprendimientos2"
-                element={<AdminMicro />}>
+              <Route element={<ProtectedRoute redirectTo='/'/>}>
                 <Route
-                  index
-                  element={<MapAdminMicros />}
-                />
-                  <Route 
-                  path="ver/:nombre"
-                  element={<MostrarMicro />}/>
-                <Route
-                  path="editar/:nombre"
-                  element={<EditarMicro />}
+                  path="Admin"
+                  element={<AdminDashboard />}
                 />
                 <Route
-                  path="crear"
-                  element={<CargarMicro />}
+                  path="Admin/microemprendimientos"
+                  element={<AdminMicroemprendimientos />}
                 />
-              </Route> */}
-              <Route
-                path="Admin/contactos"
-                element={<AdminContactos />}
-              />
-              <Route
-                path="Admin/publicaciones"
-                element={<AdminPublicaciones />}
-              />
+                <Route
+                  path="Admin/contactos"
+                  element={<AdminContactos />}
+                />
+                <Route
+                  path="Admin/publicaciones"
+                  element={<AdminPublicaciones />}
+                />
+              </Route>
             </Route>
             <Route
               path="*"
@@ -117,3 +100,28 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>
 );
+
+{
+  /* Rutas de Microemprendimientos para cargar componentes */
+}
+{
+  /* <Route
+                  path="Admin/microemprendimientos2"
+                  element={<AdminMicro />}>
+                  <Route
+                    index
+                    element={<MapAdminMicros />}
+                  />
+                    <Route 
+                    path="ver/:nombre"
+                    element={<MostrarMicro />}/>
+                  <Route
+                    path="editar/:nombre"
+                    element={<EditarMicro />}
+                  />
+                  <Route
+                    path="crear"
+                    element={<CargarMicro />}
+                  />
+                </Route> */
+}

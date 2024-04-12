@@ -1,7 +1,6 @@
 import { Typography, Box, Container, Button } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CircleIcon from '@mui/icons-material/Circle';
-import { Link } from 'react-router-dom';
 
 export const CardSolContactos = ({ contacto, onClick }) => {
   let timestamp = contacto.fechaCreacion;

@@ -13,11 +13,15 @@ import {
 } from '../../../utils/services/axiosConfig';
 import { useSnackbar } from 'notistack';
 import { capitalizeTrim } from '../../../utils/services/capitalize';
+import { useSelector } from 'react-redux';
 
 export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
+  //Token obtenido al logearse
+  const token = useSelector(state => state.token);
+
   const crearPublicacion = async (formEnviar, images) => {
     //Crear publicacion
-    postFormularioPublicacion(formEnviar)
+    postFormularioPublicacion(formEnviar, token)
       .then(response => {
         if (response && response.status === 200) {
           //ENVIO ARRAY DE IMAGENES
@@ -27,7 +31,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
           });
           // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
           Promise.all(formImages.getAll('imagenes')).then(() => {
-            postImagenesPublicacion(formImages, response.data.body.id)
+            postImagenesPublicacion(formImages, response.data.body.id, token)
               .then(response => {
                 if (response && response.status === 200) {
                   openAlert(
@@ -74,7 +78,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
 
   const editarPublicacion = async (formEnviar, images, idPubli) => {
     //Editar publicacion
-    putFormularioPublicacion(formEnviar, idPubli)
+    putFormularioPublicacion(formEnviar, idPubli, token)
       .then(response => {
         if (response && response.status === 200) {
           //ENVIO ARRAY DE IMAGENES
@@ -103,7 +107,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
 
           // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
           Promise.all(promises).then(() => {
-            putImagenesPublicacion(formImages, idPubli)
+            putImagenesPublicacion(formImages, idPubli, token)
               .then(response => {
                 if (response && response.status === 200) {
                   openAlert(

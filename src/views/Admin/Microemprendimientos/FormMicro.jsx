@@ -27,11 +27,13 @@ import {
   putImagenesMicro,
 } from '../../../utils/services/axiosConfig';
 import { useSnackbar } from 'notistack';
+import { useSelector } from 'react-redux';
 
 export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
+  const token = useSelector(state => state.token);
   const crearMicro = async (formEnviar, images, paisId, provinciaId) => {
     //Crear publicacion
-    postFormularioMicro(formEnviar, paisId, provinciaId)
+    postFormularioMicro(formEnviar, paisId, provinciaId, token)
       .then(response => {
         if (response && (response.status === 200 || response.status === 201)) {
           //ENVIO ARRAY DE IMAGENES
@@ -41,7 +43,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           });
           // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
           Promise.all(formImages.getAll('imagenes')).then(() => {
-            postImagenesMicro(formImages, response.data)
+            postImagenesMicro(formImages, response.data, token)
               .then(response => {
                 if (
                   response &&
@@ -91,7 +93,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
 
   const editarMicro = async (formEnviar, images, idMicro) => {
     //Editar publicacion
-    putFormularioMicro(formEnviar, idMicro)
+    putFormularioMicro(formEnviar, idMicro, token)
       .then(response => {
         if (response && (response.status === 200 || response.status === 201)) {
           //ENVIO ARRAY DE IMAGENES
@@ -118,13 +120,9 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
             }
           });
 
-          // Esperamos a que todas las promesas se resuelvan
-          Promise.all(promises).then(() => {
-            console.log('FormImages', formImages.getAll('imagenes'));
-          });
           // Aquí necesitas esperar a que todas las imágenes se hayan agregado a formImages antes de llamar a putImagenesPublicacion
           Promise.all(promises).then(() => {
-            putImagenesMicro(formImages, idMicro)
+            putImagenesMicro(formImages, idMicro, token)
               .then(response => {
                 if (
                   response &&
@@ -200,10 +198,13 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
 
         if (microemprendimiento) {
           if (categoriasData.length > 0) {
-            formik.setFieldValue('categoria', microemprendimiento.rubroId || "");
+            formik.setFieldValue(
+              'categoria',
+              microemprendimiento.rubroId || ''
+            );
           }
           if (paisData.data.length > 0) {
-            formik.setFieldValue('pais', microemprendimiento.paisId || "");
+            formik.setFieldValue('pais', microemprendimiento.paisId || '');
           }
         }
 
@@ -282,7 +283,13 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
       getProvinciasPais(formik.values.pais).then(provincias => {
         setProvincias(provincias.data);
         //Verifica que haya micro, haya provincias, y el id de la provincia este en el array sino ""
-        if (microemprendimiento && provincias.data.length > 0 && provincias.data.find(provincia => provincia.id === microemprendimiento.provinciaId)) {
+        if (
+          microemprendimiento &&
+          provincias.data.length > 0 &&
+          provincias.data.find(
+            provincia => provincia.id === microemprendimiento.provinciaId
+          )
+        ) {
           formik.setFieldValue('provincia', microemprendimiento.provinciaId);
         } else {
           formik.setFieldValue('provincia', '');
