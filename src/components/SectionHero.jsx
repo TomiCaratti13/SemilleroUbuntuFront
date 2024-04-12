@@ -40,7 +40,7 @@ export const SectionHero = ({ category, title, description, img }) => {
               display: 'flex',
               flexDirection: 'column',
               padding: '0',
-              gap: '10px',
+              gap: '16px',
             }}>
             <Typography
               sx={{
@@ -54,7 +54,7 @@ export const SectionHero = ({ category, title, description, img }) => {
             </Typography>
             <Typography
               sx={{
-                width: '240px',
+                width: '260px',
                 fontWeight: '500',
                 fontSize: '28px',
                 lineHeight: '33px',

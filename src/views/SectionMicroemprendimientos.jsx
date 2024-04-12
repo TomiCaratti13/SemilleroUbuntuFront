@@ -33,10 +33,12 @@ export const SectionMicroemprendmientos = () => {
     }
     return '';
   }
+  
   const title = getTitle(categoryUrl);
 
   useEffect(() => {
   }, [categoryUrl, location.pathname]);
+
   return (
     <Box
       sx={{

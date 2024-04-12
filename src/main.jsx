@@ -18,6 +18,8 @@ import { AdminContactos } from './views/Admin/AdminContactos.jsx';
 import { AdminPublicaciones } from './views/Admin/AdminPublicaciones.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
 import { RutaAdmin } from './views/Admin/components/RutaAdmin.jsx';
+import SectionInversiones from './views/SectionInversiones.jsx';
+import { InversorDashboard } from './views/Inversor/InversorDashboard.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -55,6 +57,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="buscar/:search"
                 element={<SectionBuscarMicroemprendimiento />}
               />
+              <Route
+                path="inversiones"
+                element={<SectionInversiones />}
+              />
               {/* <Route
                 path="Admin/:token"
                 element={<AdminDashboard />}
@@ -78,6 +84,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route
                 path="Admin/publicaciones"
                 element={<AdminPublicaciones />}
+              />
+              <Route
+                path="Inversor"
+                element={<InversorDashboard />}
+                // element={<AdminContactos />}
               />
             </Route>
             <Route
