@@ -231,9 +231,7 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
   const handleDisableButton = () => {
     setSending(true);
     handleAlert("La publicación se está enviando, por favor espera", "info");
-    setTimeout(() => {
-      setSending(false);
-    }, 4000);
+    openAlert("loading", 'Publicación en proceso', 'Por favor, aguarde unos segundos');
   };
 
   return (

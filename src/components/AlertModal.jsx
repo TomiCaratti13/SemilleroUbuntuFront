@@ -1,5 +1,6 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Box, Button, Modal, Typography } from '@mui/material';
 
 export const AlertModal = ({
@@ -38,7 +39,15 @@ export const AlertModal = ({
             textAlign: 'center',
             gap: '10px',
           }}>
-          {alert.icon ? (
+          {alert.icon === 'loading' ? (
+            <CloudUploadIcon
+              sx={{
+                color: 'azul.main',
+                width: '50px',
+                height: '50px',
+              }}
+            />
+          ) : alert.icon ? (
             <CheckCircleOutlineIcon
               sx={{
                 color: 'gestion.exito',

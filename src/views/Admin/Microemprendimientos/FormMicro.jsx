@@ -187,9 +187,9 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
     const fetchData = async () => {
       try {
         const [provinciasData, paisData, categoriasData] = await Promise.all([
-          getAllProvincias(),
-          getPais(),
-          getCategorias(),
+          getAllProvincias(token),
+          getPais(token),
+          getCategorias(token),
         ]);
 
         setProvincias(provinciasData.data);
@@ -280,7 +280,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
 
   useEffect(() => {
     if (formik.values.pais) {
-      getProvinciasPais(formik.values.pais).then(provincias => {
+      getProvinciasPais(formik.values.pais,token).then(provincias => {
         setProvincias(provincias.data);
         //Verifica que haya micro, haya provincias, y el id de la provincia este en el array sino ""
         if (
@@ -321,9 +321,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
   const handleDisableButton = () => {
     setSending(true);
     handleAlert('La publicación se está enviando, por favor espera', 'info');
-    setTimeout(() => {
-      setSending(false);
-    }, 4000);
+    openAlert("loading", 'Publicación en proceso', 'Por favor, aguarde unos segundos');
   };
 
   return (
@@ -453,7 +451,6 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
             id="demo-simple-select-label">
             Categoría*
           </InputLabel>
-          {/* {categorias.length > 0 && ( */}
           <Select
             labelId="demo-simple-select-label"
             id="categoria"
@@ -471,7 +468,6 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
               </MenuItem>
             ))}
           </Select>
-          {/* )} */}
           <FormHelperText>
             {formik.touched.categoria && formik.errors.categoria
               ? formik.errors.categoria
@@ -587,8 +583,6 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
             id="demo-simple-select-label">
             País*
           </InputLabel>
-
-          {/* {paises.length > 0 && ( */}
           <Select
             labelId="demo-simple-select-label"
             id="pais"
@@ -606,7 +600,6 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
               </MenuItem>
             ))}
           </Select>
-          {/* )} */}
           <FormHelperText>
             {formik.touched.pais && formik.errors.pais
               ? formik.errors.pais
@@ -656,8 +649,6 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
             id="demo-simple-select-label">
             Provincia/Estado*
           </InputLabel>
-
-          {/* {provincias.length > 0 && ( */}
           <Select
             labelId="demo-simple-select-label"
             id="provincia"
@@ -675,7 +666,6 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
               </MenuItem>
             ))}
           </Select>
-          {/* )} */}
           <FormHelperText>
             {formik.touched.provincia && formik.errors.provincia
               ? formik.errors.provincia

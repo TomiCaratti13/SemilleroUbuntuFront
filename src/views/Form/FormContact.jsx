@@ -4,8 +4,18 @@ import formContact from '../../utils/schemas/schemaFormContact';
 import { enviarFormulario } from '../../utils/services/axiosConfig';
 import { AlertModal } from '../../components/AlertModal';
 import { useAlertModal } from '../../utils/hooks/useAlertModal';
+import { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 
 export const FormContact = ({ idMic }) => {
+  //Manejar alertas Snackbar
+  const { enqueueSnackbar } = useSnackbar();
+  const handleAlert = (mensaje, color) => {
+    enqueueSnackbar(mensaje, {
+      variant: color,
+    });
+  };
+
   const formik = useFormik({
     initialValues: {
       nombre: '',
@@ -65,13 +75,38 @@ export const FormContact = ({ idMic }) => {
     formik.handleSubmit
   );
 
+  //Desabilitar boton de enviar
+  const [sending, setSending] = useState(false);
+  const [disabledButton, setDisableButton] = useState(false);
+  useEffect(() => {
+    if (
+      Object.keys(formik.errors).length > 0 ||
+      formik.isSubmitting ||
+      sending
+    ) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [formik.errors, formik.isSubmitting, sending]);
+
+  const handleDisableButton = () => {
+    setSending(true);
+    handleAlert('La publicación se está enviando, por favor espera', 'info');
+    openAlert(
+      'loading',
+      'Publicación en proceso',
+      'Por favor, aguarde unos segundos'
+    );
+  };
+
   return (
     <>
       <AlertModal
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
-        returnTo={"/microemprendimientos/categorias"}
+        returnTo={'/microemprendimientos/categorias'}
       />
       <Container
         component="form"
@@ -348,6 +383,7 @@ export const FormContact = ({ idMic }) => {
         </Box>
         <Button
           type="submit"
+          disabled={disabledButton}
           sx={{
             width: '100%',
             padding: '0 20px',
@@ -356,18 +392,33 @@ export const FormContact = ({ idMic }) => {
             justifyContent: 'space-evenly',
             borderRadius: '100px',
             color: 'blanco.main',
-            backgroundColor: 'azul.main',
+            backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
             textTransform: 'none',
             '&:hover': {
               backgroundColor: 'azul.main',
             },
+            '&:disabled': {
+              brackgoundColor: 'gris.medio',
+              color: 'gris.oscuro',
+              cursor: 'not-allowed',
+            },
           }}>
           <Typography
+            onClick={handleDisableButton}
             sx={{
               fontWeight: '700',
               fontSize: '16px',
               lineHeight: '30px',
               textAlign: 'center',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              '&:disabled': {
+                color: theme => theme.palette.white,
+                cursor: 'not-allowed',
+              },
             }}>
             Enviar
           </Typography>
