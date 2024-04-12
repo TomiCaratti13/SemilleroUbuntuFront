@@ -47,7 +47,7 @@ export const SliderSwipper = ({ imgs }) => {
               className="swiper-button-next"
               style={{ color: 'white' }}
             />
-            {imgs.map((imagen, index) => {
+            {imgs?.map((imagen, index) => {
               return (
                 <SwiperSlide
                   className="liSliderCard"

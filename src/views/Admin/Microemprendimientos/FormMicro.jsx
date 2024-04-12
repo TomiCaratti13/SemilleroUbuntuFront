@@ -475,7 +475,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           fullWidth
           id="subcategoria"
           name="subcategoria"
-          label="Subcategoría*"
+          label="Subcategoría"
           variant="outlined"
           value={formik.values.subcategoria}
           onChange={formik.handleChange}

@@ -110,6 +110,7 @@ export const AdminPublicaciones = () => {
             <MapPublicaciones
               publicaciones={publicaciones}
               setEditar={setEditar}
+              setCrear={setCrear}
               isAdmin={true}
             />
           </>

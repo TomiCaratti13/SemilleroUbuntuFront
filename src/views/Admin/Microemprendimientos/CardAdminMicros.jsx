@@ -22,6 +22,7 @@ export const CardAdminMicros = ({
   handlePopper,
   isAdmin,
   setVer,
+  setCrear,
 }) => {
   const microemprendimientoMap = {
     nombre: microemprendimiento.title,
@@ -64,7 +65,7 @@ export const CardAdminMicros = ({
     console.log('Ocultar micro', microemprendimiento.id, token);
     deleteOcultaMicro(microemprendimiento.id, token)
       .then(response => {
-        if (response && response.status === 200) {
+        if (response && response.status === 204) {
           openAlert(true, 'Microemprendimiento ocultado con éxito');
         } else {
           openAlert(false, 'Error a ocultar el microemprendimiento');
@@ -90,6 +91,8 @@ export const CardAdminMicros = ({
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
+        setCrear={setCrear}
+        setEditar={setEditar}
       />
       <Container
         sx={{

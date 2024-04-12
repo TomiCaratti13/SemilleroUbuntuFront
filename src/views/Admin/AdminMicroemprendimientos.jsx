@@ -124,6 +124,7 @@ export const AdminMicroemprendimientos = () => {
                   handlePopper={handlePopper}
                   isActive={activePopperId === microemprendimiento.id}
                   isAdmin={true}
+                  setCrear={setCrear}
                 />
               ))}
             </Box>

@@ -99,35 +99,14 @@ export const AlertModal = ({
               {alert.info}
             </Typography>
           )}
-          <Box
-            sx={{
-              display: 'flex',
-              width: '100%',
-              m: 0,
-              justifyContent: 'end',
-            }}>
-            <Button
+          {alert.icon === 'loading' ? null : (
+            <Box
               sx={{
-                fontSize: '14px',
-                lineHeight: '20px',
-                fontWeight: 600,
-                color: 'azul.main',
-                textAlign: 'center',
-                textTransform: 'none',
-                '&:hover': {
-                  bgcolor: 'gris.medio',
-                },
-              }}
-              onClick={() => {
-                if (setSelectedContacto) setSelectedContacto(null);
-                if (setValue) setValue('1');
-                if (setCrear) setCrear(false);
-                if (setEditar) setEditar([]);
-                closeAlert(returnTo);
+                display: 'flex',
+                width: '100%',
+                m: 0,
+                justifyContent: 'end',
               }}>
-              {alert.icon ? 'Aceptar' : 'Cancelar'}
-            </Button>
-            {!alert.icon ? (
               <Button
                 sx={{
                   fontSize: '14px',
@@ -140,11 +119,34 @@ export const AlertModal = ({
                     bgcolor: 'gris.medio',
                   },
                 }}
-                onClick={resendAlert}>
-                Intentar Nuevamente
+                onClick={() => {
+                  if (setSelectedContacto) setSelectedContacto(null);
+                  if (setValue) setValue('1');
+                  if (setCrear) setCrear(false);
+                  if (setEditar) setEditar([]);
+                  closeAlert(returnTo);
+                }}>
+                {alert.icon ? 'Aceptar' : 'Cancelar'}
               </Button>
-            ) : null}
-          </Box>
+              {!alert.icon ? (
+                <Button
+                  sx={{
+                    fontSize: '14px',
+                    lineHeight: '20px',
+                    fontWeight: 600,
+                    color: 'azul.main',
+                    textAlign: 'center',
+                    textTransform: 'none',
+                    '&:hover': {
+                      bgcolor: 'gris.medio',
+                    },
+                  }}
+                  onClick={resendAlert}>
+                  Intentar Nuevamente
+                </Button>
+              ) : null}
+            </Box>
+          )}
         </Box>
       </Modal>
     </div>
