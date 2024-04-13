@@ -5,6 +5,7 @@ import Header from './views/Header';
 import { SnackbarProvider } from 'notistack';
 import { CssBaseline } from '@mui/material';
 import Chatbot from './components/chatbot/ChatBot';
+import { useSelector } from 'react-redux';
 
 export default function App() {
   return (
@@ -19,7 +20,7 @@ export default function App() {
         <main>
           <Outlet />
         </main>
-        <Chatbot />
+        {location.pathname.includes('/Admin') ? null : <Chatbot />}
       </SnackbarProvider>
     </ThemeProvider>
   );

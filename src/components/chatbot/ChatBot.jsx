@@ -12,53 +12,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getPreguntas } from '../../utils/services/axiosConfig';
 
-// const primeras = {
-//   preguntas: [
-//     { name: 'Pregunta 1', id: 1 },
-//     { name: 'Pregunta 2', id: 2 },
-//   ],
-// };
-
-// const segundas1 = {
-//   respuesta: 'Respuesta al pregunta 1',
-//   preguntas: [
-//     { name: 'Pregunta 3', id: 3 },
-//     { name: 'Pregunta 4', id: 4 },
-//   ],
-// };
-
-// const segundas2 = {
-//   respuesta: 'Respuesta a la pregunta 2',
-//   preguntas: [
-//     { name: 'Pregunta 5', id: 5 },
-//     { name: 'Pregunta 6', id: 6 },
-//   ],
-// };
-
-// const terceras3 = {
-//   respuesta: 'Respuesta a la pregunta 3 de la 1',
-//   preguntas: [
-//     { name: 'Pregunta 7', id: 7 },
-//     { name: 'Pregunta 8', id: 8 },
-//   ],
-// };
-
-// const terceras4 = {
-//   respuesta: 'Respuesta 5 de la 2',
-//   preguntas: [
-//     { name: 'Pregunta 9', id: 9 },
-//     { name: 'Pregunta 10', id: 10 },
-//   ],
-// };
-
-// // Mapeo de preguntas a preguntas de seguimiento
-// const mapaPreguntas = {
-//   1: segundas1,
-//   2: segundas2,
-//   3: terceras3,
-//   5: terceras4,
-// };
-
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const handleDial = boleean => setOpen(boleean);
@@ -66,12 +19,26 @@ export default function ChatBot() {
   const [preguntaSeleccionada, setPreguntaSeleccionada] = useState({});
   const [anterior, setAnterior] = useState([4]);
 
+  const seleccionarPregunta = id => {
+    setAnterior(prevAnterior => {
+      const nuevoAnterior = [...prevAnterior, id];
+      return nuevoAnterior;
+    });
+    traerMasPreguntas(id);
+  };
+
+  const volverAtras = () => {
+    setAnterior(prevAnterior => {
+      const nuevoAnterior = [...prevAnterior];
+      nuevoAnterior.pop();
+      const idPreguntaAnterior = nuevoAnterior[nuevoAnterior.length - 1];
+      traerMasPreguntas(idPreguntaAnterior);
+      return nuevoAnterior;
+    });
+  };
+
   const traerMasPreguntas = id => {
     getPreguntas(id).then(nuevasPreguntas => {
-      console.log("IDACTUAL",id);
-      console.log("Anterior", anterior);
-      // console.log(nuevasPreguntas.respuesta.preguntas);
-      setAnterior(id);
       setPreguntaSeleccionada(nuevasPreguntas);
       if (nuevasPreguntas) {
         setPreguntaSeleccionada(nuevasPreguntas);
@@ -82,15 +49,17 @@ export default function ChatBot() {
   };
 
   useEffect(() => {
-    traerMasPreguntas(4);
+    seleccionarPregunta(4);
   }, [open]);
 
-  // useEffect(() => {
-  //   traerMasPreguntas(anterior);
-  // }, [anterior]);
+  //Array para revisar array
+  const todosIguales = arr => arr.every(val => val === arr[0]);
 
   return (
-    <div onClick={() => handleDial(false)}>
+    <div
+      onClick={() => {
+        handleDial(false), setAnterior([4]);
+      }}>
       <Box
         sx={{
           position: 'fixed',
@@ -102,6 +71,21 @@ export default function ChatBot() {
         }}>
         <Backdrop open={open} />
         <SpeedDial
+          open={open}
+          onClick={e => {
+            e.stopPropagation();
+            if (!open) {
+              handleDial(true);
+            } else if (
+              todosIguales(anterior) &&
+              anterior[anterior.length - 1] === 4
+            ) {
+              setAnterior([4]);
+              handleDial(false);
+            } else {
+              volverAtras();
+            }
+          }}
           ariaLabel="SpeedDial tooltip example"
           sx={{
             position: 'absolute',
@@ -116,7 +100,10 @@ export default function ChatBot() {
             <SpeedDialIcon
               icon={
                 open ? (
-                  preguntaSeleccionada.pregunta ? (
+                  !(
+                    todosIguales(anterior) &&
+                    anterior[anterior.length - 1] === 4
+                  ) ? (
                     <CallReceivedIcon />
                   ) : (
                     <AddIcon />
@@ -135,35 +122,16 @@ export default function ChatBot() {
                 alignItems: 'center',
               }}
             />
-          }
-          onClick={e => {
-            e.stopPropagation();
-            if (!open) {
-              handleDial(true);
-            } else {
-              // handleDial(false);
-            }
-
-            // if (!preguntaSeleccionada) {
-            //   handleDial(false);
-            //   setPreguntaSeleccionada(4);
-            // }
-            if (preguntaSeleccionada && preguntaSeleccionada.id && anterior) {
-              if (preguntaSeleccionada !== 4) {
-                traerMasPreguntas(anterior);
-                setPreguntaSeleccionada(anterior);
-              } else {
-                handleDial(false);
-                setPreguntaSeleccionada(4);
-              }
-            }
-          }}
-          open={open}>
+          }>
           {preguntaSeleccionada.respuesta &&
             preguntaSeleccionada.respuesta.preguntas &&
             preguntaSeleccionada.respuesta.preguntas.map(preguntas => (
               <SpeedDialAction
                 key={preguntas.id}
+                onClick={event => {
+                  event.stopPropagation();
+                  seleccionarPregunta(preguntas.id);
+                }}
                 sx={{
                   bgcolor: '#093C59',
                   color: 'white',
@@ -188,46 +156,43 @@ export default function ChatBot() {
                     {preguntas.pregunta}
                   </Typography>
                 }
-                onClick={event => {
-                  event.stopPropagation();
-                  traerMasPreguntas(preguntas.id);
-                }}
               />
             ))}
-          <SpeedDialAction
-            sx={{
-              bgcolor: 'gris.claro',
-              color: '#093C59',
-              maxWidth: '500px',
-              width: '90%',
-              height: 'fit-content',
-              borderRadius: '6px',
-              padding: '5px 8px',
-              textTransform: 'none',
-              alignSelf: 'flex-end',
-              cursor: 'default',
-              '&:hover': {
+          {preguntaSeleccionada.respuesta && (
+            <SpeedDialAction
+              sx={{
                 bgcolor: 'gris.claro',
-              },
-            }}
-            icon={
-              <Typography
-                sx={{
-                  textAlign: 'center',
-                  textWrap: 'wrap',
-                  fontSize: '14px',
-                  width: '100%',
-                  fontWeight: 600,
-                }}
-                variant="body1">
-                {preguntaSeleccionada.respuesta &&
-                  preguntaSeleccionada.respuesta.respuesta}
-              </Typography>
-            }
-            onClick={event => {
-              event.stopPropagation();
-            }}
-          />
+                color: '#093C59',
+                maxWidth: '500px',
+                width: '90%',
+                height: 'fit-content',
+                borderRadius: '6px',
+                padding: '5px 8px',
+                textTransform: 'none',
+                alignSelf: 'flex-end',
+                cursor: 'default',
+                '&:hover': {
+                  bgcolor: 'gris.claro',
+                },
+              }}
+              icon={
+                <Typography
+                  sx={{
+                    textAlign: 'center',
+                    textWrap: 'wrap',
+                    fontSize: '14px',
+                    width: '100%',
+                    fontWeight: 600,
+                  }}
+                  variant="body1">
+                  {preguntaSeleccionada.respuesta.respuesta}
+                </Typography>
+              }
+              onClick={event => {
+                event.stopPropagation();
+              }}
+            />
+          )}
           {preguntaSeleccionada && (
             <SpeedDialAction
               sx={{
@@ -260,7 +225,6 @@ export default function ChatBot() {
               }
               onClick={event => {
                 event.stopPropagation();
-                // traerMasPreguntas(pregunta.id);
               }}
             />
           )}
