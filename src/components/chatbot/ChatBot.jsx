@@ -10,75 +10,84 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { getPreguntas } from '../../utils/services/axiosConfig';
 
-const primeras = {
-  preguntas: [
-    { name: 'Pregunta 1', id: 1 },
-    { name: 'Pregunta 2', id: 2 },
-  ],
-};
+// const primeras = {
+//   preguntas: [
+//     { name: 'Pregunta 1', id: 1 },
+//     { name: 'Pregunta 2', id: 2 },
+//   ],
+// };
 
-const segundas1 = {
-  respuesta: 'Respuesta al pregunta 1',
-  preguntas: [
-    { name: 'Pregunta 3', id: 3 },
-    { name: 'Pregunta 4', id: 4 },
-  ],
-};
+// const segundas1 = {
+//   respuesta: 'Respuesta al pregunta 1',
+//   preguntas: [
+//     { name: 'Pregunta 3', id: 3 },
+//     { name: 'Pregunta 4', id: 4 },
+//   ],
+// };
 
-const segundas2 = {
-  respuesta: 'Respuesta a la pregunta 2',
-  preguntas: [
-    { name: 'Pregunta 5', id: 5 },
-    { name: 'Pregunta 6', id: 6 },
-  ],
-};
+// const segundas2 = {
+//   respuesta: 'Respuesta a la pregunta 2',
+//   preguntas: [
+//     { name: 'Pregunta 5', id: 5 },
+//     { name: 'Pregunta 6', id: 6 },
+//   ],
+// };
 
-const terceras3 = {
-  respuesta: 'Respuesta a la pregunta 3 de la 1',
-  preguntas: [
-    { name: 'Pregunta 7', id: 7 },
-    { name: 'Pregunta 8', id: 8 },
-  ],
-};
+// const terceras3 = {
+//   respuesta: 'Respuesta a la pregunta 3 de la 1',
+//   preguntas: [
+//     { name: 'Pregunta 7', id: 7 },
+//     { name: 'Pregunta 8', id: 8 },
+//   ],
+// };
 
-const terceras4 = {
-  respuesta: 'Respuesta 5 de la 2',
-  preguntas: [
-    { name: 'Pregunta 9', id: 9 },
-    { name: 'Pregunta 10', id: 10 },
-  ],
-};
+// const terceras4 = {
+//   respuesta: 'Respuesta 5 de la 2',
+//   preguntas: [
+//     { name: 'Pregunta 9', id: 9 },
+//     { name: 'Pregunta 10', id: 10 },
+//   ],
+// };
 
-// Mapeo de preguntas a preguntas de seguimiento
-const mapaPreguntas = {
-  1: segundas1,
-  2: segundas2,
-  3: terceras3,
-  5: terceras4,
-};
+// // Mapeo de preguntas a preguntas de seguimiento
+// const mapaPreguntas = {
+//   1: segundas1,
+//   2: segundas2,
+//   3: terceras3,
+//   5: terceras4,
+// };
 
-export default function SpeedDialTooltipOpen() {
+export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const handleDial = boleean => setOpen(boleean);
 
-  const [preguntaSeleccionada, setPreguntaSeleccionada] = useState(primeras);
+  const [preguntaSeleccionada, setPreguntaSeleccionada] = useState({});
+  const [anterior, setAnterior] = useState([4]);
 
-  const traerMasPreguntas = idPregunta => {
-    const nuevasPreguntas = mapaPreguntas[idPregunta];
-    if (nuevasPreguntas) {
+  const traerMasPreguntas = id => {
+    getPreguntas(id).then(nuevasPreguntas => {
+      console.log("IDACTUAL",id);
+      console.log("Anterior", anterior);
+      // console.log(nuevasPreguntas.respuesta.preguntas);
+      setAnterior(id);
       setPreguntaSeleccionada(nuevasPreguntas);
-    } else {
-      setPreguntaSeleccionada({ respuesta: 'No hay más preguntas' });
-    }
+      if (nuevasPreguntas) {
+        setPreguntaSeleccionada(nuevasPreguntas);
+      } else {
+        setPreguntaSeleccionada({ pregunta: 'No hay más preguntas' });
+      }
+    });
   };
 
+  useEffect(() => {
+    traerMasPreguntas(4);
+  }, [open]);
+
   // useEffect(() => {
-  //   if (preguntaSeleccionada) {
-  //     traerMasPreguntas(preguntaSeleccionada);
-  //   }
-  //   // setPreguntaSeleccionada(segundas1)
-  // }, [preguntaSeleccionada]);
+  //   traerMasPreguntas(anterior);
+  // }, [anterior]);
 
   return (
     <div onClick={() => handleDial(false)}>
@@ -89,6 +98,7 @@ export default function SpeedDialTooltipOpen() {
           flexGrow: 1,
           bottom: '0',
           right: '0',
+          width: '100%',
         }}>
         <Backdrop open={open} />
         <SpeedDial
@@ -100,12 +110,13 @@ export default function SpeedDialTooltipOpen() {
             display: 'flex',
             flexDirection: 'column-reverse',
             alignItems: 'flex-end',
+            width: '100%',
           }}
           icon={
             <SpeedDialIcon
               icon={
                 open ? (
-                  preguntaSeleccionada.respuesta ? (
+                  preguntaSeleccionada.pregunta ? (
                     <CallReceivedIcon />
                   ) : (
                     <AddIcon />
@@ -130,68 +141,121 @@ export default function SpeedDialTooltipOpen() {
             if (!open) {
               handleDial(true);
             } else {
-              handleDial(false);
+              // handleDial(false);
             }
 
-            if (!preguntaSeleccionada.preguntas) {
-              handleDial(false);
-              setPreguntaSeleccionada(primeras);
+            // if (!preguntaSeleccionada) {
+            //   handleDial(false);
+            //   setPreguntaSeleccionada(4);
+            // }
+            if (preguntaSeleccionada && preguntaSeleccionada.id && anterior) {
+              if (preguntaSeleccionada !== 4) {
+                traerMasPreguntas(anterior);
+                setPreguntaSeleccionada(anterior);
+              } else {
+                handleDial(false);
+                setPreguntaSeleccionada(4);
+              }
             }
           }}
           open={open}>
-          {preguntaSeleccionada.preguntas?.map(pregunta => (
-            <SpeedDialAction
-              key={pregunta.id}
-              sx={{
-                bgcolor: '#093C59',
-                color: 'white',
-                maxWidth: '500px',
-                width: 'fit-content',
-                height: 'fit-content',
-                borderRadius: '10px',
-                padding: '5px 8px',
-                textTransform: 'none',
-                alignSelf: 'flex-end',
-              }}
-              icon={
-                <Typography
-                  sx={{
-                    textAlign: 'center',
-                    textWrap: 'nowrap',
-                  }}
-                  variant="body1">
-                  {pregunta.name}
-                </Typography>
-              }
-              onClick={event => {
-                event.stopPropagation();
-                traerMasPreguntas(pregunta.id);
-              }}
-            />
-          ))}
-          {preguntaSeleccionada.respuesta && (
+          {preguntaSeleccionada.respuesta &&
+            preguntaSeleccionada.respuesta.preguntas &&
+            preguntaSeleccionada.respuesta.preguntas.map(preguntas => (
+              <SpeedDialAction
+                key={preguntas.id}
+                sx={{
+                  bgcolor: '#093C59',
+                  color: 'white',
+                  maxWidth: '500px',
+                  width: 'fit-content',
+                  height: 'fit-content',
+                  borderRadius: '10px',
+                  padding: '5px 8px',
+                  textTransform: 'none',
+                  alignSelf: 'flex-end',
+                  '&:hover': {
+                    bgcolor: 'gris.oscuro',
+                  },
+                }}
+                icon={
+                  <Typography
+                    sx={{
+                      textAlign: 'center',
+                      textWrap: 'nowrap',
+                    }}
+                    variant="body1">
+                    {preguntas.pregunta}
+                  </Typography>
+                }
+                onClick={event => {
+                  event.stopPropagation();
+                  traerMasPreguntas(preguntas.id);
+                }}
+              />
+            ))}
+          <SpeedDialAction
+            sx={{
+              bgcolor: 'gris.claro',
+              color: '#093C59',
+              maxWidth: '500px',
+              width: '90%',
+              height: 'fit-content',
+              borderRadius: '6px',
+              padding: '5px 8px',
+              textTransform: 'none',
+              alignSelf: 'flex-end',
+              cursor: 'default',
+              '&:hover': {
+                bgcolor: 'gris.claro',
+              },
+            }}
+            icon={
+              <Typography
+                sx={{
+                  textAlign: 'center',
+                  textWrap: 'wrap',
+                  fontSize: '14px',
+                  width: '100%',
+                  fontWeight: 600,
+                }}
+                variant="body1">
+                {preguntaSeleccionada.respuesta &&
+                  preguntaSeleccionada.respuesta.respuesta}
+              </Typography>
+            }
+            onClick={event => {
+              event.stopPropagation();
+            }}
+          />
+          {preguntaSeleccionada && (
             <SpeedDialAction
               sx={{
                 bgcolor: 'white',
                 color: '#093C59',
                 maxWidth: '500px',
-                width: 'fit-content',
+                width: '90%',
                 height: 'fit-content',
                 borderRadius: '6px',
                 padding: '5px 8px',
                 textTransform: 'none',
                 alignSelf: 'flex-end',
+                cursor: 'default',
+                '&:hover': {
+                  bgcolor: 'gris.claro',
+                },
               }}
               icon={
                 <Typography
                   sx={{
                     textAlign: 'center',
-                    textWrap: 'nowrap',
-                    fontSize: '25px',
+                    textWrap: 'wrap',
+                    fontSize: '14px',
+                    width: '100%',
                     fontWeight: 600,
                   }}
                   variant="body1">
-                  {preguntaSeleccionada.respuesta}
+                  {preguntaSeleccionada.pregunta}
                 </Typography>
               }
               onClick={event => {

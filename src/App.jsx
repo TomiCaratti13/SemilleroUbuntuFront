@@ -4,9 +4,9 @@ import theme from './theme/theme';
 import Header from './views/Header';
 import { SnackbarProvider } from 'notistack';
 import { CssBaseline } from '@mui/material';
-import { Chatbot } from './components/chatbot/ChatBot';
+import Chatbot from './components/chatbot/ChatBot';
 
-function App() {
+export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider
@@ -22,4 +22,5 @@ function App() {
         <Chatbot />
       </SnackbarProvider>
     </ThemeProvider>
-  )}
+  );
+}
