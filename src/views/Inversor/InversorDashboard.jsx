@@ -23,16 +23,12 @@ export const InversorDashboard = () => {
   const riesgos = Riesgo;
 
   useEffect(() => {
-    if (value === '1') {
-      getMicroemprendimientos().then(response => {
-        const microemprendimientosFiltrados = response.filter(micro => !inversiones.some(inv => inv.microId === micro.id));
-        setMicroemp(microemprendimientosFiltrados);
-      });
-    } else if (value === '2') {
-      // const inversiones = Inversion;
-      setInversion(inversiones);
-      setRiesgo(riesgos);
-    }
+    getMicroemprendimientos().then(response => {
+      const microemprendimientosFiltrados = response.filter(micro => !inversiones.some(inv => inv.microId === micro.id));
+      setMicroemp(microemprendimientosFiltrados);
+    });
+    setInversion(inversiones);
+    setRiesgo(riesgos);
   }, [value, selectedCard, inversion]);
 
 
@@ -109,7 +105,7 @@ export const InversorDashboard = () => {
             </Box>
             <TabPanel value={value}
               sx={{
-                pt: value === '1' ? '27px' : '0',
+                pt: value === '1' ? '35px' : '0',
               }}
             >
               {selectedCard === null ? (
@@ -122,7 +118,7 @@ export const InversorDashboard = () => {
                   ))
                 ) : (
                   <>
-                    <MapRiesgo riesgos={riesgo}/>
+                    <MapRiesgo riesgos={riesgo} />
                     {inversion.map((inv, index) => (
                       <MapInversiones
                         key={index}
@@ -136,7 +132,9 @@ export const InversorDashboard = () => {
                 <DetalleInversion
                   setSelectedCard={setSelectedCard}
                   setValue={setValue}
-                  contacto={selectedCard}
+                  card={selectedCard}
+                  value={value}
+                  riesgo={riesgo}
                 />
               )}
             </TabPanel>

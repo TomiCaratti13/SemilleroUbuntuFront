@@ -1,6 +1,8 @@
 import { Typography, Box, Container, Button } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import CircleIcon from '@mui/icons-material/Circle';
+
 
 export const MapMicroInv = ({ microemprendimiento, onClick }) => {
   const microMap = {
@@ -40,6 +42,13 @@ export const MapMicroInv = ({ microemprendimiento, onClick }) => {
             gap: '4px',
             flexGrow: 1,
           }}>
+          <CircleIcon
+            fontSize='small'
+            sx={{
+              mt: '3px',
+              color: 'gris.medio'
+            }}
+          />
           {microMap.nombre}
         </Typography>
         <Typography

@@ -3,8 +3,6 @@ import { Box, Typography } from '@mui/material';
 
 export const MapRiesgo = ({ riesgos }) => {
 
-  const riesgoMap = riesgos;
-
 
   return (
     <Box
@@ -13,19 +11,19 @@ export const MapRiesgo = ({ riesgos }) => {
         alignItems: 'center',
         gap: '8px',
         mx: 'auto',
-        p: '3px 0'
+        p: '7px 0'
       }}
     >
       <Typography
         sx={{
           fontSize: '14px',
           fontWeight: '600',
-          ml: '8px'
+          ml: '4px'
         }}
       >
         Riesgo:
       </Typography>
-      {riesgoMap.map((riesgo, index) => (
+      {riesgos.map((riesgo, index) => (
         <Typography
           key={index}
           sx={{

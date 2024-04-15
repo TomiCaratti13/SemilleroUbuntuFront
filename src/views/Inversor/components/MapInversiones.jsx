@@ -66,6 +66,7 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
           <CircleIcon
             fontSize='small'
             sx={{
+              mt: '2px',
               color: nivelRiesgo === 'alto'
                 ? 'nivel.alto'
                 : (nivelRiesgo === 'medio' 
@@ -92,9 +93,9 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
             justifyContent: 'space-between',
             padding: '16px 0',
           }}>
-          <span>{inversionMap.id}</span>
+          {/* <span>{inversionMap.id}</span> */}
           {inversionMap.monto}
-          <span>{`CC ${parseInt(inversionMap.cuotas) - parseInt(inversionMap.cuotasFaltantes)}/${inversionMap.cuotas}`}</span>
+          <span>{`Cuotas: ${parseInt(inversionMap.cuotas) - parseInt(inversionMap.cuotasFaltantes)}/${inversionMap.cuotas}`}</span>
         </Typography>
       </Box>
       <Button
