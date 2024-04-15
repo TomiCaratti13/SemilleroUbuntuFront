@@ -3,7 +3,8 @@ import { ButtonBlue } from '../../components/ButtonBlue';
 
 export const MapAdminPublis = () => {
   return (
-    <Typography
+    <>
+      <Typography
         variant="h4"
         sx={{
           fontSize: '28px',
@@ -50,5 +51,6 @@ export const MapAdminPublis = () => {
           isAdmin={true}
         />
       </Box>
+    </>
   )
 }

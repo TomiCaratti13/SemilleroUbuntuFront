@@ -5,7 +5,7 @@ import { serviceUser } from "../../../utils/services/serviceUser";
 export const RutaAdmin = () => {
   const { token } = useParams();
   serviceUser({token});
-  const user = useSelector(state => state.user)
+  // const user = useSelector(state => state.user)
 
   return (
     <Navigate to='/Admin' />

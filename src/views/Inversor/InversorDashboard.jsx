@@ -4,41 +4,40 @@ import { useEffect, useState } from 'react';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { MapSolContactos } from '../Admin/components/MapSolContactos';
-import { DetalleContacto } from '../Admin/components/DetalleContacto';
-import { getContactos } from '../../utils/services/axiosConfig';
+import { DetalleInversion } from './components/DetalleInversion';
+import { MapMicroInv } from './components/MapMicroInv';
+import { getMicroemprendimientos } from '../../utils/services/axiosConfig';
+import { MapInversiones } from './components/MapInversiones';
+import Inversion from '../../utils/mocks/Inversion.json'
+import Riesgo from '../../utils/mocks/Riesgo.json'
+import { MapRiesgo } from './components/MapRiesgo';
 
 export const InversorDashboard = () => {
   const [value, setValue] = useState('1');
-  const [solContactos, setSolContactos] = useState([]);
-  const [contactos, setContactos] = useState([]);
-  const [selectedContacto, setSelectedContacto] = useState(null);
+  const [microemp, setMicroemp] = useState([]);
+  const [inversion, setInversion] = useState([]);
+  const [riesgo, setRiesgo] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
-  //traerContactos
+  const inversiones = Inversion;
+  const riesgos = Riesgo;
+
   useEffect(() => {
-    getContactos().then(response => {
-      const allContactos = response.data;
-      setSolContactos(allContactos);
-      if (value === '1') {
-        setContactos(allContactos.filter(contacto => contacto.gestionado === true));
-      } else if (value === '2') {
-        setContactos(allContactos.filter(contacto => contacto.gestionado === false));
-      }
-    });
-  }, [value, selectedContacto]);
-
-  //Esto necesita el evento no borrar
-  const handleChange = (event, newValue) => {
-    setSelectedContacto(null);
-    if (newValue === '1') {
-      setContactos(
-        solContactos.filter(contacto => contacto.gestionado === true)
-      );
-    } else if (newValue === '2') {
-      setContactos(
-        solContactos.filter(contacto => contacto.gestionado === false)
-      );
+    if (value === '1') {
+      getMicroemprendimientos().then(response => {
+        const microemprendimientosFiltrados = response.filter(micro => !inversiones.some(inv => inv.microId === micro.id));
+        setMicroemp(microemprendimientosFiltrados);
+      });
+    } else if (value === '2') {
+      // const inversiones = Inversion;
+      setInversion(inversiones);
+      setRiesgo(riesgos);
     }
+  }, [value, selectedCard, inversion]);
+
+
+  const handleChange = (e, newValue) => {
+    setSelectedCard(null);
     setValue(newValue);
   };
 
@@ -108,21 +107,36 @@ export const InversorDashboard = () => {
                 />
               </TabList>
             </Box>
-            <TabPanel value={value}>
-              {selectedContacto === null ? (
-                contactos.map((contacto, index) => (
-                  <MapSolContactos
-                    contacto={contacto}
-                    key={index}
-                    onClick={() => setSelectedContacto(contacto)}
-                  />
+            <TabPanel value={value}
+              sx={{
+                pt: value === '1' ? '27px' : '0',
+              }}
+            >
+              {selectedCard === null ? (
+                (value === '1' ? (
+                  microemp.map((micro, index) => (
+                    <MapMicroInv
+                      key={index}
+                      microemprendimiento={micro}
+                      onClick={() => setSelectedCard(micro)} />
+                  ))
+                ) : (
+                  <>
+                    <MapRiesgo riesgos={riesgo}/>
+                    {inversion.map((inv, index) => (
+                      <MapInversiones
+                        key={index}
+                        inversion={inv}
+                        riesgo={riesgo}
+                        onClick={() => setSelectedCard(inv)} />
+                    ))}
+                  </>
                 ))
               ) : (
-                <DetalleContacto
-                  //SetselectContacto y setVAlue es un pequeño drillProp
-                  setSelectedContacto={setSelectedContacto}
+                <DetalleInversion
+                  setSelectedCard={setSelectedCard}
                   setValue={setValue}
-                  contacto={selectedContacto}
+                  contacto={selectedCard}
                 />
               )}
             </TabPanel>
@@ -132,3 +146,4 @@ export const InversorDashboard = () => {
     </Box>
   )
 }
+

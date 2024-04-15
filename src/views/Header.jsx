@@ -18,6 +18,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AdminHeader from './Admin/AdminHeader';
 import { useSelector } from 'react-redux';
 import { HEADER_HEIGHT } from '../utils/services/constants';
+import PerfilAdmin from '../components/PerfilAdmin';
 
 const drawerWidth = 256;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones', 'Inversiones'];
@@ -68,7 +69,7 @@ function Header(props) {
             {navItems.map((item, index) => (
               <React.Fragment key={item}>
                 <Link
-                  
+
                   to={
                     item === 'Inicio'
                       ? '/'
@@ -105,9 +106,9 @@ function Header(props) {
               </React.Fragment>
             ))}
           </Box>
-          
+
           <Link
-            to={user.isAdmin ? '/Admin' : '/login'}
+            to={user.isAdmin ? '/Admin' : (user.isIversor ? '/Inversor' : '/login')}
             style={{
               width: '100%',
               textDecoration: 'none',

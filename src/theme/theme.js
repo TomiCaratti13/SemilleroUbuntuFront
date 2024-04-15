@@ -27,6 +27,11 @@ const theme = createTheme({
       nogestionada: '#b86b11',
       error: '#bc1111'
     },
+    nivel: {
+      alto: '#bc1111',
+      medio: '#b86b11',
+      bajo: '#1d9129'
+    },
   },
   typography: {
     fontFamily:'Lato',

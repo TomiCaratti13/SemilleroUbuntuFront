@@ -1,0 +1,14 @@
+[
+  {
+    "id":1,
+    "nivel":"bajo"
+  },
+  {
+    "id":2,
+    "nivel":"medio"
+  },
+  {
+    "id":3,
+    "nivel":"alto"
+  }
+]

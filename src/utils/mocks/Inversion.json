@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "microId": 1,
+    "usuarioId":"1",
+    "riesgoId":3,
+    "monto":"$24000",
+    "cuotas":"6",
+    "retorno":"$688750",
+    "ganancias":"$429250",
+    "montoMorMes":"$5000",
+    "cuotasFaltantes":"5"
+  },
+  {
+    "id": 2,
+    "microId": 2,
+    "usuarioId":"1",
+    "riesgoId": 1,
+    "monto":"$34500",
+    "cuotas":"12",
+    "retorno":"$688750",
+    "ganancias":"$429250",
+    "montoMorMes":"$5000",
+    "cuotasFaltantes":"7"
+  },
+  {
+    "id": 3,
+    "microId": 6,
+    "usuarioId":"1",
+    "riesgoId": 2,
+    "monto":"$24000",
+    "cuotas":"3",
+    "retorno":"$688750",
+    "ganancias":"$429250",
+    "montoMorMes":"$5000",
+    "cuotasFaltantes":"2"
+  }
+]
+
