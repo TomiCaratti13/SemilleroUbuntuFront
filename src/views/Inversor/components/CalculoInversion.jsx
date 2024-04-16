@@ -45,20 +45,25 @@ const ButtonInversion = ({ onClick, text }) => {
   )
 }
 // #region COMPONENTE
-export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesgo }) => {
+export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) => {
+
+  // const cardMicro = {
+  //   nombre: card?.nombre || 'Microemprendimiento',
+  // }
+  const { nombre } = card;
 
   const formik = useFormik({
     initialValues: {
-      monto: card?.usuarioSolicitante?.nombre || '',
-      costosGestion: card?.usuarioSolicitante?.email || '',
-      totalAportar: card?.usuarioSolicitante?.telefono || '',
-      riesgo: card?.usuarioSolicitante?.nombre || '',
-      cuotas: card?.usuarioSolicitante?.nombre || '',
-      cuotasFaltantes: card?.usuarioSolicitante?.nombre || '',
-      retorno: card?.usuarioSolicitante?.nombre || '',
-      ganancias: card?.usuarioSolicitante?.nombre || '',
-      porMes: card?.usuarioSolicitante?.nombre || '',
-      descripcion: card?.usuarioSolicitante?.nombre || 'Si decides optar por esta inversión, podrás empezar a cobrar a partir del poximo mes, durante 12 meses el monto de $57.452,89',
+      monto: '',
+      costosGestion: '',
+      totalAportar: '',
+      riesgo: '',
+      cuotas: '',
+      cuotasFaltantes: '',
+      retorno: '',
+      ganancias: '',
+      porMes: '',
+      descripcion: 'Si decides optar por esta inversión, podrás empezar a cobrar a partir del poximo mes, durante 12 meses el monto de $57.452,89',
     },
     validationSchema: formContact,
     onSubmit: formData => {
@@ -120,7 +125,6 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
         setValue={setValue}
       />
       <Container
-        // onBack={onBack}
         component='form'
         onSubmit={formik.handleSubmit}
         style={{
@@ -131,11 +135,11 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
           maxWidth: '600px',
           margin: 'auto',
         }}>
-        <Container
-          style={{
+        <Box
+          sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px',
+            gap: '8px',
             width: '100%',
             maxWidth: '600px',
             margin: 'auto',
@@ -143,61 +147,44 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
           <Typography
             sx={{
               fontSize: '18px',
-              lineHeight: '19px',
               fontWeight: 700,
               color: 'azul.main',
-              padding: value === '2' ? '27px 0 8px 0' : null,
               display: 'flex',
-              gap: '4px',
+              alignItems: 'center',
               justifyContent: 'center',
-              width: '100%',
+              gap: '4px',
             }}>
-            {value === '2' ? (<CircleIcon
-              fontSize='small'
-              sx={{
-                color: card.gestionado
-                  ? 'gestion.exito'
-                  : 'gestion.nogestionada',
-              }}
-            />) : null}
-            {card.nombre ? card.nombre : 'Microemp'}
+            <CircleIcon
+              fontSize='s'
+              sx={{ color: 'gris.medio' }}
+            />
+            {nombre}
           </Typography>
-          {value === '2' ?
-            (<Typography
-              sx={{
-                fontSize: '14px',
-                lineHeight: '1px',
-                fontWeight: 700,
-                display: 'flex',
-                justifyContent: 'center',
-                width: '100%',
-                m: '-8px 0 8px 0'
-              }}
-            >
-              N°: {card.id}
-            </Typography>)
-            : null
-          }
           <Typography
             sx={{
-              fontSize: '14px',
-              mt: '16px',
-              fontWeight: 400,
-              display: 'flex',
-              gap: '4px',
-              flexGrow: 1,
-              justifyContent: 'center',
-              width: '100%',
+              fontSize: '16px',
+              fontWeight: 500,
+              textAlign: 'center',
             }}>
-            Formulario de Cálculo Inversión
+            Formulario Inversión
           </Typography>
-        </Container>
+          <Typography
+            sx={{
+              width: '100%',
+              fontSize: '12px',
+              fontWeight: 500,
+              lineHeight: '14px',
+              color: 'nivel.medio',
+            }}>
+            Ingrese el monto que desea aportar a {nombre} y luego seleccione un nivel de Riesgo de Inversión, para realizar lo cálculos. Si está de acuerdo, dé a Invertir.
+          </Typography>
+        </Box>
         <TextField
           // #region MONTO 
           fullWidth
           id='monto'
           name='monto'
-          label='Monto a Invertir'
+          label='Monto a Aportar'
           variant='outlined'
           value={formik.values.monto}
           onChange={formik.handleChange}
@@ -250,64 +237,63 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
             },
           }}
         />
-        <FormControl
-        // #region RIESGO
-        >
-          <InputLabel id='select-label'>Riesgo Inversion</InputLabel>
+        <FormControl>
+          <InputLabel id='select-label' sx={{ fontWeight: '400' }}>Riesgo Inversión</InputLabel>
           <Select
-            label='Riesgo Inversion'
+            // #region RIESGO
+            label='Riesgo Inversión'
             labelId='select-label'
             displayEmpty
             defaultValue='0'
             // onChange={formik.handleConsult}
-            inputProps={{
-              id: 'uncontrolled-native',
-            }}
             sx={{
-
               '& .MuiOutlinedInput-input': {
                 display: 'flex',
                 alignItems: 'center',
               },
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#090909',
+                fontWeight: '400',
               },
-
               '& .MuiFormLabel-root': {
                 color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '800',
-              },
-
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : `${theme.palette.primary.main} !important`,
-              },
-
-              '& .MuiFormHelperText-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
+                  formik.touched.nombre && formik.errors.nombre
                     ? theme.palette.gestion.error
                     : '#090909 !important',
                 fontWeight: '400',
               },
-
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: theme =>
+                  formik.touched.nombre && formik.errors.nombre
+                    ? theme.palette.gestion.error
+                    : `${theme.palette.primary.main} !important`,
+              },
+              '& .MuiFormHelperText-root': {
+                color: theme =>
+                  formik.touched.nombre && formik.errors.nombre
+                    ? theme.palette.gestion.error
+                    : '#090909 !important',
+                fontWeight: '400',
+              },
               '& .Mui-disabled': {
                 color: theme => `${theme.palette.primary.main} !important`,
               },
             }}
-          >
+            InputProps={{
+              id: 'uncontrolled-native',
+              sx: {
+                '& .Mui-disabled': {
+                  WebkitTextFillColor: '#090909 !important',
+                },
+              },
+            }}>
             <MenuItem value='0'>
               <ListItemIcon>
                 <Typography
                   sx={{
                     fontWeight: '400',
                   }}>
-                  Seleccione un Nivel de Riesgo
+                  Nivel de Riesgo
                 </Typography>
               </ListItemIcon>
             </MenuItem>
@@ -319,13 +305,15 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
                   <CircleIcon
                     fontSize='small'
                     sx={{
-                      color: riesgo.nombre === 'ALTO'
-                        ? 'nivel.alto'
-                        : (riesgo.nombre === 'MEDIO'
-                          ? 'nivel.medio'
-                          : (riesgo.nombre === 'BAJO'
-                            ? 'nivel.bajo'
-                            : null)),
+                      color: riesgo.nombre === 'ALTO' ?
+                        'nivel.alto'
+                        : (riesgo.nombre === 'MEDIO' ?
+                          'nivel.medio'
+                          : (riesgo.nombre === 'BAJO' ?
+                            'nivel.bajo'
+                            : null
+                          )
+                        ),
                     }}
                   />
                   <Typography
@@ -333,7 +321,6 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
                       pl: '8px',
                       lineHeight: '20px',
                       fontWeight: '400',
-
                     }}>
                     {riesgo.nombre.charAt(0).toUpperCase() + riesgo.nombre.slice(1).toLowerCase()}
                   </Typography>
@@ -518,128 +505,65 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
             },
           }}
         />
-        {(value === '2' ? (
-          <TextField
-            fullWidth
-            id='cuotasFaltantes'
-            name='cuotasFaltantes'
-            label='Cuotas Faltantes'
-            variant='outlined'
-            value={formik.values.cuotasFaltantes}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={formik.isSubmitting}
-            error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-            helperText={
-              formik.touched.telefono && formik.errors.telefono
-                ? formik.errors.telefono
-                : null
-            }
-            sx={{
-              '& .MuiOutlinedInput-input': {
-                fontWeight: '400',
-              },
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#090909',
-              },
+        <TextField
+          fullWidth
+          id='cuotasFaltantes'
+          name='cuotasFaltantes'
+          label='Tasa de Retorno'
+          variant='outlined'
+          value={formik.values.cuotasFaltantes}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          disabled={formik.isSubmitting}
+          error={formik.touched.telefono && Boolean(formik.errors.telefono)}
+          helperText={
+            formik.touched.telefono && formik.errors.telefono
+              ? formik.errors.telefono
+              : null
+          }
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#090909',
+            },
 
-              '& .MuiFormLabel-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
+            '& .MuiFormLabel-root': {
+              color: theme =>
+                formik.touched.telefono && formik.errors.telefono
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
 
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : `${theme.palette.primary.main} !important`,
-              },
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: theme =>
+                formik.touched.telefono && formik.errors.telefono
+                  ? theme.palette.gestion.error
+                  : `${theme.palette.primary.main} !important`,
+            },
 
-              '& .MuiFormHelperText-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
+            '& .MuiFormHelperText-root': {
+              color: theme =>
+                formik.touched.telefono && formik.errors.telefono
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
 
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+            },
+          }}
+          InputProps={{
+            sx: {
               '& .Mui-disabled': {
-                color: theme => `${theme.palette.primary.main} !important`,
+                WebkitTextFillColor: '#090909 !important',
               },
-            }}
-            InputProps={{
-              sx: {
-                '& .Mui-disabled': {
-                  WebkitTextFillColor: '#090909 !important',
-                },
-              },
-            }}
-          />
-        ) : (null))}
-        {(value === '1' ? (
-          <TextField
-            fullWidth
-            id='cuotasFaltantes'
-            name='cuotasFaltantes'
-            label='Tasa de Retorno'
-            variant='outlined'
-            value={formik.values.cuotasFaltantes}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={formik.isSubmitting}
-            error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-            helperText={
-              formik.touched.telefono && formik.errors.telefono
-                ? formik.errors.telefono
-                : null
-            }
-            sx={{
-              '& .MuiOutlinedInput-input': {
-                fontWeight: '400',
-              },
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#090909',
-              },
-
-              '& .MuiFormLabel-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : `${theme.palette.primary.main} !important`,
-              },
-
-              '& .MuiFormHelperText-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
-              '& .Mui-disabled': {
-                color: theme => `${theme.palette.primary.main} !important`,
-              },
-            }}
-            InputProps={{
-              sx: {
-                '& .Mui-disabled': {
-                  WebkitTextFillColor: '#090909 !important',
-                },
-              },
-            }}
-          />
-        ) : (null))}
+            },
+          }}
+        />
         <TextField
           // #region RETORNO
           fullWidth
@@ -760,24 +684,30 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
             },
           }}
         />
-        {(value === '2' ? (
+        <Box>
           <TextField
-            // #region POR MES
+            // #region DESCRIPCION
             fullWidth
-            id='porMes'
-            name='porMes'
-            label='Retorno Mensual'
+            id='mensaje'
+            name='mensaje'
+            label='Descripción'
             variant='outlined'
-            value={formik.values.porMes}
-            onChange={formik.handleChange}
+            multiline
+            rows={4}
+            value={formik.values.mensaje}
+            inputProps={{
+              maxLength: 300,
+            }}
+            onChange={e => {
+              if (e.target.value.length <= 300) {
+                setChars(e.target.value.length);
+                formik.handleChange(e);
+              }
+            }}
             onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}
-            error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-            helperText={
-              formik.touched.telefono && formik.errors.telefono
-                ? formik.errors.telefono
-                : null
-            }
+            error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
+            helperText={formik.touched.mensaje && formik.errors.mensaje}
             sx={{
               '& .MuiOutlinedInput-input': {
                 fontWeight: '400',
@@ -788,7 +718,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
 
               '& .MuiFormLabel-root': {
                 color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
+                  formik.touched.mensaje && formik.errors.mensaje
                     ? theme.palette.gestion.error
                     : '#090909 !important',
                 fontWeight: '400',
@@ -796,14 +726,14 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
 
               '& .MuiInputLabel-root.Mui-focused': {
                 color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
+                  formik.touched.mensaje && formik.errors.mensaje
                     ? theme.palette.gestion.error
                     : `${theme.palette.primary.main} !important`,
               },
 
               '& .MuiFormHelperText-root': {
                 color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
+                  formik.touched.mensaje && formik.errors.mensaje
                     ? theme.palette.gestion.error
                     : '#090909 !important',
                 fontWeight: '400',
@@ -821,78 +751,11 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, value, riesg
               },
             }}
           />
-        ) : (
-          <Box>
-            <TextField
-              // #region DESCRIPCION
-              fullWidth
-              id='mensaje'
-              name='mensaje'
-              label='Descripcion'
-              variant='outlined'
-              multiline
-              rows={4}
-              value={formik.values.mensaje}
-              inputProps={{
-                maxLength: 300,
-              }}
-              onChange={e => {
-                if (e.target.value.length <= 300) {
-                  setChars(e.target.value.length);
-                  formik.handleChange(e);
-                }
-              }}
-              onBlur={formik.handleBlur}
-              disabled={formik.isSubmitting}
-              error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
-              helperText={formik.touched.mensaje && formik.errors.mensaje}
-              sx={{
-                '& .MuiOutlinedInput-input': {
-                  fontWeight: '400',
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#090909',
-                },
-
-                '& .MuiFormLabel-root': {
-                  color: theme =>
-                    formik.touched.mensaje && formik.errors.mensaje
-                      ? theme.palette.gestion.error
-                      : '#090909 !important',
-                  fontWeight: '400',
-                },
-
-                '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme =>
-                    formik.touched.mensaje && formik.errors.mensaje
-                      ? theme.palette.gestion.error
-                      : `${theme.palette.primary.main} !important`,
-                },
-
-                '& .MuiFormHelperText-root': {
-                  color: theme =>
-                    formik.touched.mensaje && formik.errors.mensaje
-                      ? theme.palette.gestion.error
-                      : '#090909 !important',
-                  fontWeight: '400',
-                },
-
-                '& .Mui-disabled': {
-                  color: theme => `${theme.palette.primary.main} !important`,
-                },
-              }}
-              InputProps={{
-                sx: {
-                  '& .Mui-disabled': {
-                    WebkitTextFillColor: '#090909 !important',
-                  },
-                },
-              }}
-            />
-          </Box>
-        ))}
+        </Box>
         <Box
+          // #region BOTONES
           sx={{
+            mt: '8px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

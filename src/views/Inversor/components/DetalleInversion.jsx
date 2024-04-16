@@ -43,7 +43,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           maxWidth: '600px',
           margin: 'auto',
         }}>
-        <Container
+        {/* <Container
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -66,10 +66,30 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
               width: '100%',
             }}
           >
+            <CircleIcon */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            width: '100%',
+            maxWidth: '600px',
+            margin: 'auto',
+          }}>
+          <Typography
+            sx={{
+              fontSize: '18px',
+              fontWeight: 700,
+              pt: '36px',
+              color: 'azul.main',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+            }}>
             <CircleIcon
               fontSize='small'
               sx={{
-                mt: '2px',
                 color: nombreRiesgo === 'ALTO'
                   ? 'nivel.alto'
                   : (nombreRiesgo === 'MEDIO'
@@ -83,19 +103,14 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           </Typography>
           <Typography
             sx={{
-              fontSize: '14px',
-              // mt: '8px',
-              mb: '4px',
-              fontWeight: 400,
-              display: 'flex',
-              gap: '4px',
-              flexGrow: 1,
-              justifyContent: 'center',
-              width: '100%',
+              fontSize: '16px',
+              fontWeight: 500,
+              textAlign: 'center',
+              pb: '18px',
             }}>
             Detalles de la Inversión
           </Typography>
-        </Container>
+        </Box>
         <TextField
           // #region APORTAR
           label='Total Aportado'
@@ -211,7 +226,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
             }}
           />
           <TextField
-            label='Cuotas Faltantes'
+            label='Faltantes'
             variant='outlined'
             value={inversionMap.cuotasFaltantes}
             disabled={true}
@@ -326,6 +341,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           <Button
             onClick={() => setSelectedCard(null)}
             sx={{
+              mt: '8px',
               minWidth: '120px',
               padding: '0 20px',
               height: '34px',

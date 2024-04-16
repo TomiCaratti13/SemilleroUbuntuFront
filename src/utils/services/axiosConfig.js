@@ -10,9 +10,9 @@ const URL_SERVIDOR = axios.create({
 export const getCategorias = async () => {
   try {
     return URL_SERVIDOR.get(`/rubro/listarRubros`,
-    {
-      withCredentials: true,
-    })
+      {
+        withCredentials: true,
+      })
       .then(response => {
         // console.log('Respuesta del servidor', response);
         return response.data;
@@ -34,16 +34,6 @@ export const getCategorias = async () => {
     console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
-// export const getCategorias = async () => {
-//   try {
-//     const response = await URL_SERVIDOR.get('/rubro/listarRubros');
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error al obtener las categorías:', error);
-//     throw error;
-//   }
-// };
 
 // Función para obtener las publicaciones
 export const getPublicaciones = async () => {
@@ -266,12 +256,10 @@ export const getPublisMes = async () => {
 //Funcion para traer el DTO riesgos (id, nivel)
 export const getRiesgos = async () => {
   try {
-    return URL_SERVIDOR.get(
-      `/riesgo/riego_calc`,
+    return URL_SERVIDOR.get(`/riesgo/riego_calc`,
       {
         withCredentials: true,
-      }
-    )
+      })
       .then(response => {
         // console.log('Respuesta del servidor', response.data);
         return response.data;
@@ -290,6 +278,65 @@ export const getRiesgos = async () => {
         console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    console.error('Error al llamar riesgos:', error);
+  }
+};
+
+// Funcion para traer calculo de invesiones (si tiene parametros)
+// o listar inversiones (si no tiene parametros)
+export const getInversiones = async (id, monto) => {
+  try {
+    return URL_SERVIDOR.get(id ? `/inversion?id=${id}&monto=${monto}` : '/inversion',
+      {
+        withCredentials: true,
+      })
+      .then(response => {
+        // console.log('Respuesta del servidor', response.data);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al llamar riesgos:', error);
+  }
+};
+
+// Función para crear inversion
+export const postInversion = async (formulario) => {
+  try {
+    return URL_SERVIDOR.post(`/inversion`, formulario,
+      {
+        withCredentials: true,
+      })
+      .then(response => {
+        // console.log('Respuesta del servidor', response);
+        return response;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al crear inversion:', error);
   }
 };

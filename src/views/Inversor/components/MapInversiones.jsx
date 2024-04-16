@@ -35,7 +35,6 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
     <Container
       sx={{
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'space-between',
         bgcolor: 'gris.claro',
         borderRadius: '8px',
@@ -100,7 +99,7 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
       </Box>
       <Button
         onClick={onClick}
-        sx={{
+        style={{
           display: 'flex',
           justifyContent: 'flex-end',
           alignItems: 'center',
