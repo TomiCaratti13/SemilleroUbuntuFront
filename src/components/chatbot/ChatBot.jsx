@@ -68,6 +68,7 @@ export default function ChatBot() {
           bottom: '0',
           right: '0',
           zIndex: 1000,
+          minWidth: open ? "360px" : "fit-content",
         }}>
         <Backdrop open={open} />
         <SpeedDial
@@ -163,7 +164,7 @@ export default function ChatBot() {
                 bgcolor: 'gris.claro',
                 color: '#093C59',
                 maxWidth: '500px',
-                width: '90%',
+                width: 'fit-content',
                 height: 'fit-content',
                 borderRadius: '6px',
                 padding: '5px 8px',
@@ -198,7 +199,7 @@ export default function ChatBot() {
                 bgcolor: 'white',
                 color: '#093C59',
                 maxWidth: '500px',
-                width: '90%',
+                width: 'fit-content',
                 height: 'fit-content',
                 borderRadius: '6px',
                 padding: '5px 8px',
