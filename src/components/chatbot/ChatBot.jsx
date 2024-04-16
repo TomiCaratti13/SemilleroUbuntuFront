@@ -67,7 +67,7 @@ export default function ChatBot() {
           flexGrow: 1,
           bottom: '0',
           right: '0',
-          width: '100%',
+          zIndex: 1000,
         }}>
         <Backdrop open={open} />
         <SpeedDial
