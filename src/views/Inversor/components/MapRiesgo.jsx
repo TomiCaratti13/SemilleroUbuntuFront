@@ -34,17 +34,17 @@ export const MapRiesgo = ({ riesgos }) => {
             gap: '2px',
           }}
         >
-          {riesgo.nivel}:
+          {riesgo.nombre.toLowerCase()}:
           <CircleIcon
             fontSize="s"
             sx={{
               p: 0,
               m: 0,
-              color: riesgo.nivel === 'alto'
+              color: riesgo.nombre === 'ALTO'
                 ? 'nivel.alto'
-                : (riesgo.nivel === 'medio'
+                : (riesgo.nombre === 'MEDIO'
                   ? 'nivel.medio'
-                  : (riesgo.nivel === 'bajo'
+                  : (riesgo.nombre === 'BAJO'
                     ? 'nivel.bajo'
                     : null)),
             }}

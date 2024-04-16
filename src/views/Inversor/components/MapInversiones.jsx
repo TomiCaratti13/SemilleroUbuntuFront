@@ -13,33 +13,34 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
     riesgo: inversion.riesgoId,
     micro: inversion.microId,
     monto: inversion.monto,
+    aportado: inversion.aportar,
     cuotas: inversion.cuotas,
     cuotasFaltantes: inversion.cuotasFaltantes,
   };
 
-  const obtenerNivelRiesgo = (id) => {
+  const obtenerNombreRiesgo = (id) => {
     const riesgoEncontrado = riesgo.find(r => r.id === id);
-    return riesgoEncontrado ? riesgoEncontrado.nivel : null;
+    return riesgoEncontrado ? riesgoEncontrado.nombre : null;
   };
 
   const obtenerNombreMicro = (id) => {
     const microEncontrado = microemprendimiento?.find(micro => micro.id === id);
-    return microEncontrado ? microEncontrado.title : 'Microemp';
+    return microEncontrado ? microEncontrado.title : 'Microemprendimiento';
   };
 
-  const nivelRiesgo = obtenerNivelRiesgo(inversionMap.riesgo);
+  const nombreRiesgo = obtenerNombreRiesgo(inversionMap.riesgo);
   const nombreMicroemp = obtenerNombreMicro(inversionMap.micro);
 
   return (
     <Container
       sx={{
         display: 'flex',
+        alignItems: 'center',
         justifyContent: 'space-between',
         bgcolor: 'gris.claro',
         borderRadius: '8px',
         p: '4px 8px',
         width: '100%',
-        gap: '8px',
         mb: '16px',
       }}>
       <Box
@@ -67,11 +68,11 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
             fontSize='small'
             sx={{
               mt: '2px',
-              color: nivelRiesgo === 'alto'
+              color: nombreRiesgo === 'ALTO'
                 ? 'nivel.alto'
-                : (nivelRiesgo === 'medio' 
+                : (nombreRiesgo === 'MEDIO' 
                 ? 'nivel.medio' 
-                : (nivelRiesgo === 'bajo' 
+                : (nombreRiesgo === 'BAJO' 
                 ? 'nivel.bajo' 
                 : null)),
             }}
@@ -82,7 +83,7 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
           style={{
             fontSize: '14px',
             fontFamily: 'Lato',
-            fontWeight: 500,
+            fontWeight: 700,
             lineHeight: '20px',
             color: 'negro',
             margin: '0',
@@ -93,14 +94,13 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
             justifyContent: 'space-between',
             padding: '16px 0',
           }}>
-          {/* <span>{inversionMap.id}</span> */}
-          {inversionMap.monto}
-          <span>{`Cuotas: ${parseInt(inversionMap.cuotas) - parseInt(inversionMap.cuotasFaltantes)}/${inversionMap.cuotas}`}</span>
+          {inversionMap.aportado}
+          <span style={{fontWeight: 400}}>{`Cuotas: ${parseInt(inversionMap.cuotas) - parseInt(inversionMap.cuotasFaltantes)}/${inversionMap.cuotas}`}</span>
         </Typography>
       </Box>
       <Button
         onClick={onClick}
-        style={{
+        sx={{
           display: 'flex',
           justifyContent: 'flex-end',
           alignItems: 'center',

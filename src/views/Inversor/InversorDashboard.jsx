@@ -6,11 +6,12 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { DetalleInversion } from './components/DetalleInversion';
 import { MapMicroInv } from './components/MapMicroInv';
-import { getMicroemprendimientos } from '../../utils/services/axiosConfig';
+import { getMicroemprendimientos, getRiesgos } from '../../utils/services/axiosConfig';
 import { MapInversiones } from './components/MapInversiones';
 import Inversion from '../../utils/mocks/Inversion.json'
 import Riesgo from '../../utils/mocks/Riesgo.json'
 import { MapRiesgo } from './components/MapRiesgo';
+import { CalculoInversion } from './components/CalculoInversion';
 
 export const InversorDashboard = () => {
   const [value, setValue] = useState('1');
@@ -18,9 +19,7 @@ export const InversorDashboard = () => {
   const [inversion, setInversion] = useState([]);
   const [riesgo, setRiesgo] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-
   const inversiones = Inversion;
-  const riesgos = Riesgo;
 
   useEffect(() => {
     getMicroemprendimientos().then(response => {
@@ -28,9 +27,11 @@ export const InversorDashboard = () => {
       setMicroemp(microemprendimientosFiltrados);
     });
     setInversion(inversiones);
-    setRiesgo(riesgos);
+    getRiesgos().then(response => {
+      const riesgos = response;
+      setRiesgo(riesgos);
+    });
   }, [value, selectedCard, inversion]);
-
 
   const handleChange = (e, newValue) => {
     setSelectedCard(null);
@@ -108,16 +109,15 @@ export const InversorDashboard = () => {
                 pt: value === '1' ? '35px' : '0',
               }}
             >
-              {selectedCard === null ? (
-                (value === '1' ? (
-                  microemp.map((micro, index) => (
+              {selectedCard === null
+                ? ((value === '1' ?
+                  (microemp.map((micro, index) => (
                     <MapMicroInv
                       key={index}
                       microemprendimiento={micro}
                       onClick={() => setSelectedCard(micro)} />
-                  ))
-                ) : (
-                  <>
+                  ))) :
+                  (<>
                     <MapRiesgo riesgos={riesgo} />
                     {inversion.map((inv, index) => (
                       <MapInversiones
@@ -126,17 +126,23 @@ export const InversorDashboard = () => {
                         riesgo={riesgo}
                         onClick={() => setSelectedCard(inv)} />
                     ))}
-                  </>
+                  </>)
+                )) :
+                ((value === '1' ?
+                  (<CalculoInversion
+                    setSelectedCard={setSelectedCard}
+                    setValue={setValue}
+                    card={selectedCard}
+                    value={value}
+                    riesgo={riesgo}
+                  />) :
+                  (<DetalleInversion
+                    setSelectedCard={setSelectedCard}
+                    card={selectedCard}
+                    riesgo={riesgo}
+                  />)
                 ))
-              ) : (
-                <DetalleInversion
-                  setSelectedCard={setSelectedCard}
-                  setValue={setValue}
-                  card={selectedCard}
-                  value={value}
-                  riesgo={riesgo}
-                />
-              )}
+              }
             </TabPanel>
           </TabContext>
         </Box>

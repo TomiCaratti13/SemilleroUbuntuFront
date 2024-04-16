@@ -1,131 +1,40 @@
 import CircleIcon from '@mui/icons-material/Circle';
-import {
-  Typography,
-  Box,
-  Container,
-  TextField,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  ListItemIcon,
-  Button,
-} from '@mui/material';
-import { AlertModal } from '../../../components/AlertModal';
-import { useAlertModal } from '../../../utils/hooks/useAlertModal';
-import { useFormik } from 'formik';
-import formContact from '../../../utils/schemas/schemaFormContact';
-import { putFormulario } from '../../../utils/services/axiosConfig';
+import { Typography, Box, Container, TextField, Button } from '@mui/material';
+import { useMicro } from '../../../utils/hooks/useMicro';
 
+// #region EXPORT
+export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
 
-const ButtonInversion = ({ onClick, text }) => {
-  return (
-    <Button
-      onClick={onClick}
-      sx={{
-        minWidth: '120px',
-        padding: '0 20px',
-        height: '34px',
-        my: '10px',
-        justifyContent: 'space-evenly',
-        borderRadius: '100px',
-        color: 'blanco.main',
-        backgroundColor: 'azul.main',
-        textTransform: 'none',
-        '&:hover': { backgroundColor: 'azul.main' },
-      }}
-    >
-      <Typography
-        sx={{
-          fontWeight: '700',
-          fontSize: '16px',
-          lineHeight: '30px',
-          textAlign: 'center',
-        }}>
-        {text}
-      </Typography>
-    </Button>
-  )
-}
-// #region COMPONENTE
-export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesgo }) => {
+  const microemprendimiento = useMicro();
 
-  const formik = useFormik({
-    initialValues: {
-      monto: card?.usuarioSolicitante?.nombre || '',
-      costosGestion: card?.usuarioSolicitante?.email || '',
-      totalAportar: card?.usuarioSolicitante?.telefono || '',
-      riesgo: card?.usuarioSolicitante?.nombre || '',
-      cuotas: card?.usuarioSolicitante?.nombre || '',
-      cuotasFaltantes: card?.usuarioSolicitante?.nombre || '',
-      retorno: card?.usuarioSolicitante?.nombre || '',
-      ganancias: card?.usuarioSolicitante?.nombre || '',
-      porMes: card?.usuarioSolicitante?.nombre || '',
-      descripcion: card?.usuarioSolicitante?.nombre || 'Si decides optar por esta inversión, podrás empezar a cobrar a partir del poximo mes, durante 12 meses el monto de $57.452,89',
-    },
-    validationSchema: formContact,
-    onSubmit: formData => {
-      try {
-        formik.setSubmitting(true);
-        const formEnviar = {
-          descripcion: formData.mensaje,
-          usuarioSolicitante: {
-            nombre: formData.nombre,
-            email: formData.email,
-            telefono: formData.telefono,
-          },
-          gestionado: true,
-        };
+  const obtenerNombreMicro = (id) => {
+    const microEncontrado = microemprendimiento?.find(micro => micro.id === id);
+    return microEncontrado ? microEncontrado.title : 'Microemprendimiento';
+  };
+  const obtenerNivelRiesgo = (id) => {
+    const riesgoEncontrado = riesgo.find(r => r.id === id);
+    return riesgoEncontrado ? riesgoEncontrado.nombre : null;
+  };
 
-        putFormulario(formEnviar, card.id)
-          .then(response => {
-            // console.log('RESPUESTA COMPONENETE', response);
-            //MANEJO DE ALERTAS
-            if (response && response.status === 200) {
-              openAlert(true, 'Estado modificado con éxito');
-            } else {
-              openAlert(
-                false,
-                'Lo sentimos, No pudo realizarse la Inversión',
-                'Por favor, volvé a intentarlo'
-              );
-            }
-          })
-          .catch(error => {
-            console.error('Error al enviar el formulario:', error);
-            openAlert(
-              false,
-              'Lo sentimos, No pudo realizarse la Inversión',
-              'Por favor, volvé a intentarlo'
-            );
-          });
+  const nombreMicroemp = obtenerNombreMicro(card?.microId);
+  const nombreRiesgo = obtenerNivelRiesgo(card?.riesgoId);
 
-        formik.setSubmitting(false);
-      } catch (error) {
-        formik.setSubmitting(false);
-        console.log(error);
-      }
-    },
-  });
-
-  const [alertModal, openAlert, closeAlert, resendAlert] = useAlertModal(
-    formik.handleSubmit
-  );
-
+  const inversionMap = {
+    monto: card?.monto,
+    costosGestion: card?.costo,
+    totalAportado: card?.aportar,
+    riesgo: card?.riesgo,
+    cuotas: card?.cuotas,
+    cuotasFaltantes: card?.cuotasFaltantes,
+    retorno: card?.retorno,
+    ganancias: card?.ganancias,
+    porMes: card?.montoPorMes,
+  }
   // #region RETURN
   return (
     <>
-      <AlertModal
-        closeAlert={closeAlert}
-        resendAlert={resendAlert}
-        alert={alertModal}
-        setSelectedContacto={setSelectedCard}
-        setValue={setValue}
-      />
       <Container
-        // onBack={onBack}
         component='form'
-        onSubmit={formik.handleSubmit}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -144,48 +53,39 @@ export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesg
             margin: 'auto',
           }}>
           <Typography
+            // #region NOMBRE
             sx={{
               fontSize: '18px',
-              lineHeight: '19px',
+              lineHeight: '22px',
               fontWeight: 700,
               color: 'azul.main',
-              padding: value === '2' ? '27px 0 8px 0' : null,
+              padding: '27px 0 8px 0',
               display: 'flex',
               gap: '4px',
               justifyContent: 'center',
               width: '100%',
-            }}>
-            {value === '2' ? (<CircleIcon
+            }}
+          >
+            <CircleIcon
               fontSize='small'
               sx={{
-                color: card.gestionado
-                  ? 'gestion.exito'
-                  : 'gestion.nogestionada',
+                mt: '2px',
+                color: nombreRiesgo === 'ALTO'
+                  ? 'nivel.alto'
+                  : (nombreRiesgo === 'MEDIO'
+                    ? 'nivel.medio'
+                    : (nombreRiesgo === 'BAJO'
+                      ? 'nivel.bajo'
+                      : null)),
               }}
-            />) : null}
-            {card.nombre ? card.nombre : 'Microemp'}
+            />
+            {nombreMicroemp}
           </Typography>
-          {value === '2' ?
-            (<Typography
-              sx={{
-                fontSize: '14px',
-                lineHeight: '1px',
-                fontWeight: 700,
-                display: 'flex',
-                justifyContent: 'center',
-                width: '100%',
-                m: '-8px 0 8px 0'
-              }}
-            >
-              N°: {card.id}
-            </Typography>)
-            : null
-          }
           <Typography
             sx={{
               fontSize: '14px',
-              mt: value === '1' ? '16px' : 0,
-              // lineHeight: '50px',
+              // mt: '8px',
+              mb: '4px',
               fontWeight: 400,
               display: 'flex',
               gap: '4px',
@@ -193,57 +93,22 @@ export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesg
               justifyContent: 'center',
               width: '100%',
             }}>
-            {value === '1' ? 'Formulario de Cálculo Inversión' : 'Datos de la Inversión'}
+            Detalles de la Inversión
           </Typography>
         </Container>
         <TextField
-          // #region MONTO 
-          fullWidth
-          id='monto'
-          name='monto'
-          label='Monto a Invertir'
+          // #region APORTAR
+          label='Total Aportado'
           variant='outlined'
-          value={formik.values.monto}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.nombre && Boolean(formik.errors.monto)}
-          helperText={formik.touched.nombre && formik.errors.nombre}
+          value={inversionMap.totalAportado}
+          disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
               fontWeight: '400',
             },
-
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-              fontWeight: '400',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.nombre && formik.errors.nombre
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.nombre && formik.errors.nombre
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.nombre && formik.errors.nombre
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
             '& .Mui-disabled': {
               color: theme => `${theme.palette.primary.main} !important`,
+              fontWeight: '400',
             },
           }}
           InputProps={{
@@ -251,145 +116,25 @@ export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesg
               '& .Mui-disabled': {
                 WebkitTextFillColor: '#090909 !important',
               },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme => `${theme.palette.primary.main} !important`,
+              },
             },
           }}
         />
-        {(value === '1' ? (
-          <FormControl
-          // #region RIESGO
-          >
-            <InputLabel id='select-label'>Riesgo Inversion</InputLabel>
-            <Select
-              label='Riesgo Inversion'
-              labelId='select-label'
-              displayEmpty
-              defaultValue='0'
-              // onChange={formik.handleSubmit}
-              inputProps={{
-                id: 'uncontrolled-native',
-              }}
-              sx={{
-                '& .MuiOutlinedInput-input': {
-                  fontWeight: '400',
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#090909',
-                },
-
-                '& .MuiFormLabel-root': {
-                  color: theme =>
-                    formik.touched.telefono && formik.errors.telefono
-                      ? theme.palette.gestion.error
-                      : '#090909 !important',
-                  fontWeight: '400',
-                },
-
-                '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme =>
-                    formik.touched.telefono && formik.errors.telefono
-                      ? theme.palette.gestion.error
-                      : `${theme.palette.primary.main} !important`,
-                },
-
-                '& .MuiFormHelperText-root': {
-                  color: theme =>
-                    formik.touched.telefono && formik.errors.telefono
-                      ? theme.palette.gestion.error
-                      : '#090909 !important',
-                  fontWeight: '400',
-                },
-
-                '& .Mui-disabled': {
-                  color: theme => `${theme.palette.primary.main} !important`,
-                },
-              }}
-            >
-              <MenuItem value='0'>
-                <ListItemIcon>
-                  <Typography
-                    sx={{
-                      fontWeight: '400',
-                    }}>
-                    Seleccione un Nivel de Riesgo
-                  </Typography>
-                </ListItemIcon>
-              </MenuItem>
-              {riesgo.map((riesgo, index) => (
-                <MenuItem
-                  key={index}
-                  value={riesgo.id}>
-                  <ListItemIcon>
-                    <CircleIcon
-                      fontSize='small'
-                      sx={{
-                        color: riesgo.nivel === 'alto'
-                          ? 'nivel.alto'
-                          : (riesgo.nivel === 'medio'
-                            ? 'nivel.medio'
-                            : (riesgo.nivel === 'bajo'
-                              ? 'nivel.bajo'
-                              : null)),
-                      }}
-                    />
-                    <Typography
-                      sx={{
-                        pl: '8px',
-                        lineHeight: '20px'
-                      }}>
-                      {riesgo.nivel.charAt(0).toUpperCase() + riesgo.nivel.slice(1).toLowerCase()}
-                    </Typography>
-                  </ListItemIcon>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        ) : (null))}
         <TextField
           // #region COSTOS
-          fullWidth
-          id='costosGestion'
-          name='costosGestion'
           label='Costos de Gestión'
           variant='outlined'
-          value={formik.values.costosGestion}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
+          value={inversionMap.costosGestion}
+          disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
               fontWeight: '400',
             },
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.email && formik.errors.email
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.email && formik.errors.email
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.email && formik.errors.email
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
             '& .Mui-disabled': {
               color: theme => `${theme.palette.primary.main} !important`,
+              fontWeight: '400',
             },
           }}
           InputProps={{
@@ -397,59 +142,25 @@ export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesg
               '& .Mui-disabled': {
                 WebkitTextFillColor: '#090909 !important',
               },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme => `${theme.palette.primary.main} !important`,
+              },
             },
           }}
         />
         <TextField
-          // #region APORTAR
-          fullWidth
-          id='totalAportar'
-          name='totalAportar'
-          label='Total a Aportar'
+          // #region MONTO
+          label='Monto Invertido'
           variant='outlined'
-          value={formik.values.totalAportar}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-          helperText={
-            formik.touched.telefono && formik.errors.telefono
-              ? formik.errors.telefono
-              : null
-          }
+          value={inversionMap.monto}
+          disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
               fontWeight: '400',
             },
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
             '& .Mui-disabled': {
               color: theme => `${theme.palette.primary.main} !important`,
+              fontWeight: '400',
             },
           }}
           InputProps={{
@@ -457,180 +168,61 @@ export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesg
               '& .Mui-disabled': {
                 WebkitTextFillColor: '#090909 !important',
               },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme => `${theme.palette.primary.main} !important`,
+              },
             },
           }}
         />
-        <TextField
+        <Box
           // #region CUOTAS
-          fullWidth
-          id='cuotas'
-          name='cuotas'
-          label='Cuotas'
-          variant='outlined'
-          value={formik.values.cuotas}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-          helperText={
-            formik.touched.telefono && formik.errors.telefono
-              ? formik.errors.telefono
-              : null
-          }
           sx={{
-            '& .MuiOutlinedInput-input': {
-              fontWeight: '400',
-            },
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .Mui-disabled': {
-              color: theme => `${theme.palette.primary.main} !important`,
-            },
+            width: '100%',
+            display: 'flex',
+            gap: '12px',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
           }}
-          InputProps={{
-            sx: {
-              '& .Mui-disabled': {
-                WebkitTextFillColor: '#090909 !important',
-              },
-            },
-          }}
-        />
-        {(value === '2' ? (
+        >
           <TextField
+            label='Cuotas'
+            variant='outlined'
+            value={inversionMap.cuotas}
+            disabled={true}
             fullWidth
-            id='cuotasFaltantes'
-            name='cuotasFaltantes'
+            sx={{
+              '& .MuiOutlinedInput-input': {
+                fontWeight: '400',
+              },
+              '& .Mui-disabled': {
+                color: theme => `${theme.palette.primary.main} !important`,
+                fontWeight: '400',
+              },
+            }}
+            InputProps={{
+              sx: {
+                '& .Mui-disabled': {
+                  WebkitTextFillColor: '#090909 !important',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => `${theme.palette.primary.main} !important`,
+                },
+              },
+            }}
+          />
+          <TextField
             label='Cuotas Faltantes'
             variant='outlined'
-            value={formik.values.cuotasFaltantes}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={formik.isSubmitting}
-            error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-            helperText={
-              formik.touched.telefono && formik.errors.telefono
-                ? formik.errors.telefono
-                : null
-            }
-            sx={{
-              '& .MuiOutlinedInput-input': {
-                fontWeight: '400',
-              },
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#090909',
-              },
-
-              '& .MuiFormLabel-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : `${theme.palette.primary.main} !important`,
-              },
-
-              '& .MuiFormHelperText-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
-              '& .Mui-disabled': {
-                color: theme => `${theme.palette.primary.main} !important`,
-              },
-            }}
-            InputProps={{
-              sx: {
-                '& .Mui-disabled': {
-                  WebkitTextFillColor: '#090909 !important',
-                },
-              },
-            }}
-          />
-        ) : (null))}
-        {(value === '1' ? (
-          <TextField
+            value={inversionMap.cuotasFaltantes}
+            disabled={true}
             fullWidth
-            id='cuotasFaltantes'
-            name='cuotasFaltantes'
-            label='Tasa de Retorno'
-            variant='outlined'
-            value={formik.values.cuotasFaltantes}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={formik.isSubmitting}
-            error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-            helperText={
-              formik.touched.telefono && formik.errors.telefono
-                ? formik.errors.telefono
-                : null
-            }
             sx={{
               '& .MuiOutlinedInput-input': {
                 fontWeight: '400',
               },
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#090909',
-              },
-
-              '& .MuiFormLabel-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : `${theme.palette.primary.main} !important`,
-              },
-
-              '& .MuiFormHelperText-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
               '& .Mui-disabled': {
                 color: theme => `${theme.palette.primary.main} !important`,
+                fontWeight: '400',
               },
             }}
             InputProps={{
@@ -638,120 +230,78 @@ export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesg
                 '& .Mui-disabled': {
                   WebkitTextFillColor: '#090909 !important',
                 },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => `${theme.palette.primary.main} !important`,
+                },
               },
             }}
           />
-        ) : (null))}
+        </Box>
         <TextField
-          // #region RETORNO
-          fullWidth
-          id='retorno'
-          name='retorno'
-          label='Retorno Esperado'
+          // #region POR MES
+          label='Retorno Mensual'
           variant='outlined'
-          value={formik.values.retorno}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-          helperText={
-            formik.touched.telefono && formik.errors.telefono
-              ? formik.errors.telefono
-              : null
-          }
+          value={inversionMap.porMes}
+          disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
               fontWeight: '400',
             },
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
             '& .Mui-disabled': {
               color: theme => `${theme.palette.primary.main} !important`,
+              fontWeight: '400',
             },
           }}
           InputProps={{
             sx: {
               '& .Mui-disabled': {
                 WebkitTextFillColor: '#090909 !important',
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme => `${theme.palette.primary.main} !important`,
+              },
+            },
+          }}
+        />
+        <TextField
+          // #region RETORNO
+          label='Retorno Esperado'
+          variant='outlined'
+          value={inversionMap.retorno}
+          disabled={true}
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+              fontWeight: '400',
+            },
+          }}
+          InputProps={{
+            sx: {
+              '& .Mui-disabled': {
+                WebkitTextFillColor: '#090909 !important',
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme => `${theme.palette.primary.main} !important`,
               },
             },
           }}
         />
         <TextField
           // #region GANANCIAS
-          fullWidth
-          id='ganancias'
-          name='ganancias'
-          label='Ganancias Totales'
+          label='Ganancia Neta'
           variant='outlined'
-          value={formik.values.ganancias}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          disabled={formik.isSubmitting}
-          error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-          helperText={
-            formik.touched.telefono && formik.errors.telefono
-              ? formik.errors.telefono
-              : null
-          }
+          value={inversionMap.ganancias}
+          disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
               fontWeight: '400',
             },
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#090909',
-            },
-
-            '& .MuiFormLabel-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
-            '& .MuiInputLabel-root.Mui-focused': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : `${theme.palette.primary.main} !important`,
-            },
-
-            '& .MuiFormHelperText-root': {
-              color: theme =>
-                formik.touched.telefono && formik.errors.telefono
-                  ? theme.palette.gestion.error
-                  : '#090909 !important',
-              fontWeight: '400',
-            },
-
             '& .Mui-disabled': {
               color: theme => `${theme.palette.primary.main} !important`,
+              fontWeight: '400',
             },
           }}
           InputProps={{
@@ -759,158 +309,43 @@ export const DetalleInversion = ({ card, setSelectedCard, setValue, value, riesg
               '& .Mui-disabled': {
                 WebkitTextFillColor: '#090909 !important',
               },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme => `${theme.palette.primary.main} !important`,
+              },
             },
           }}
         />
-        {(value === '2' ? (
-          <TextField
-            // #region POR MES
-            fullWidth
-            id='porMes'
-            name='porMes'
-            label='Retorno Mensual'
-            variant='outlined'
-            value={formik.values.porMes}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={formik.isSubmitting}
-            error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-            helperText={
-              formik.touched.telefono && formik.errors.telefono
-                ? formik.errors.telefono
-                : null
-            }
-            sx={{
-              '& .MuiOutlinedInput-input': {
-                fontWeight: '400',
-              },
-              '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#090909',
-              },
-
-              '& .MuiFormLabel-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : `${theme.palette.primary.main} !important`,
-              },
-
-              '& .MuiFormHelperText-root': {
-                color: theme =>
-                  formik.touched.telefono && formik.errors.telefono
-                    ? theme.palette.gestion.error
-                    : '#090909 !important',
-                fontWeight: '400',
-              },
-
-              '& .Mui-disabled': {
-                color: theme => `${theme.palette.primary.main} !important`,
-              },
-            }}
-            InputProps={{
-              sx: {
-                '& .Mui-disabled': {
-                  WebkitTextFillColor: '#090909 !important',
-                },
-              },
-            }}
-          />
-        ) : (
-          <Box>
-            <TextField
-              // #region DESCRIPCION
-              fullWidth
-              id='mensaje'
-              name='mensaje'
-              label='Descripcion'
-              variant='outlined'
-              multiline
-              rows={4}
-              value={formik.values.mensaje}
-              inputProps={{
-                maxLength: 300,
-              }}
-              onChange={e => {
-                if (e.target.value.length <= 300) {
-                  setChars(e.target.value.length);
-                  formik.handleChange(e);
-                }
-              }}
-              onBlur={formik.handleBlur}
-              disabled={formik.isSubmitting}
-              error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
-              helperText={formik.touched.mensaje && formik.errors.mensaje}
-              sx={{
-                '& .MuiOutlinedInput-input': {
-                  fontWeight: '400',
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#090909',
-                },
-
-                '& .MuiFormLabel-root': {
-                  color: theme =>
-                    formik.touched.mensaje && formik.errors.mensaje
-                      ? theme.palette.gestion.error
-                      : '#090909 !important',
-                  fontWeight: '400',
-                },
-
-                '& .MuiInputLabel-root.Mui-focused': {
-                  color: theme =>
-                    formik.touched.mensaje && formik.errors.mensaje
-                      ? theme.palette.gestion.error
-                      : `${theme.palette.primary.main} !important`,
-                },
-
-                '& .MuiFormHelperText-root': {
-                  color: theme =>
-                    formik.touched.mensaje && formik.errors.mensaje
-                      ? theme.palette.gestion.error
-                      : '#090909 !important',
-                  fontWeight: '400',
-                },
-
-                '& .Mui-disabled': {
-                  color: theme => `${theme.palette.primary.main} !important`,
-                },
-              }}
-              InputProps={{
-                sx: {
-                  '& .Mui-disabled': {
-                    WebkitTextFillColor: '#090909 !important',
-                  },
-                },
-              }}
-            />
-          </Box>
-        ))}
         <Box
+          // #region BOTON
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '12px'
           }}
         >
-          <ButtonInversion
-            text={'Volver'}
-            onClick={() => { setSelectedCard(null) }}
-          />
-          {value === '1' ?
-            (<ButtonInversion
-              text={'Invertir'}
-              onClick={() => { formik.handleSubmit() }}
-            />) : null
-          }
+          <Button
+            onClick={() => setSelectedCard(null)}
+            sx={{
+              minWidth: '120px',
+              padding: '0 20px',
+              height: '34px',
+              borderRadius: '100px',
+              color: 'blanco.main',
+              backgroundColor: 'azul.main',
+              textTransform: 'none',
+              '&:hover': { backgroundColor: 'azul.main' },
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: '700',
+                fontSize: '16px',
+                lineHeight: '30px',
+                textAlign: 'center',
+              }}>
+              Volver
+            </Typography>
+          </Button>
         </Box>
       </Container >
     </>

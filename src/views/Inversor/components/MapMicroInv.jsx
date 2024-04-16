@@ -19,7 +19,6 @@ export const MapMicroInv = ({ microemprendimiento, onClick }) => {
         borderRadius: '8px',
         p: '4px 8px',
         width: '100%',
-        gap: '8px',
         mb: '16px',
       }}>
       <Box

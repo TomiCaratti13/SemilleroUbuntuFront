@@ -262,3 +262,34 @@ export const getPublisMes = async () => {
     console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
+
+//Funcion para traer el DTO riesgos (id, nivel)
+export const getRiesgos = async () => {
+  try {
+    return URL_SERVIDOR.get(
+      `/riesgo/riego_calc`,
+      {
+        withCredentials: true,
+      }
+    )
+      .then(response => {
+        // console.log('Respuesta del servidor', response.data);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al buscar microemprendimientos en componente:', error);
+  }
+};
