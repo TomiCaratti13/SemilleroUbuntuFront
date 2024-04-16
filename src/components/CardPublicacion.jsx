@@ -52,18 +52,33 @@ export default function CardPublicacion({
   };
 
   //Cortar Parrafo si tiene mas de 100 caracteres
-  let descriptionTrim = publicacion.description.trim();
-  let descriptionSplit = '';
+  let [descriptionSplit, setDescriptionSplit] = useState('');
 
-  const index = descriptionTrim.indexOf('  ');
-  if (index !== -1 && index > 80) {
-    descriptionSplit = [
-      descriptionTrim.substring(0, index),
-      descriptionTrim.substring(index + 1),
-    ];
-  } else {
-    descriptionSplit = [descriptionTrim];
-  }
+  useEffect(() => {
+    let descriptionTrim = publicacion.description.trim();
+
+    // Buscar un salto de línea después de las 60 letras
+    const index = descriptionTrim.indexOf('\n', 60);
+
+    // Si se encuentra un salto de línea después de las 60 letras, se corta allí
+    if (index !== -1) {
+      setDescriptionSplit([
+        descriptionTrim.substring(0, index),
+        descriptionTrim.substring(index + 1),
+      ]);
+    }
+    // Si no se encuentra un salto de línea, se corta a las 100 letras
+    else if (descriptionTrim.length > 100) {
+      setDescriptionSplit([
+        descriptionTrim.substring(0, 100),
+        descriptionTrim.substring(100),
+      ]);
+    }
+    // Si el texto es más corto que 100 letras, no se corta
+    else {
+      setDescriptionSplit(descriptionTrim);
+    }
+  }, []);
 
   //Popper
   const [open, setOpen] = useState(false);

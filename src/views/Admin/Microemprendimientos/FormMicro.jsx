@@ -227,11 +227,8 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
     },
     validationSchema: formMicros,
     onSubmit: async formData => {
-      console.log('Formulario', formData);
       try {
         formik.setSubmitting(true);
-
-        console.log('Enviando formulario');
 
         // Verificar que se haya subido al menos una imagen
         if (formData.imagenes.length <= 0) {

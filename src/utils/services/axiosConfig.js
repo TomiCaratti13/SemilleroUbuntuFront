@@ -7,7 +7,7 @@ const URL_SERVIDOR = axios.create({
 });
 
 //Funcion para ChatBot
-export const getPreguntas = async (id) => {
+export const getPreguntas = async id => {
   try {
     return URL_SERVIDOR.get(`/pregunta/${id}`, {
       withCredentials: true,
@@ -547,7 +547,6 @@ export const postFormularioMicro = async (
   token
 ) => {
   try {
-    console.log('Formulario en axios POST micro:', formulario);
     return URL_SERVIDOR.post(
       `/microEmprendimiento/crear/${paisId}/${provinciaId}`,
       formulario,
@@ -582,7 +581,6 @@ export const postFormularioMicro = async (
 
 export const postImagenesMicro = async (imagenes, id, token) => {
   try {
-    console.log('Imagenes en axios POST micro:', imagenes);
     return URL_SERVIDOR.post(
       `microEmprendimiento/crearImagenes/${id}`,
       imagenes,

@@ -165,7 +165,7 @@ export const UploadImages = ({
           sx={{
             width: '100%',
             display: 'flex',
-            flexDirection: { direction } || 'column',
+            flexDirection: direction || 'column',
             gap: '10px',
             justifyContent: 'center',
             alignItems: 'center',
@@ -197,6 +197,7 @@ export const UploadImages = ({
                     transform: 'translate(50%, -50%)',
                     display: 'flex',
                     gap: '4px',
+                    cursor: 'pointer',
                   }}>
                   <Box
                     sx={{
@@ -234,6 +235,7 @@ export const UploadImages = ({
                     right: '5px',
                     display: 'flex',
                     gap: '4px',
+                    cursor: 'pointer',
                   }}>
                   <Box
                     sx={{
@@ -272,6 +274,7 @@ export const UploadImages = ({
                       height: '24px',
                       bgcolor: '#00000060',
                       borderRadius: '50%',
+                      cursor: 'pointer',
                     }}
                     onClick={() => handleRemove(index)}>
                     <svg

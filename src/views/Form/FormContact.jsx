@@ -188,6 +188,10 @@ export const FormContact = ({ idMic }) => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
           sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: '#090909',
             },
@@ -244,6 +248,10 @@ export const FormContact = ({ idMic }) => {
               : 'Con el siguiente formato +54 9 261 002 002'
           }
           sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: '#090909',
             },
@@ -306,6 +314,10 @@ export const FormContact = ({ idMic }) => {
             error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
             helperText={formik.touched.mensaje && formik.errors.mensaje}
             sx={{
+              '& .MuiOutlinedInput-input': {
+                fontWeight: '400',
+              },
+
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#090909',
               },

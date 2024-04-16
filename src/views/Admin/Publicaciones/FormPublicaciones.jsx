@@ -169,7 +169,6 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
       try {
         formik.setSubmitting(true);
 
-        console.log('Enviando formulario');
         // Verificar que se haya subido al menos una imagen
         if (formData.imagenes.length === 0) {
           handleAlert('Debes subir al menos una imagen', 'error');
@@ -192,7 +191,6 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
             : await crearPublicacion(formEnviar, formData.imagenes);
         }
 
-        console.log('formulario enviado');
         formik.setSubmitting(false);
       } catch (error) {
         formik.setSubmitting(false);

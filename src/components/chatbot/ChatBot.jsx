@@ -94,7 +94,6 @@ export default function ChatBot() {
             display: 'flex',
             flexDirection: 'column-reverse',
             alignItems: 'flex-end',
-            width: '100%',
           }}
           icon={
             <SpeedDialIcon
