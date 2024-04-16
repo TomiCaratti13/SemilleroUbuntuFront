@@ -127,6 +127,8 @@ export const LandingPage = () => {
           alignItems: 'center',
           gap: '16px',
           padding: '0 16px',
+          width: '100%',
+          bgcolor:"red"
         }}>
         <MapPublicaciones
           publicaciones={publicaciones}
