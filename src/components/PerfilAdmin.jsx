@@ -66,7 +66,6 @@ export default function PerfilAdmin() {
   }, [popperRef]);
 
   //Cerrar sesión
-
   function deleteAllCookies() {
     var cookies = document.cookie.split(';');
     for (var i = 0; i < cookies.length; i++) {
@@ -76,13 +75,11 @@ export default function PerfilAdmin() {
       document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
     }
   }
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const closeSesion = () => {
     deleteAllCookies();
     dispatch(clearToken());
-    dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
+    dispatch(addUser({ nombre: '', foto: '', isAdmin: false }));
     localStorage.clear();
     window.location.href = `http://localhost:8080/logout`;
   };

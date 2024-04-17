@@ -31,14 +31,14 @@ function deleteAllCookies() {
 
 export const LandingPage = () => {
   //Limpiar usuario y token
-  const dispatch = useDispatch();
-  useEffect(() => {
-    deleteAllCookies();
-    dispatch(clearToken());
-    dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
-    localStorage.clear();
-    // window.location.href = `http://localhost:8080/logout`;
-  }, []);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   deleteAllCookies();
+  //   dispatch(clearToken());
+  //   dispatch(addUser({ nombre: '', foto: '', isAdmin: false }));
+  //   localStorage.clear();
+  //   // window.location.href = `http://localhost:8080/logout`;
+  // }, []);
 
   //Manejar alertas
   const { enqueueSnackbar } = useSnackbar();
@@ -128,7 +128,6 @@ export const LandingPage = () => {
           gap: '16px',
           padding: '0 16px',
           width: '100%',
-          bgcolor:"red"
         }}>
         <MapPublicaciones
           publicaciones={publicaciones}
