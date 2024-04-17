@@ -106,6 +106,25 @@ function AdminHeader(props) {
               </Link>
             ))}
           </Box>
+          <Link
+            to="/"
+            style={{
+              width: '100%',
+              textDecoration: 'none',
+            }}>
+            <ListItemText
+              sx={{
+                color: 'blanco.main',
+                fontFamily: 'Lato',
+                fontWeight: 700,
+                fontSize: '18px',
+                lineHeight: '20px',
+                padding: '0px 16px',
+              }}
+              primaryTypographyProps={{ variant: 'none' }}
+              primary="Visitante"
+            />
+          </Link>
         </ListItem>
       </List>
     </Box>
@@ -139,8 +158,7 @@ function AdminHeader(props) {
             {mobileOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
           <Link
-            //Cambiar Por /Admin es más intuitivo y no genera preguntas
-            to="/"
+            to="/Admin"
             style={{
               display: 'flex',
               justifyContent: 'center',
