@@ -87,11 +87,17 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
       });
   };
 
-  const editarMicro = async (formEnviar, images, idMicro) => {
+  const editarMicro = async (
+    formEnviar,
+    images,
+    idMicro,
+    idProvincia,
+    idPais
+  ) => {
     //Editar publicacion
-    putFormularioMicro(formEnviar, idMicro, token)
+    putFormularioMicro(formEnviar, idMicro, idProvincia, idPais, token)
       .then(response => {
-        if (response && (response.status === 200 || response.status === 201)) {
+        if (response && (response.status === 200 || response.status === 204)) {
           //ENVIO ARRAY DE IMAGENES
           const formImages = new FormData();
 
@@ -122,7 +128,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
               .then(response => {
                 if (
                   response &&
-                  (response.status === 200 || response.status === 201)
+                  (response.status === 200 || response.status === 204)
                 ) {
                   openAlert(true, 'Cambios guardados con éxito');
                 } else {
@@ -207,7 +213,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
     };
 
     fetchData();
-  }, [microemprendimiento]);
+  }, [,microemprendimiento]);
 
   useEffect(() => {
     formik.setFieldValue('imagenes', images);
@@ -248,9 +254,16 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           subRubro: formData.subcategoria,
         };
 
+        console.log(formData, images);
         {
           microemprendimiento.id
-            ? editarMicro(formEnviar, formData.imagenes, microemprendimiento.id)
+            ? editarMicro(
+                formEnviar,
+                formData.imagenes,
+                microemprendimiento.id,
+                formData.provincia,
+                formData.pais
+              )
             : crearMicro(
                 formEnviar,
                 formData.imagenes,

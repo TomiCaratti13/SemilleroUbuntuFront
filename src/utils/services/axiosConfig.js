@@ -614,9 +614,9 @@ export const postImagenesMicro = async (imagenes, id, token) => {
   }
 };
 
-export const putFormularioMicro = async (formulario, id, token) => {
+export const putFormularioMicro = async (formulario, idMicro,idProvincia ,idPais, token) => {
   try {
-    return URL_SERVIDOR.put(`/microEmprendimiento/editar/${id}`, formulario, {
+    return URL_SERVIDOR.put(`/microEmprendimiento/editar/${idMicro}/${idPais}/${idProvincia}`, formulario, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -658,7 +658,7 @@ export const putImagenesMicro = async (imagenes, id, token) => {
       }
     )
       .then(response => {
-        // console.log('Respuesta del servidor imagenes', response);
+        console.log('Respuesta del servidor imagenes', response);
         return response;
       })
       .catch(error => {
