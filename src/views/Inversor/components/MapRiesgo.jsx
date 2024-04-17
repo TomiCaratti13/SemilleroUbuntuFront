@@ -11,7 +11,7 @@ export const MapRiesgo = ({ riesgos }) => {
         alignItems: 'center',
         gap: '8px',
         mx: 'auto',
-        p: '7px 0'
+        p: '9px 0'
       }}
     >
       <Typography
@@ -23,7 +23,7 @@ export const MapRiesgo = ({ riesgos }) => {
       >
         Riesgo:
       </Typography>
-      {riesgos.map((riesgo, index) => (
+      {riesgos?.map((riesgo, index) => (
         <Typography
           key={index}
           sx={{

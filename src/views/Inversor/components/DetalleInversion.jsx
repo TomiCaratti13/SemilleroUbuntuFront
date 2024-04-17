@@ -12,7 +12,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
     return microEncontrado ? microEncontrado.title : 'Microemprendimiento';
   };
   const obtenerNivelRiesgo = (id) => {
-    const riesgoEncontrado = riesgo.find(r => r.id === id);
+    const riesgoEncontrado = riesgo?.find(r => r.id === id);
     return riesgoEncontrado ? riesgoEncontrado.nombre : null;
   };
 
@@ -43,30 +43,6 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           maxWidth: '600px',
           margin: 'auto',
         }}>
-        {/* <Container
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            width: '100%',
-            maxWidth: '600px',
-            margin: 'auto',
-          }}>
-          <Typography
-            // #region NOMBRE
-            sx={{
-              fontSize: '18px',
-              lineHeight: '22px',
-              fontWeight: 700,
-              color: 'azul.main',
-              padding: '27px 0 8px 0',
-              display: 'flex',
-              gap: '4px',
-              justifyContent: 'center',
-              width: '100%',
-            }}
-          >
-            <CircleIcon */}
         <Box
           sx={{
             display: 'flex',

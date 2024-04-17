@@ -104,7 +104,10 @@ export const InversorDashboard = () => {
                 />
               </TabList>
             </Box>
-            <TabPanel value={value} sx={{ pt: '35px' }}>
+            <TabPanel value={value} 
+              sx={{ 
+                pt: value === '1' ? '39px' : 0 , 
+              }}>
               {selectedCard === null
                 ? ((value === '1' ?
                   (microemp.map((micro, index) => (

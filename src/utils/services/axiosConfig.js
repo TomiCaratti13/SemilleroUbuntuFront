@@ -282,16 +282,15 @@ export const getRiesgos = async () => {
   }
 };
 
-// Funcion para traer calculo de invesiones (si tiene parametros)
-// o listar inversiones (si no tiene parametros)
-export const getInversiones = async (id, monto) => {
+// Funcion para traer calculo de invesiones 
+export const getCalculo = async (id, monto) => {
   try {
-    return URL_SERVIDOR.get(id ? `/inversion?id=${id}&monto=${monto}` : '/inversion',
+    return URL_SERVIDOR.get(`/riesgo/calculo?id=${id}&monto=${monto}`,
       {
         withCredentials: true,
       })
       .then(response => {
-        // console.log('Respuesta del servidor', response.data);
+        console.log('Respuesta del servidor', response.data);
         return response.data;
       })
       .catch(error => {

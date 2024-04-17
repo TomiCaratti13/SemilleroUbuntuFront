@@ -19,7 +19,7 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
   };
 
   const obtenerNombreRiesgo = (id) => {
-    const riesgoEncontrado = riesgo.find(r => r.id === id);
+    const riesgoEncontrado = riesgo?.find(r => r.id === id);
     return riesgoEncontrado ? riesgoEncontrado.nombre : null;
   };
 
