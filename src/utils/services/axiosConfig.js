@@ -47,7 +47,8 @@ export const getCategorias = async () => {
       .catch(error => {
         if (error.response) {
           // El servidor respondió con un estado de error
-          console.log('Error en respuesta', error.response);
+          console.log('Error en respuesta', error.response);        
+          return error.response;
         } else if (error.request) {
           // La solicitud fue hecha pero no se recibió ninguna respuesta
           console.log('Error en llamado', error.request);
@@ -216,6 +217,7 @@ export const getContactos = async token => {
         if (error.response) {
           // El servidor respondió con un estado de error
           console.log('Error en respuesta', error.response);
+          return error.response;
         } else if (error.request) {
           // La solicitud fue hecha pero no se recibió ninguna respuesta
           console.log('Error en llamado', error.request);
@@ -245,7 +247,8 @@ export const getPais = async token => {
       .catch(error => {
         if (error.response) {
           // El servidor respondió con un estado de error
-          console.log('Error en respuesta', error.response);
+          console.log('Error en respuesta', error.response);        
+          return error.response;
         } else if (error.request) {
           // La solicitud fue hecha pero no se recibió ninguna respuesta
           console.log('Error en llamado', error.request);
@@ -276,6 +279,7 @@ export const getAllProvincias = async token => {
         if (error.response) {
           // El servidor respondió con un estado de error
           console.log('Error en respuesta', error.response);
+          return error.response;
         } else if (error.request) {
           // La solicitud fue hecha pero no se recibió ninguna respuesta
           console.log('Error en llamado', error.request);
@@ -368,6 +372,7 @@ export const getMicroCategoria = async token => {
         if (error.response) {
           // El servidor respondió con un estado de error
           console.log('Error en respuesta', error.response);
+          return error.response;
         } else if (error.request) {
           // La solicitud fue hecha pero no se recibió ninguna respuesta
           console.log('Error en llamado', error.request);
@@ -402,6 +407,7 @@ export const getPublisMes = async token => {
         if (error.response) {
           // El servidor respondió con un estado de error
           console.log('Error en respuesta', error.response);
+          return error.response;
         } else if (error.request) {
           // La solicitud fue hecha pero no se recibió ninguna respuesta
           console.log('Error en llamado', error.request);
@@ -614,14 +620,24 @@ export const postImagenesMicro = async (imagenes, id, token) => {
   }
 };
 
-export const putFormularioMicro = async (formulario, idMicro,idProvincia ,idPais, token) => {
+export const putFormularioMicro = async (
+  formulario,
+  idMicro,
+  idProvincia,
+  idPais,
+  token
+) => {
   try {
-    return URL_SERVIDOR.put(`/microEmprendimiento/editar/${idMicro}/${idPais}/${idProvincia}`, formulario, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-      },
-    })
+    return URL_SERVIDOR.put(
+      `/microEmprendimiento/editar/${idMicro}/${idPais}/${idProvincia}`,
+      formulario,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+      }
+    )
       .then(response => {
         // console.log('Respuesta del servidor en POST PUBLICACIONES', response);
         return response;

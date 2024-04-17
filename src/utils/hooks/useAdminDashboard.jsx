@@ -5,9 +5,10 @@ import {
   getPublisMes,
 } from '../services/axiosConfig';
 import { useSelector } from 'react-redux';
+import { useLogout } from './useLogout';
 
 export const useAdminDashboard = () => {
-  const token = useSelector((state) => state.token);
+  const token = useSelector(state => state.token);
   const [AdminInfo, setAdminInfo] = useState({
     NuevosMicroemprendimientos: 0,
     Gestionados: 0,
@@ -26,9 +27,16 @@ export const useAdminDashboard = () => {
       },
     ],
   });
+
+  const closeSesion = useLogout();
+
   //traerCosas
   useEffect(() => {
     const contactos = getContactos(token).then(response => {
+      if (response.status === 403) {
+        closeSesion();
+      }
+
       let gestionados = 0;
       let noGestionados = 0;
       response.data.forEach(contacto => {
@@ -38,9 +46,14 @@ export const useAdminDashboard = () => {
           noGestionados++;
         }
       });
+
       return { gestionados, noGestionados };
     });
     const microXCat = getMicroCategoria(token).then(response => {
+      if (response.status === 403) {
+        closeSesion();
+      }
+
       const categorias = response.data.map(cat => {
         return {
           title: cat.categoria,
@@ -50,6 +63,10 @@ export const useAdminDashboard = () => {
       return categorias;
     });
     const visPubli = getPublisMes(token).then(response => {
+      if (response.status === 403) {
+        closeSesion();
+      }
+
       const publicaciones = response.data.map(publicacion => {
         //Arreglo fecha Unix
         let timestamp = publicacion.fecha_creacion;
@@ -64,6 +81,7 @@ export const useAdminDashboard = () => {
           }),
         };
       });
+
       return publicaciones;
     });
     Promise.all([contactos, microXCat, visPubli]).then(info => {

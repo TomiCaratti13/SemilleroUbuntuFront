@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { useFormik } from 'formik';
 import { useAlertModal } from '../../../utils/hooks/useAlertModal';
 import { AlertModal } from '../../../components/AlertModal';
@@ -227,6 +234,8 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
     );
   };
 
+  const isSmallScreen = useMediaQuery('(max-width: 570px)');
+
   return (
     <>
       <AlertModal
@@ -419,48 +428,89 @@ export const FormPublicaciones = ({ publicacion, setCrear, setEditar }) => {
           direction={'column'}
         />
 
-        <Button
-          type="submit"
-          disabled={disabledButton}
+        <Box
           sx={{
-            width: '100%',
-            padding: '0 20px',
-            height: '40px',
-            my: '10px',
-            justifyContent: 'space-evenly',
-            borderRadius: '100px',
-            color: 'blanco.main',
-            backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
-            textTransform: 'none',
-            '&:hover': {
-              backgroundColor: 'azul.main',
-            },
-            '&:disabled': {
-              brackgoundColor: 'gris.medio',
-              color: 'gris.oscuro',
-              cursor: 'not-allowed',
-            },
+            display: 'flex',
+            flexDirection: isSmallScreen ? 'column-reverse' : 'row',
+            gap: isSmallScreen ? '0' : '20px',
           }}>
-          <Typography
-            onClick={handleDisableButton}
+          <Button
+            onClick={() => {
+              setCrear(false);
+              setEditar([]);
+            }}
             sx={{
-              fontWeight: '700',
-              fontSize: '16px',
-              lineHeight: '30px',
-              textAlign: 'center',
               width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              padding: '0 20px',
+              height: '40px',
+              my: '10px',
+              justifyContent: 'space-evenly',
+              borderRadius: '100px',
+              color: 'blanco.main',
+              backgroundColor: 'azul.main',
+              textTransform: 'none',
+              '&:hover': {
+                backgroundColor: 'azul.main',
+              },
+            }}>
+            <Typography
+              sx={{
+                fontWeight: '700',
+                fontSize: '16px',
+                lineHeight: '30px',
+                textAlign: 'center',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              Volver
+            </Typography>
+          </Button>
+          <Button
+            type="submit"
+            disabled={disabledButton}
+            sx={{
+              width: '100%',
+              padding: '0 20px',
+              height: '40px',
+              my: '10px',
+              justifyContent: 'space-evenly',
+              borderRadius: '100px',
+              color: 'blanco.main',
+              backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
+              textTransform: 'none',
+              '&:hover': {
+                backgroundColor: 'azul.main',
+              },
               '&:disabled': {
-                color: theme => theme.palette.white,
+                brackgoundColor: 'gris.medio',
+                color: 'gris.oscuro',
                 cursor: 'not-allowed',
               },
             }}>
-            {publicacion.title ? 'Editar Publicación' : 'Crear Publicación'}
-          </Typography>
-        </Button>
+            <Typography
+              onClick={handleDisableButton}
+              sx={{
+                fontWeight: '700',
+                fontSize: '16px',
+                lineHeight: '30px',
+                textAlign: 'center',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&:disabled': {
+                  color: theme => theme.palette.white,
+                  cursor: 'not-allowed',
+                },
+              }}>
+              {publicacion.title ? 'Editar Publicación' : 'Crear Publicación'}
+            </Typography>
+          </Button>
+        </Box>
       </Container>
     </>
   );

@@ -10,6 +10,7 @@ import {
   FormControl,
   InputLabel,
   FormHelperText,
+  useMediaQuery,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useAlertModal } from '../../../utils/hooks/useAlertModal';
@@ -27,7 +28,10 @@ import {
   putImagenesMicro,
 } from '../../../utils/services/axiosConfig';
 import { useSnackbar } from 'notistack';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearToken } from '../../../utils/redux/tokenSlice';
+import { addUser } from '../../../utils/redux/userSlice';
+import { useLogout } from '../../../utils/hooks/useLogout';
 
 export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
   const token = useSelector(state => state.token);
@@ -181,6 +185,9 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
   const [paises, setPaises] = useState([]);
   const [provincias, setProvincias] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const closeSesion = useLogout();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -189,6 +196,14 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           getPais(token),
           getCategorias(token),
         ]);
+
+        if (
+          provinciasData.status === 403 ||
+          paisData.status === 403 ||
+          categoriasData.status === 403
+        ) {
+          closeSesion();
+        }
 
         setProvincias(provinciasData.data);
         setPaises(paisData.data);
@@ -213,7 +228,7 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
     };
 
     fetchData();
-  }, [,microemprendimiento]);
+  }, [, microemprendimiento]);
 
   useEffect(() => {
     formik.setFieldValue('imagenes', images);
@@ -328,6 +343,8 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
       'Por favor, aguarde unos segundos'
     );
   };
+
+  const isSmallScreen = useMediaQuery('(max-width: 570px)');
 
   return (
     <>
@@ -956,50 +973,92 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           direction={'row'}
         />
 
-        <Button
-          type="submit"
-          disabled={disabledButton}
+        <Box
           sx={{
-            width: '100%',
-            padding: '0 20px',
-            height: '40px',
-            my: '10px',
-            justifyContent: 'space-evenly',
-            borderRadius: '100px',
-            color: 'blanco.main',
-            backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
-            textTransform: 'none',
-            '&:hover': {
-              backgroundColor: 'azul.main',
-            },
-            '&:disabled': {
-              brackgoundColor: 'gris.medio',
-              color: 'gris.oscuro',
-              cursor: 'not-allowed',
-            },
+            display: 'flex',
+            flexDirection: isSmallScreen ? 'column-reverse' : 'row',
+            gap: isSmallScreen ? '0' : '20px',
           }}>
-          <Typography
-            onClick={handleDisableButton}
+          <Button
+            onClick={() => {
+              setEditar([]);
+              setCrear(false);
+            }}
             sx={{
-              fontWeight: '700',
-              fontSize: '16px',
-              lineHeight: '30px',
-              textAlign: 'center',
               width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              padding: '0 20px',
+              height: '40px',
+              my: '10px',
+              justifyContent: 'space-evenly',
+              borderRadius: '100px',
+              color: 'blanco.main',
+              backgroundColor: 'azul.main',
+              textTransform: 'none',
+              '&:hover': {
+                backgroundColor: 'azul.main',
+              },
+            }}>
+            <Typography
+              sx={{
+                fontWeight: '700',
+                fontSize: '16px',
+                lineHeight: '30px',
+                textAlign: 'center',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              Volver
+            </Typography>
+          </Button>
+
+          <Button
+            type="submit"
+            disabled={disabledButton}
+            sx={{
+              width: '100%',
+              padding: '0 20px',
+              height: '40px',
+              my: '10px',
+              justifyContent: 'space-evenly',
+              borderRadius: '100px',
+              color: 'blanco.main',
+              backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
+              textTransform: 'none',
+              '&:hover': {
+                backgroundColor: 'azul.main',
+              },
               '&:disabled': {
-                color: theme => theme.palette.white,
+                brackgoundColor: 'gris.medio',
+                color: 'gris.oscuro',
                 cursor: 'not-allowed',
               },
             }}>
-            {microemprendimiento.title
-              ? 'Editar Microemprendimiento'
-              : 'Crear Microemprendimiento'}
-          </Typography>
-        </Button>
+            <Typography
+              onClick={handleDisableButton}
+              sx={{
+                fontWeight: '700',
+                fontSize: '16px',
+                lineHeight: '30px',
+                textAlign: 'center',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&:disabled': {
+                  color: theme => theme.palette.white,
+                  cursor: 'not-allowed',
+                },
+              }}>
+              {microemprendimiento.title
+                ? 'Editar Microemprendimiento'
+                : 'Crear Microemprendimiento'}
+            </Typography>
+          </Button>
+        </Box>
       </Container>
     </>
   );

@@ -9,6 +9,7 @@ import { CardSolContactos } from './components/CardSolContactos';
 import { DetalleContacto } from './components/DetalleContacto';
 import { getContactos } from '../../utils/services/axiosConfig';
 import { useSelector } from 'react-redux';
+import { useLogout } from '../../utils/hooks/useLogout';
 
 export const AdminContactos = () => {
   const token = useSelector(state => state.token);
@@ -17,15 +18,27 @@ export const AdminContactos = () => {
   const [contactos, setContactos] = useState([]);
   const [selectedContacto, setSelectedContacto] = useState(null);
 
+  const closeSesion = useLogout();
   //traerContactos
   useEffect(() => {
     getContactos(token).then(response => {
+      if (response.status === 403) {
+        closeSesion();
+      }
       const allContactos = response.data;
       setSolContactos(allContactos);
       if (value === '1') {
-        setContactos(allContactos?.reverse().filter(contacto => contacto.gestionado === true));
+        setContactos(
+          allContactos
+            ?.reverse()
+            .filter(contacto => contacto.gestionado === true)
+        );
       } else if (value === '2') {
-        setContactos(allContactos?.reverse().filter(contacto => contacto.gestionado === false));
+        setContactos(
+          allContactos
+            ?.reverse()
+            .filter(contacto => contacto.gestionado === false)
+        );
       }
     });
   }, [value, selectedContacto]);

@@ -1,33 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
   Container,
   TextField,
   Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormHelperText,
 } from '@mui/material';
-import { useFormik } from 'formik';
-import { useAlertModal } from '../../../utils/hooks/useAlertModal';
-import { AlertModal } from '../../../components/AlertModal';
 import { UploadImages } from '../components/UploadImages';
-import formMicros from '../../../utils/schemas/schemaFormMicros';
-import {
-  getAllProvincias,
-  getCategorias,
-  getPais,
-  getProvinciasPais,
-  postFormularioMicro,
-  postImagenesMicro,
-  putFormularioMicro,
-  putImagenesMicro,
-} from '../../../utils/services/axiosConfig';
 import { useSnackbar } from 'notistack';
-import { useSelector } from 'react-redux';
 
 export const VerMicro = ({ microemprendimiento, setVer }) => {
   //Manejar alertas Snackbar
@@ -436,6 +416,40 @@ export const VerMicro = ({ microemprendimiento, setVer }) => {
           direction={'row'}
           zoom={true}
         />
+
+        <Button
+          onClick={() => {
+            setVer([]);
+          }}
+          sx={{
+            width: '100%',
+            padding: '0 20px',
+            height: '40px',
+            my: '10px',
+            justifyContent: 'space-evenly',
+            borderRadius: '100px',
+            color: 'blanco.main',
+            backgroundColor: 'azul.main',
+            textTransform: 'none',
+            '&:hover': {
+              backgroundColor: 'azul.main',
+            },
+          }}>
+          <Typography
+            sx={{
+              fontWeight: '700',
+              fontSize: '16px',
+              lineHeight: '30px',
+              textAlign: 'center',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            Volver
+          </Typography>
+        </Button>
       </Container>
     </>
   );
