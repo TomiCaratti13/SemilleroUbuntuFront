@@ -7,11 +7,12 @@ export const CardSolContactos = ({ contacto, onClick }) => {
   let date = new Date(timestamp);
   const contactoMap = {
     nombre: contacto.microemprendimiento,
-    fecha: date.toLocaleDateString('es-AR', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }),
+    // fecha: date.toLocaleDateString('es-AR', {
+    //   year: 'numeric',
+    //   month: 'numeric',
+    //   day: 'numeric',
+    // }),
+    fecha: contacto.fechaCreacion,
     gestionado: contacto.gestionado,
   };
 

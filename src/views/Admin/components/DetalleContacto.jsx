@@ -27,11 +27,12 @@ export const DetalleContacto = ({
   //Arreglo fecha Unix
   let timestamp = contacto.fechaCreacion;
   let date = new Date(timestamp);
-  const contactoFecha = date.toLocaleDateString('es-AR', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  });
+  // const contactoFecha = date.toLocaleDateString('es-AR', {
+  //   year: 'numeric',
+  //   month: 'numeric',
+  //   day: 'numeric',
+  // });
+  const contactoFecha = contacto.fechaCreacion;
 
   const formik = useFormik({
     initialValues: {

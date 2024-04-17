@@ -1,13 +1,13 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme';
 import Header from './views/Header';
 import { SnackbarProvider } from 'notistack';
 import { CssBaseline } from '@mui/material';
 import Chatbot from './components/chatbot/ChatBot';
-import { useSelector } from 'react-redux';
 
 export default function App() {
+  const location = useLocation();
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider

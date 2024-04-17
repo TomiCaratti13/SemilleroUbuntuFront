@@ -27,7 +27,7 @@ export const ImageZoom = ({ images, initialIndex, onClose }) => {
         top: 0,
         left: 0,
         width: '100%',
-        height: '100%',
+        height: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -46,7 +46,7 @@ export const ImageZoom = ({ images, initialIndex, onClose }) => {
             images[currentIndex].cloudinaryUrl ||
             URL.createObjectURL(images[currentIndex])
           }
-          style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
+          style={{ maxHeight: '80vh', maxWidth: '100%', objectFit: 'contain' }}
           onClick={handleImageClick}
         />
         <Box
