@@ -82,19 +82,26 @@ export const FormContact = ({ idMic }) => {
     if (
       Object.keys(formik.errors).length > 0 ||
       formik.isSubmitting ||
-      sending
+      sending ||
+      formik.values.nombre === ""
     ) {
       setDisableButton(true);
     } else {
       setDisableButton(false);
     }
-  }, [formik.errors, formik.isSubmitting, sending]);
+  }, [
+    idMic,
+    formik.errors,
+    formik.isSubmitting,
+    sending,
+    formik.values,
+  ]);
 
   const handleDisableButton = () => {
     setSending(true);
     openAlert(
       'loading',
-      'Publicación en proceso',
+      'Enviando Formulario',
       'Por favor, aguarde unos segundos'
     );
   };

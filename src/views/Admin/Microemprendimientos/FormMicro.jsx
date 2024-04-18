@@ -269,7 +269,6 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           subRubro: formData.subcategoria,
         };
 
-        console.log(formData, images);
         {
           microemprendimiento.id
             ? editarMicro(
@@ -759,9 +758,9 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           }}
         />
 
-        {/* Field Descripcion */}
         <Box>
           <TextField
+            //#region Descripcion
             fullWidth
             id="descripcion"
             name="descripcion"
@@ -864,9 +863,9 @@ export const FormMicro = ({ microemprendimiento, setCrear, setEditar }) => {
           </Box>
         </Box>
 
-        {/* Field Mas Informacion */}
         <Box>
           <TextField
+            //#region Mas Informacion
             fullWidth
             id="masInfo"
             name="masInfo"
