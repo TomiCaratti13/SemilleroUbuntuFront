@@ -74,7 +74,7 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
             backgroundColor: 'transparent',
           }}
           onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === 'Delete') {
+            if ((e.key === 'Enter' || e.key === 'Delete')&& searchInput?.trim() !== '') {
               handleSearch();
             }
           }}
