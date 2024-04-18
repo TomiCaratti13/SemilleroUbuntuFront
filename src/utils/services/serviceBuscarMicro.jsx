@@ -5,16 +5,20 @@ export const serviceBuscarMicro = async search => {
   const setMic = buscarMic
     ?.map(microemprendimiento => {
       return {
+        id: microemprendimiento.id,
         title: microemprendimiento.nombre,
+        description: microemprendimiento.descripcion,
+        moreinfo: microemprendimiento.masInformacion,
         category: microemprendimiento.rubro,
         subcategory: microemprendimiento.subRubro,
         ubication: `${microemprendimiento.ciudad}, ${microemprendimiento.provincia}, ${microemprendimiento.pais}`,
-        img0: microemprendimiento.img0,
-        img1: microemprendimiento.img1,
-        img2: microemprendimiento.img2,
-        description: microemprendimiento.descripcion,
-        moreinfo: microemprendimiento.masInformacion,
-        id: microemprendimiento.id,
+        imagenes: microemprendimiento.imagenes,
+        pais: microemprendimiento.pais,
+        provincia: microemprendimiento.provincia,
+        ciudad: microemprendimiento.ciudad,
+        paisId: microemprendimiento.paisId,
+        provinciaId: microemprendimiento.provinciaId,
+        rubroId: microemprendimiento.rubroId,
       };
     })
     .sort((a, b) => {

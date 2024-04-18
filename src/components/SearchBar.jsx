@@ -1,28 +1,30 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 export const SearchBar = ({ color = 'blanco.main' }) => {
-  const [searchInput, setSearchInput] = useState('');
-
+  const inputRef = useRef();
+  const { search } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState(search);
 
   const handleSearch = () => {
-    if (searchInput.trim() !== '') {
-      localStorage.setItem('searchInput', searchInput.trim());
-      navigate(`/buscar/${searchInput.trim()}`);
-    } else {
-      localStorage.removeItem('searchInput');
-    }
+    // if (searchInput?.trim() !== '') {
+      navigate(`/buscar/${searchInput?.trim()}`);
+    // }
   };
-
   useEffect(() => {
-    const savedSearchInput = localStorage.getItem('searchInput');
-    if (savedSearchInput) {
-      setSearchInput(savedSearchInput);
+    if (location.pathname.includes('/buscar')) {
+      handleSearch();
+      inputRef.current.focus();
     }
-  }, []);
+    if (location.pathname === '/') {
+      navigate(`/`);
+      inputRef.current.focus();
+    }
+  }, [searchInput]);
 
   return (
     <>
@@ -47,7 +49,10 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
           },
         }}>
         <Button
-          onClick={handleSearch}
+          onClick={() => {
+            setSearchInput(inputRef.current.value);
+            handleSearch();
+          }}
           style={{
             border: 'none',
             backgroundColor: 'transparent',
@@ -58,6 +63,7 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
           <SearchIcon />
         </Button>
         <input
+          ref={inputRef}
           id="searchBar"
           style={{
             width: '100%',
@@ -67,15 +73,13 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
             border: 'none',
             backgroundColor: 'transparent',
           }}
-          // onKeyDown={event => {
-          //   if (event.key === 'Enter' || event.key === "Delete") {
-          //     handleSearch();
-          //   }
-          // }}
-          onChange={event => {
-            setSearchInput(event.target.value);
-            handleSearch();
-            localStorage.setItem('searchInput', event.target.value);
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === "Delete") {
+              handleSearch();
+            }
+          }}
+          onChange={e => {
+            setSearchInput(e.target.value);
           }}
           value={searchInput}
           type="text"
