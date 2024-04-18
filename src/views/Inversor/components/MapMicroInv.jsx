@@ -41,13 +41,13 @@ export const MapMicroInv = ({ microemprendimiento, onClick }) => {
             gap: '4px',
             flexGrow: 1,
           }}>
-          <CircleIcon
+          {/* <CircleIcon
             fontSize='small'
             sx={{
               mt: '3px',
               color: 'gris.medio'
             }}
-          />
+          /> */}
           {microMap.nombre}
         </Typography>
         <Typography

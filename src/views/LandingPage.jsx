@@ -7,10 +7,6 @@ import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
 import { usePublicaciones } from '../utils/hooks/usePublicaciones';
 import { useCategorias } from '../utils/hooks/useCategorias';
-import { useDispatch } from 'react-redux';
-import { clearToken } from '../utils/redux/tokenSlice';
-import { addUser } from '../utils/redux/userSlice';
-import { useEffect } from 'react';
 
 const heroLanding = {
   category: 'FINANCIAMIENTO SOSTENIBLE',
@@ -48,10 +44,7 @@ export const LandingPage = () => {
     });
   };
 
-  //Llamar a publicaciones
   const publicaciones = usePublicaciones();
-
-  //Llamar a Categorias
   const Categorias = useCategorias();
 
   return (

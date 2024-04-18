@@ -20,7 +20,7 @@ export default function App() {
         <main>
           <Outlet />
         </main>
-        {location.pathname.includes('/Admin') ? null : <Chatbot />}
+        {location.pathname.includes('/Admin') || location.pathname.includes('/Inversor') ? null : <Chatbot />}
       </SnackbarProvider>
     </ThemeProvider>
   );

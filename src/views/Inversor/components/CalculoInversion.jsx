@@ -187,6 +187,60 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           maxWidth: '600px',
           margin: 'auto',
         }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            width: '100%',
+            maxWidth: '600px',
+            margin: 'auto',
+          }}>
+          <Typography
+            sx={{
+              fontSize: '18px',
+              fontWeight: 700,
+              color: 'azul.main',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+            }}>
+            <CircleIcon
+              fontSize='s'
+              sx={{
+                color: idCalculo === 3 ?
+                  'nivel.alto'
+                  : (idCalculo === 2 ?
+                    'nivel.medio'
+                    : (idCalculo === 1 ?
+                      'nivel.bajo'
+                      : 'gris.medio')),
+              }}
+            />
+            {cardMap.nombre}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: '16px',
+              fontWeight: 500,
+              textAlign: 'center',
+            }}>
+            Formulario para crear Inversión
+          </Typography>
+          <Typography
+            sx={{
+              width: '100%',
+              fontSize: '13px',
+              // fontWeight: 400,
+              lineHeight: '14px',
+              py: '6px',
+              color: 'azul.main',
+            }}>
+            Ingrese el monto a invertir en {cardMap.nombre} y luego seleccione un nivel de Riesgo de Inversión
+            para realizar lo cálculos. Si está de acuerdo, dé a Invertir.
+          </Typography>
+        </Box>
         <TextField
           // #region MONTO 
           fullWidth
@@ -332,7 +386,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
             label='Descripción'
             variant='outlined'
             multiline
-            rows={3}
+            rows={4}
             value={formik.values.mensaje}
             disabled={formik.isSubmitting}
           />

@@ -68,37 +68,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="inversiones"
                 element={<SectionInversiones />}
               />
-              {/* <Route
-                path="Admin/:token"
-                element={<AdminDashboard />}
-              /> */}
-
               <Route
                 path="Admin/:token"
                 element={<RutaAdmin />}
               />
               <Route
-                path="Admin"
-                element={<AdminDashboard />}
-              />
-              <Route
-                path="Admin/microemprendimientos"
-                element={<AdminMicroemprendimientos />}
-              />
-              <Route
-                path="Admin/contactos"
-                element={<AdminContactos />}
-              />
-              <Route
-                path="Admin/publicaciones"
-                element={<AdminPublicaciones />}
-              />
-              <Route
                 path="Inversor"
                 element={<InversorDashboard />}
-                // element={<AdminContactos />}
               />
-              <Route element={<ProtectedRoute redirectTo='/'/>}>
+              <Route element={<ProtectedRoute redirectTo='/' />}>
                 <Route
                   path="Admin"
                   element={<AdminDashboard />}
@@ -115,6 +93,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   path="Admin/publicaciones"
                   element={<AdminPublicaciones />}
                 />
+                {/* <Route
+                  path="Inversor"
+                  element={<InversorDashboard />}
+                /> */}
               </Route>
             </Route>
             <Route
