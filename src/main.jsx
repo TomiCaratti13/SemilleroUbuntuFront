@@ -20,6 +20,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { RutaAdmin } from './views/Admin/components/RutaAdmin.jsx';
 import SectionInversiones from './views/SectionInversiones.jsx';
 import { InversorDashboard } from './views/Inversor/InversorDashboard.jsx';
+import { ProtectedRoute } from './views/Admin/components/ProtectedRoute.jsx';
+
+// import { AdminMicro } from './views/Admin/AdminMicro.jsx';
+// import { MapAdminMicros } from './views/Admin/Microemprendimientos/MapAdminMicros.jsx';
+// import { EditarMicro } from './views/Admin/Microemprendimientos/EditarMicro.jsx';
+// import { CargarMicro } from './views/Admin/Microemprendimientos/CargarMicro.jsx';
+// import { MostrarMicro } from './views/Admin/Microemprendimientos/MostrarMicro.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -65,6 +72,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="Admin/:token"
                 element={<AdminDashboard />}
               /> */}
+
               <Route
                 path="Admin/:token"
                 element={<RutaAdmin />}
@@ -90,6 +98,24 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 element={<InversorDashboard />}
                 // element={<AdminContactos />}
               />
+              <Route element={<ProtectedRoute redirectTo='/'/>}>
+                <Route
+                  path="Admin"
+                  element={<AdminDashboard />}
+                />
+                <Route
+                  path="Admin/microemprendimientos"
+                  element={<AdminMicroemprendimientos />}
+                />
+                <Route
+                  path="Admin/contactos"
+                  element={<AdminContactos />}
+                />
+                <Route
+                  path="Admin/publicaciones"
+                  element={<AdminPublicaciones />}
+                />
+              </Route>
             </Route>
             <Route
               path="*"
@@ -106,3 +132,28 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>
 );
+
+{
+  /* Rutas de Microemprendimientos para cargar componentes */
+}
+{
+  /* <Route
+                  path="Admin/microemprendimientos2"
+                  element={<AdminMicro />}>
+                  <Route
+                    index
+                    element={<MapAdminMicros />}
+                  />
+                    <Route 
+                    path="ver/:nombre"
+                    element={<MostrarMicro />}/>
+                  <Route
+                    path="editar/:nombre"
+                    element={<EditarMicro />}
+                  />
+                  <Route
+                    path="crear"
+                    element={<CargarMicro />}
+                  />
+                </Route> */
+}

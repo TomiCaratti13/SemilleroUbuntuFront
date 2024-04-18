@@ -1,23 +1,32 @@
-import { addPublicacion } from '../redux/publicacionSlice';
+import { addPublicacion, clearPublicaciones } from '../redux/publicacionSlice';
 import { store } from '../redux/store';
 import { getPublicaciones } from './axiosConfig';
 
 export const servicePublicaciones = async () => {
   const publicacionesStorage = store.getState().publicacion.publicacionLista;
-  if (publicacionesStorage === undefined || publicacionesStorage.length === 0) {
-    //Llamar a publicaciones
-    const publicacionesAPI = await getPublicaciones();
-    const publicacionesRedux = publicacionesAPI?.map(publicacion => {
-      return {
-        id: publicacion.id,
-        title: publicacion.titulo,
-        description: publicacion.descripcion,
-        date: publicacion.fechaCreacion,
-        visualizaciones: publicacion.visualizaciones,
-      };
-    });
 
-    //Guardar publicaciones en el estado de redux
+  // Llamar a publicaciones SIEMPRE
+  const publicacionesAPI = await getPublicaciones();
+  const publicacionesRedux = publicacionesAPI?.map(publicacion => {
+    return {
+      id: publicacion.id,
+      title: publicacion.titulo,
+      description: publicacion.descripcion,
+      date: publicacion.fechaCreacion,
+      visualizaciones: publicacion.visualizaciones,
+      imagenes: publicacion.imagenes,
+    };
+  });
+
+  // Compara los datos de la API con los datos existentes en el almacenamiento de Redux
+  const isDataChanged =
+    JSON.stringify(publicacionesStorage) !== JSON.stringify(publicacionesRedux);
+
+  if (isDataChanged) {
+    // Limpiar el estado de Redux
+    store.dispatch(clearPublicaciones());
+
+    // Guardar publicaciones en el estado de redux
     publicacionesRedux.forEach(publicacion => {
       store.dispatch(addPublicacion(publicacion));
     });

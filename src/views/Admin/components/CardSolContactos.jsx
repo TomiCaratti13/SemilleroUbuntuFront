@@ -1,18 +1,18 @@
 import { Typography, Box, Container, Button } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CircleIcon from '@mui/icons-material/Circle';
-import { Link } from 'react-router-dom';
 
-export const MapSolContactos = ({ contacto, onClick }) => {
+export const CardSolContactos = ({ contacto, onClick }) => {
   let timestamp = contacto.fechaCreacion;
   let date = new Date(timestamp);
   const contactoMap = {
     nombre: contacto.microemprendimiento,
-    fecha: date.toLocaleDateString('es-AR', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }),
+    // fecha: date.toLocaleDateString('es-AR', {
+    //   year: 'numeric',
+    //   month: 'numeric',
+    //   day: 'numeric',
+    // }),
+    fecha: contacto.fechaCreacion,
     gestionado: contacto.gestionado,
   };
 

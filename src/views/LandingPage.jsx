@@ -1,4 +1,3 @@
-
 import Objetivos from '../components/Objetivos';
 import { useSnackbar } from 'notistack';
 import { SectionHero } from '../components/SectionHero';
@@ -8,6 +7,10 @@ import { MapCategorias } from '../components/MapCategorias';
 import { ButtonBlue } from '../components/ButtonBlue';
 import { usePublicaciones } from '../utils/hooks/usePublicaciones';
 import { useCategorias } from '../utils/hooks/useCategorias';
+import { useDispatch } from 'react-redux';
+import { clearToken } from '../utils/redux/tokenSlice';
+import { addUser } from '../utils/redux/userSlice';
+import { useEffect } from 'react';
 
 const heroLanding = {
   category: 'FINANCIAMIENTO SOSTENIBLE',
@@ -16,7 +19,27 @@ const heroLanding = {
   img: '/backgroundLandingPage.webp',
 };
 
+function deleteAllCookies() {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    var eqPos = cookie.indexOf('=');
+    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  }
+}
+
 export const LandingPage = () => {
+  //Limpiar usuario y token
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   deleteAllCookies();
+  //   dispatch(clearToken());
+  //   dispatch(addUser({ nombre: '', foto: '', isAdmin: false }));
+  //   localStorage.clear();
+  //   // window.location.href = `http://localhost:8080/logout`;
+  // }, []);
+
   //Manejar alertas
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = () => {
@@ -96,7 +119,16 @@ export const LandingPage = () => {
           Finanzas con impacto
         </Typography>
       </Container>
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '16px',
+          padding: '0 16px',
+          width: '100%',
+        }}>
         <MapPublicaciones
           publicaciones={publicaciones}
           cantidad={3}

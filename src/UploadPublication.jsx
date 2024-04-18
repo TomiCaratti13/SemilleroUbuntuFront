@@ -372,7 +372,7 @@ const UploadPublication = () => {
               },
             }}
             disabled={disabledButton}
-          >
+          >disabledButton
             Crear publicación
           </Button>
         </Box>

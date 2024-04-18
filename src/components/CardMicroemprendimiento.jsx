@@ -39,13 +39,7 @@ export default function CardMicroemprendimiento({ microemprendimiento }) {
         maxWidth: '500px',
         width: '100%',
       }}>
-      <SliderSwipper
-        imgs={[
-          microemprendimiento.img0,
-          microemprendimiento.img1,
-          microemprendimiento.img2,
-        ]}
-      />
+      <SliderSwipper imgs={microemprendimiento.imagenes} />
       <CardContent
         style={{
           paddingBottom: 0,

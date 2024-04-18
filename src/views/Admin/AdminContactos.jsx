@@ -5,25 +5,40 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-import { MapSolContactos } from './components/MapSolContactos';
+import { CardSolContactos } from './components/CardSolContactos';
 import { DetalleContacto } from './components/DetalleContacto';
 import { getContactos } from '../../utils/services/axiosConfig';
+import { useSelector } from 'react-redux';
+import { useLogout } from '../../utils/hooks/useLogout';
 
 export const AdminContactos = () => {
+  const token = useSelector(state => state.token);
   const [value, setValue] = useState('1');
   const [solContactos, setSolContactos] = useState([]);
   const [contactos, setContactos] = useState([]);
   const [selectedContacto, setSelectedContacto] = useState(null);
 
+  const closeSesion = useLogout();
   //traerContactos
   useEffect(() => {
-    getContactos().then(response => {
+    getContactos(token).then(response => {
+      if (response.status === 403) {
+        closeSesion();
+      }
       const allContactos = response.data;
       setSolContactos(allContactos);
       if (value === '1') {
-        setContactos(allContactos.filter(contacto => contacto.gestionado === true));
+        setContactos(
+          allContactos
+            ?.reverse()
+            .filter(contacto => contacto.gestionado === true)
+        );
       } else if (value === '2') {
-        setContactos(allContactos.filter(contacto => contacto.gestionado === false));
+        setContactos(
+          allContactos
+            ?.reverse()
+            .filter(contacto => contacto.gestionado === false)
+        );
       }
     });
   }, [value, selectedContacto]);
@@ -86,6 +101,7 @@ export const AdminContactos = () => {
               }}>
               <TabList
                 onChange={handleChange}
+                onClick={() => setSelectedContacto(null)}
                 aria-label="lab API tabs example"
                 sx={{
                   width: 'fitContent',
@@ -112,7 +128,7 @@ export const AdminContactos = () => {
             <TabPanel value={value}>
               {selectedContacto === null ? (
                 contactos.map((contacto, index) => (
-                  <MapSolContactos
+                  <CardSolContactos
                     contacto={contacto}
                     key={index}
                     onClick={() => setSelectedContacto(contacto)}

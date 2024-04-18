@@ -1,13 +1,20 @@
-import { useState } from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import formContact from '../../utils/schemas/schemaFormContact';
 import { enviarFormulario } from '../../utils/services/axiosConfig';
 import { AlertModal } from '../../components/AlertModal';
 import { useAlertModal } from '../../utils/hooks/useAlertModal';
+import { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 
 export const FormContact = ({ idMic }) => {
-  const [chars, setChars] = useState(0);
+  //Manejar alertas Snackbar
+  const { enqueueSnackbar } = useSnackbar();
+  const handleAlert = (mensaje, color) => {
+    enqueueSnackbar(mensaje, {
+      variant: color,
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -22,11 +29,11 @@ export const FormContact = ({ idMic }) => {
         formik.setSubmitting(true);
 
         const formEnviar = {
-          descripcion: formData.mensaje,
+          descripcion: formData.mensaje.trim(),
           usuarioSolicitante: {
-            nombre: formData.nombre,
-            email: formData.email,
-            telefono: formData.telefono,
+            nombre: formData.nombre.trim(),
+            email: formData.email.trim(),
+            telefono: formData.telefono.trim(),
           },
         };
 
@@ -68,12 +75,44 @@ export const FormContact = ({ idMic }) => {
     formik.handleSubmit
   );
 
+  //Desabilitar boton de enviar
+  const [sending, setSending] = useState(false);
+  const [disabledButton, setDisableButton] = useState(false);
+  useEffect(() => {
+    if (
+      Object.keys(formik.errors).length > 0 ||
+      formik.isSubmitting ||
+      sending ||
+      formik.values.nombre === ""
+    ) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [
+    idMic,
+    formik.errors,
+    formik.isSubmitting,
+    sending,
+    formik.values,
+  ]);
+
+  const handleDisableButton = () => {
+    setSending(true);
+    openAlert(
+      'loading',
+      'Enviando Formulario',
+      'Por favor, aguarde unos segundos'
+    );
+  };
+
   return (
     <>
       <AlertModal
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
+        returnTo={'/microemprendimientos/categorias'}
       />
       <Container
         component="form"
@@ -156,6 +195,10 @@ export const FormContact = ({ idMic }) => {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
           sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: '#090909',
             },
@@ -212,6 +255,10 @@ export const FormContact = ({ idMic }) => {
               : 'Con el siguiente formato +54 9 261 002 002'
           }
           sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: '#090909',
             },
@@ -266,7 +313,6 @@ export const FormContact = ({ idMic }) => {
             }}
             onChange={e => {
               if (e.target.value.length <= 300) {
-                setChars(e.target.value.length);
                 formik.handleChange(e);
               }
             }}
@@ -275,6 +321,10 @@ export const FormContact = ({ idMic }) => {
             error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
             helperText={formik.touched.mensaje && formik.errors.mensaje}
             sx={{
+              '& .MuiOutlinedInput-input': {
+                fontWeight: '400',
+              },
+
               '& .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#090909',
               },
@@ -345,12 +395,13 @@ export const FormContact = ({ idMic }) => {
                   ? theme.palette.gestion.error
                   : '#090909'
               }>
-              {chars}/300
+              {formik.values.mensaje.length}/300
             </Typography>
           </Box>
         </Box>
         <Button
           type="submit"
+          disabled={disabledButton}
           sx={{
             width: '100%',
             padding: '0 20px',
@@ -359,18 +410,33 @@ export const FormContact = ({ idMic }) => {
             justifyContent: 'space-evenly',
             borderRadius: '100px',
             color: 'blanco.main',
-            backgroundColor: 'azul.main',
+            backgroundColor: disabledButton ? 'gris.medio' : 'azul.main',
             textTransform: 'none',
             '&:hover': {
               backgroundColor: 'azul.main',
             },
+            '&:disabled': {
+              brackgoundColor: 'gris.medio',
+              color: 'gris.oscuro',
+              cursor: 'not-allowed',
+            },
           }}>
           <Typography
+            onClick={handleDisableButton}
             sx={{
               fontWeight: '700',
               fontSize: '16px',
               lineHeight: '30px',
               textAlign: 'center',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              '&:disabled': {
+                color: theme => theme.palette.white,
+                cursor: 'not-allowed',
+              },
             }}>
             Enviar
           </Typography>

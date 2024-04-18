@@ -35,7 +35,15 @@ export const SectionPublicaciones = () => {
       />
       <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
         <VectorGreen />
-        <MapPublicaciones publicaciones={publicaciones} />
+        <Box
+          sx={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            padding: '0 16px',
+          }}>
+          <MapPublicaciones publicaciones={publicaciones} />
+        </Box>
       </Box>
     </Box>
   );

@@ -1,6 +1,8 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { keyframes } from '@emotion/react';
 
 export const AlertModal = ({
   alert,
@@ -9,7 +11,21 @@ export const AlertModal = ({
   returnTo,
   setSelectedContacto,
   setValue,
+  setCrear,
+  setEditar,
 }) => {
+  // Define la animación
+  const slideInFromLeft = keyframes`
+0% {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+100% {
+  transform: translateY(0);
+  opacity: 1;
+}
+`;
+
   return (
     <div>
       <Modal
@@ -21,6 +37,7 @@ export const AlertModal = ({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          animation: `${slideInFromLeft} 0.5s forwards`,
         }}>
         <Box
           sx={{
@@ -36,7 +53,15 @@ export const AlertModal = ({
             textAlign: 'center',
             gap: '10px',
           }}>
-          {alert.icon ? (
+          {alert.icon === 'loading' ? (
+            <CloudUploadIcon
+              sx={{
+                color: 'azul.main',
+                width: '50px',
+                height: '50px',
+              }}
+            />
+          ) : alert.icon ? (
             <CheckCircleOutlineIcon
               sx={{
                 color: 'gestion.exito',
@@ -74,35 +99,14 @@ export const AlertModal = ({
               {alert.info}
             </Typography>
           )}
-          <Box
-            sx={{
-              display: 'flex',
-              width: '100%',
-              m: 0,
-              justifyContent: 'end',
-            }}>
-            <Button
+          {alert.icon === 'loading' ? null : (
+            <Box
               sx={{
-                fontSize: '14px',
-                lineHeight: '20px',
-                fontWeight: 600,
-                color: 'azul.main',
-                textAlign: 'center',
-                textTransform: 'none',
-                '&:hover': {
-                  bgcolor: 'gris.medio',
-                },
-              }}
-              onClick={() => {
-                if (setSelectedContacto && setValue) {
-                  setSelectedContacto(null);
-                  setValue('1');
-                }
-                closeAlert(returnTo);
+                display: 'flex',
+                width: '100%',
+                m: 0,
+                justifyContent: 'end',
               }}>
-              {alert.icon ? 'Aceptar' : 'Cancelar'}
-            </Button>
-            {!alert.icon ? (
               <Button
                 sx={{
                   fontSize: '14px',
@@ -115,11 +119,34 @@ export const AlertModal = ({
                     bgcolor: 'gris.medio',
                   },
                 }}
-                onClick={resendAlert}>
-                Intentar Nuevamente
+                onClick={() => {
+                  if (setSelectedContacto) setSelectedContacto(null);
+                  if (setValue) setValue('1');
+                  if (setCrear) setCrear(false);
+                  if (setEditar) setEditar([]);
+                  closeAlert(returnTo);
+                }}>
+                {alert.icon ? 'Aceptar' : 'Cancelar'}
               </Button>
-            ) : null}
-          </Box>
+              {!alert.icon ? (
+                <Button
+                  sx={{
+                    fontSize: '14px',
+                    lineHeight: '20px',
+                    fontWeight: 600,
+                    color: 'azul.main',
+                    textAlign: 'center',
+                    textTransform: 'none',
+                    '&:hover': {
+                      bgcolor: 'gris.medio',
+                    },
+                  }}
+                  onClick={resendAlert}>
+                  Intentar Nuevamente
+                </Button>
+              ) : null}
+            </Box>
+          )}
         </Box>
       </Modal>
     </div>

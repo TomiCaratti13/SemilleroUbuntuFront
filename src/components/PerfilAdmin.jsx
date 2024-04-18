@@ -1,8 +1,7 @@
 import { Avatar, Button, Popper, Fade } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { addUser } from '../utils/redux/userSlice';
+import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useLogout } from '../utils/hooks/useLogout';
 
 export default function PerfilAdmin() {
   const user = useSelector(state => state.user);
@@ -64,26 +63,7 @@ export default function PerfilAdmin() {
     };
   }, [popperRef]);
 
-  //Cerrar sesión
-
-  function deleteAllCookies() {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i];
-      var eqPos = cookie.indexOf('=');
-      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    }
-  }
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const closeSesion = () => {
-    deleteAllCookies();
-    dispatch(addUser({ nombre: '', foto: '', idAdmin: false }));
-    localStorage.clear();
-    window.location.href = `http://localhost:8080/logout`;
-  };
+  const closeSesion = useLogout();
 
   return (
     <div>

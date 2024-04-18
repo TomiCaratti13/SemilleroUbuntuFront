@@ -1,6 +1,7 @@
 import { Box, Typography, Container } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useAdminDashboard } from '../../utils/hooks/useAdminDashboard';
+import { Link } from 'react-router-dom';
 
 export const AdminDashboard = () => {
   const AdminInfo = useAdminDashboard();
@@ -233,9 +234,12 @@ export const AdminDashboard = () => {
           gap: '16px',
         }}>
         {AdminInfo.Publicaciones.map((publicacion, index) => (
-          <Box
+          <Link
+            to={'/Admin/publicaciones'}
             key={index}
-            sx={{
+            style={{
+              textDecoration: 'none',
+              color: 'inherit',
               display: 'flex',
               justifyContent: 'space-between',
               gap: '16px',
@@ -291,7 +295,7 @@ export const AdminDashboard = () => {
                 {publicacion.visualizaciones}
               </Typography>
             </Box>
-          </Box>
+          </Link>
         ))}
       </Box>
     </Container>

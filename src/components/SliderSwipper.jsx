@@ -47,14 +47,14 @@ export const SliderSwipper = ({ imgs }) => {
               className="swiper-button-next"
               style={{ color: 'white' }}
             />
-            {imgs.map((img, index) => {
+            {imgs?.map((imagen, index) => {
               return (
                 <SwiperSlide
                   className="liSliderCard"
                   key={index}>
                   <img
                     className="imgSliderCard"
-                    src={img}
+                    src={imagen.cloudinaryUrl}
                     style={{
                       objectFit: 'cover',
                       borderRadius: '16px',

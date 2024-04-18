@@ -52,5 +52,5 @@ export const MapAdminPublis = () => {
         />
       </Box>
     </>
-  )
-}
+  );
+};

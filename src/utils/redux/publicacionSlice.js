@@ -19,8 +19,11 @@ export const publicacionSlice = createSlice({
         });
       }
     },
+    clearPublicaciones: state => {
+      state.publicacionLista = [];
+    },
   },
 });
 
-export const { addPublicacion } = publicacionSlice.actions;
+export const { addPublicacion, clearPublicaciones } = publicacionSlice.actions;
 export default publicacionSlice.reducer;

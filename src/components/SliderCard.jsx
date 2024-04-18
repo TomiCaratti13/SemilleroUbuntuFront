@@ -38,6 +38,7 @@ export const SliderCard = ({ imgs }) => {
   const goToSlide = slideIndex => {
     setCurrentIndex(slideIndex);
   };
+
   return (
     <CardMedia
       className="slider-container"
@@ -66,8 +67,11 @@ export const SliderCard = ({ imgs }) => {
                 className="liSliderCard"
                 key={index}>
                 <img
+                  loading="lazy"
                   className="imgSliderCard"
-                  src={img}
+                  src={img.cloudinaryUrl}
+                  srcSet={`${img.cloudinaryUrlSmall} 300w, ${img.cloudinaryUrlLarge} 768w`}
+                  sizes="(max-width: 300px) 300px, 768px"
                   style={{ objectFit: 'cover' }}
                 />
               </li>

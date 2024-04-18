@@ -18,11 +18,13 @@ export const MapPublicaciones = ({
     <Container
       component="section"
       sx={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        placeItems: 'center',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
         gap: '16px',
         width: '100%',
+        padding: '0',
       }}>
       {publicacionesMutable
         //Convertimos Date a fechas para poder ordenarlas
