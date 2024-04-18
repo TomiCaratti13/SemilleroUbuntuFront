@@ -58,16 +58,21 @@ export default function CardPublicacion({
     let descriptionTrim = publicacion.description.trim();
 
     // Buscar un salto de línea después de las 60 letras
-    const index = descriptionTrim.indexOf('\n', 60);
+    let index = descriptionTrim.indexOf('\n', 60);
 
-    // Si se encuentra un salto de línea después de las 60 letras, se corta allí
+    // Si no se encuentra un salto de línea, buscar un punto después de las 60 letras
+    if (index === -1) {
+      index = descriptionTrim.indexOf('.', 60);
+    }
+
+    // Si se encuentra un salto de línea o un punto después de las 60 letras, se corta allí
     if (index !== -1) {
       setDescriptionSplit([
         descriptionTrim.substring(0, index),
         descriptionTrim.substring(index + 1),
       ]);
     }
-    // Si no se encuentra un salto de línea, se corta a las 100 letras
+    // Si no se encuentra un salto de línea ni un punto, se corta a las 100 letras
     else if (descriptionTrim.length > 100) {
       setDescriptionSplit([
         descriptionTrim.substring(0, 100),
@@ -280,6 +285,7 @@ export default function CardPublicacion({
               fontWeight: 400,
               lineHeight: '20px',
               color: 'negro',
+              mb: '0',
             }}>
             {expanded || !descriptionSplit[1]
               ? descriptionSplit[0]
