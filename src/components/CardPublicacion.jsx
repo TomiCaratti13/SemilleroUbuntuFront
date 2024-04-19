@@ -270,13 +270,12 @@ export default function CardPublicacion({
           )}
         </Box>
         <SliderSwipper imgs={publicacion.imagenes} />
-        <CardContent style={{ paddingBottom: 0 }}>
-          <Typography
-            variant="body2"
-            color="negro"
-            sx={{ fontSize: '14px', fontFamily: 'Lato', fontWeight: 600 }}>
-            {publicacion.date}
-          </Typography>
+        <CardContent
+          sx={{
+            transition: 'max-height 1.5s ease-in-out',
+            maxHeight: expanded ? '1500px' : '95px', // Ajusta estos valores según tus necesidades
+            overflow: 'hidden',
+          }}>
           <Typography
             paragraph
             sx={{
@@ -286,30 +285,15 @@ export default function CardPublicacion({
               lineHeight: '20px',
               color: 'negro',
               mb: '0',
+              display: '-webkit-box',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              '-webkit-line-clamp': expanded ? 'none' : '3', // Cambia '3' al número de líneas que quieres mostrar
+              '-webkit-box-orient': 'vertical',
             }}>
-            {expanded || !descriptionSplit[1]
-              ? descriptionSplit[0]
-              : descriptionSplit[0] + ' ...'}
+            {publicacion.description}
           </Typography>
         </CardContent>
-        <Collapse
-          in={expanded}
-          timeout="auto"
-          unmountOnExit>
-          <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <Typography
-              paragraph
-              sx={{
-                fontSize: '16px',
-                fontFamily: 'Lato',
-                fontWeight: 400,
-                lineHeight: '20px',
-                color: 'negro',
-              }}>
-              {descriptionSplit[1]}
-            </Typography>
-          </CardContent>
-        </Collapse>
         {descriptionSplit.length > 1 && (
           <CardActions
             disableSpacing
