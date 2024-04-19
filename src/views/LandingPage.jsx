@@ -92,11 +92,11 @@ export const LandingPage = () => {
             fontWeight: 600,
             mb: '12px',
           }}>
-          Categorias
+          Categorías
         </Typography>
         <MapCategorias categorias={Categorias} />
         <ButtonBlue
-          text="Ver más Categorias"
+          text="Ver más Categorías"
           link="/microemprendimientos/categorias"
         />
       </Box>

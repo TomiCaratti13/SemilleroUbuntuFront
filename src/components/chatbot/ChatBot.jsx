@@ -69,7 +69,7 @@ export default function ChatBot() {
           bottom: '0',
           right: '0',
           zIndex: 1000,
-          minWidth: open ? '360px' : 'fit-content',
+          minWidth: open ? '100%' : 'fit-content',
         }}>
         <Backdrop open={open} />
         <SpeedDial
@@ -159,7 +159,7 @@ export default function ChatBot() {
                   <Typography
                     sx={{
                       textAlign: 'center',
-                      textWrap: 'nowrap',
+                      textWrap: 'wrap',
                     }}
                     variant="body1">
                     {preguntas.pregunta}
