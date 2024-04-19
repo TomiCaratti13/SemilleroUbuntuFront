@@ -55,7 +55,7 @@ export const DetalleContacto = ({
           gestionado: true,
         };
 
-        putFormulario(formEnviar, contacto.id,token)
+        putFormulario(formEnviar, contacto.id, token)
           .then(response => {
             //MANEJO DE ALERTAS
             if (response && response.status === 200) {
@@ -219,7 +219,7 @@ export const DetalleContacto = ({
           value={formik.values.nombre}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          disabled={contacto.gestionado? true : formik.isSubmitting}
+          disabled={contacto.gestionado ? true : formik.isSubmitting}
           error={formik.touched.nombre && Boolean(formik.errors.nombre)}
           helperText={formik.touched.nombre && formik.errors.nombre}
           sx={{
@@ -276,7 +276,7 @@ export const DetalleContacto = ({
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          disabled={contacto.gestionado? true :formik.isSubmitting}
+          disabled={contacto.gestionado ? true : formik.isSubmitting}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
           sx={{
@@ -331,7 +331,7 @@ export const DetalleContacto = ({
           value={formik.values.telefono}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          disabled={contacto.gestionado? true :formik.isSubmitting}
+          disabled={contacto.gestionado ? true : formik.isSubmitting}
           error={formik.touched.telefono && Boolean(formik.errors.telefono)}
           helperText={
             formik.touched.telefono && formik.errors.telefono
@@ -401,7 +401,7 @@ export const DetalleContacto = ({
               }
             }}
             onBlur={formik.handleBlur}
-            disabled={contacto.gestionado? true :formik.isSubmitting}
+            disabled={contacto.gestionado ? true : formik.isSubmitting}
             error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
             helperText={formik.touched.mensaje && formik.errors.mensaje}
             sx={{
