@@ -6,10 +6,9 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { DetalleInversion } from './components/DetalleInversion';
 import { MapMicroInv } from './components/MapMicroInv';
-import { getMicroemprendimientos, getRiesgos } from '../../utils/services/axiosConfig';
+import { getInversiones, getMicroemprendimientos, getRiesgos } from '../../utils/services/axiosConfig';
 import { MapInversiones } from './components/MapInversiones';
-import Inversion from '../../utils/mocks/Inversion.json'
-import Riesgo from '../../utils/mocks/Riesgo.json'
+// import Inversion from '../../utils/mocks/Inversion.json'
 import { MapRiesgo } from './components/MapRiesgo';
 import { CalculoInversion } from './components/CalculoInversion';
 
@@ -19,19 +18,29 @@ export const InversorDashboard = () => {
   const [inversion, setInversion] = useState([]);
   const [riesgo, setRiesgo] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-  const inversiones = Inversion;
-
+  
   useEffect(() => {
+
     getMicroemprendimientos().then(response => {
-      const microemprendimientosFiltrados = response.filter(micro => !inversiones.some(inv => inv.microId === micro.id));
-      setMicroemp(microemprendimientosFiltrados);
+      // const microemprendimientosFiltrados = response.filter(micro => !inversiones.some(inv => inv.microId === micro.id));
+      // setMicroemp(microemprendimientosFiltrados);
+      const microemprendimientos = response;
+      setMicroemp(microemprendimientos);
     });
-    setInversion(inversiones);
+    
     getRiesgos().then(response => {
       const riesgos = response;
       setRiesgo(riesgos);
     });
-  }, [value, selectedCard, inversion]);
+
+    getInversiones(1).then(response => {
+      console.log(response);
+      const inversiones = response;
+      setInversion(inversiones);
+    })
+
+  // }, [value, selectedCard, inversion]);
+  }, [value, selectedCard]);
 
   const handleChange = (e, newValue) => {
     setSelectedCard(null);

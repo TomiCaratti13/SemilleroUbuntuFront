@@ -36,14 +36,6 @@ export const LandingPage = () => {
   //   // window.location.href = `http://localhost:8080/logout`;
   // }, []);
 
-  //Manejar alertas
-  const { enqueueSnackbar } = useSnackbar();
-  const handleAlert = () => {
-    enqueueSnackbar('Probando alertasssss', {
-      variant: 'warning',
-    });
-  };
-
   const publicaciones = usePublicaciones();
   const Categorias = useCategorias();
 

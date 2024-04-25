@@ -1,30 +1,35 @@
 import * as yup from 'yup';
 
 const formInversion = yup.object().shape({
-  nombre: yup
+  // monto: yup
+  //   .number()
+    // .min(200, 'Debe ser mayor a $200')
+    // .max(100000, 'Debe ser menor a $100000')
+    // .required('Debes ingresar el monto a invertir'),
+  // riesgo: yup
+  //   .number()
+  //   .positive('Debes seleccionar un nivel de riesgo'),
+  costo: yup
+    .number()
+    .required('Debes generar una Inversión'),
+  total: yup
+    .number()
+    .required('Debes generar una Inversión'),
+  tasa: yup
+    .number()
+    .required('Generar Inversión'),
+  retorno: yup
+    .number()
+    .required('Debes generar una Inversión'),
+  ganancias: yup
+    .number()
+    .required('Debes generar una Inversión'),
+  cuotas: yup
+    .number()
+    .required('Generar Inversión'),
+  mensaje: yup
     .string()
-    .min(5, 'El título debe tener al menos 5 caracteres')
-    .required('Este campo es obligatorio'),
-  categoria: yup.number().required('Este campo es obligatorio'),
-  subcategoria: yup
-    .string()
-    .min(5, 'El título debe tener al menos 5 caracteres'),
-  pais: yup.number().required('Este campo es obligatorio'),
-  provincia: yup.number().required('Este campo es obligatorio'),
-  ciudad: yup
-    .string()
-    .min(3, 'La ciudad debe tener al menos 3 caracteres')
-    .required('Este campo es obligatorio'),
-  descripcion: yup
-    .string()
-    .min(5, 'La descripción debe tener al menos 5 caracteres')
-    .max(300, 'La descripción debe tener como máximo 300 caracteres')
-    .required('Debes escribir una descripción'),
-  masInfo: yup
-    .string()
-    .min(5, 'La descripción debe tener al menos 5 caracteres')
-    .max(300, 'La descripción debe tener como máximo 300 caracteres')
-    .required('Debes escribir mas información sobre tu microemprendimiento'),
+    .required('Debes generar una Inversión'),
 });
 
 export default formInversion;

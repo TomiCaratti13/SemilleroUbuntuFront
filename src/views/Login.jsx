@@ -5,9 +5,10 @@ import avatarGoogle from '/avatarGoogle.png';
 import LoginButton from '../components/LoginButton';
 import { GOOGLE_AUTH } from '../utils/services/constants';
 import { HEADER_HEIGHT } from '../utils/services/constants';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUser } from '../utils/redux/userSlice';
+import { capitalizeTrim } from '../utils/services/capitalize';
+// import { addUser } from '../utils/redux/userSlice';
 
 export default function Login() {
   const user = useSelector(state => state.user);
@@ -20,13 +21,16 @@ export default function Login() {
     }
   };
 
+
+  const { texto } = useParams();
   //Redireccion sin pasar por back
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const redirectGoogle = () => {
-    dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
-    navigate(`/Admin`);
-  };
+
+  // const redirectGoogle = () => {
+  //   dispatch(addUser({ nombre: 'Lautaro Gonzalez', foto: '', idAdmin: true }));
+  //   navigate(`/Admin`);
+  // };
 
   return (
     <Box
@@ -79,7 +83,7 @@ export default function Login() {
             }}>
             Ingreso
             <br />
-            Administrador
+            {capitalizeTrim(texto)}
           </Typography>
           <img
             src={logoLogin}

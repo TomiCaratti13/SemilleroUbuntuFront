@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   AppBar,
@@ -18,7 +18,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AdminHeader from './Admin/AdminHeader';
 import { useSelector } from 'react-redux';
 import { HEADER_HEIGHT } from '../utils/services/constants';
-import PerfilAdmin from '../components/PerfilAdmin';
 
 const drawerWidth = 256;
 const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones', 'Inversiones'];
@@ -67,48 +66,35 @@ function Header(props) {
               gap: '16px',
             }}>
             {navItems.map((item, index) => (
-              <React.Fragment key={item}>
-                <Link
-
-                  to={
-                    item === 'Inicio'
-                      ? '/'
-                      : item === 'Microemprendimientos'
-                        ? '/microemprendimientos/categorias'
-                        : `/${item.toLowerCase()}`
-                  }
-                  style={{ textDecoration: 'none' }}>
-                  <ListItemText
-                    sx={{
-                      color: 'blanco.main',
-                      fontFamily: 'Lato',
-                      fontWeight: 700,
-                      fontSize: '18px',
-                      lineHeight: '20px',
-                      width: '100%',
-                      flexGrow: 0,
-                      padding: '0 16px',
-                    }}
-                    primaryTypographyProps={{ variant: 'none' }}
-                    primary={item}
-                  />
-                </Link>
-                {index === navItems.length - 2 &&
-                  <Divider
-                    sx={{
-                      mx: '12px',
-                      mt: '12px',
-                      mb: '-8px',
-                      backgroundColor: 'blanco.main'
-                    }}
-                  />
+              <Link
+                key={item}
+                to={
+                  item === 'Inicio'
+                    ? '/'
+                    : item === 'Microemprendimientos'
+                      ? '/microemprendimientos/categorias'
+                      : `/${item.toLowerCase()}`
                 }
-              </React.Fragment>
+                style={{ textDecoration: 'none' }}>
+                <ListItemText
+                  sx={{
+                    color: 'blanco.main',
+                    fontFamily: 'Lato',
+                    fontWeight: 700,
+                    fontSize: '18px',
+                    lineHeight: '20px',
+                    width: '100%',
+                    flexGrow: 0,
+                    padding: '0 16px',
+                  }}
+                  primaryTypographyProps={{ variant: 'none' }}
+                  primary={item}
+                />
+              </Link>
             ))}
           </Box>
-
           <Link
-            to={user.isAdmin ? '/Admin' : (user.isIversor ? '/Inversor' : '/login')}
+            to={user.isAdmin ? '/Admin' : (user.isInversor ? '/Inversor' : '/login/administrador')}
             style={{
               width: '100%',
               textDecoration: 'none',
@@ -123,7 +109,7 @@ function Header(props) {
                 padding: '0px 16px',
               }}
               primaryTypographyProps={{ variant: 'none' }}
-              primary="Ingresar"
+              primary="Administrador"
             />
           </Link>
         </ListItem>
@@ -259,7 +245,7 @@ function Header(props) {
                     fontSize: '14px',
                     alignItems: 'flex-start',
                   }}>
-                  Ingresar
+                  Administrador
                 </Button>
               </Link>
             </Box>

@@ -30,8 +30,8 @@ function CardCategoria({ title, identifier, img }) {
       <Button
         sx={{
           width: '100%',
-          padding: '20px',
-          height: '64px',
+          padding: '10px 20px',
+          minHeight: '72px',
           my: '16px',
           borderRadius: '16px',
           backgroundColor: 'gris.claro',

@@ -45,7 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 element={<LandingPage />}
               />
               <Route
-                path="login"
+                path="login/:texto"
                 element={<Login />}
               />
               <Route
@@ -72,10 +72,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="Admin/:token"
                 element={<RutaAdmin />}
               />
-              <Route
-                path="Inversor"
-                element={<InversorDashboard />}
-              />
               <Route element={<ProtectedRoute redirectTo='/' />}>
                 <Route
                   path="Admin"
@@ -93,20 +89,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   path="Admin/publicaciones"
                   element={<AdminPublicaciones />}
                 />
-                {/* <Route
+                <Route
                   path="Inversor"
                   element={<InversorDashboard />}
-                /> */}
+                />
               </Route>
             </Route>
             <Route
               path="*"
-              element={
-                <Navigate
-                  replace
-                  to="/"
-                />
-              }
+              element={<Navigate replace to="/" />}
             />
           </Routes>
         </BrowserRouter>

@@ -175,6 +175,7 @@ export const buscarMicroemprendimientos = async nombre => {
 // Función para enviar un formulario VISITANTE
 export const enviarFormulario = async (formulario, id) => {
   try {
+    console.log(formulario);
     return URL_SERVIDOR.post(`/contacto/${id}`, formulario, {
       withCredentials: true,
     })
@@ -795,7 +796,7 @@ export const getCalculo = async (id, monto) => {
         withCredentials: true,
       })
       .then(response => {
-        console.log('Respuesta del servidor', response.data);
+        // console.log('Respuesta del servidor', response.data);
         return response.data;
       })
       .catch(error => {
@@ -817,9 +818,9 @@ export const getCalculo = async (id, monto) => {
 };
 
 // Función para crear inversion
-export const postInversion = async (formulario) => {
+export const postInversion = async (formulario, idUser, idMicro, idRiesgo) => {
   try {
-    return URL_SERVIDOR.post(`/inversion`, formulario,
+    return URL_SERVIDOR.post(`/mi_inversion/crearInversion?id_user=${idUser}&id_micro=${idMicro}&id_riesgo=${idRiesgo}`, formulario,
       {
         withCredentials: true,
       })
@@ -842,5 +843,34 @@ export const postInversion = async (formulario) => {
       });
   } catch (error) {
     console.error('Error al crear inversion:', error);
+  }
+};
+
+//Funcion para traer el DTO riesgos (id)
+export const getInversiones = async (id) => {
+  try {
+    return URL_SERVIDOR.get(`/mi_inversion/misinversiones?id=${id}`,
+      {
+        withCredentials: true,
+      })
+      .then(response => {
+        // console.log('Respuesta del servidor', response.data);
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          // El servidor respondió con un estado de error
+          console.log('Error en respuesta', error.response);
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió ninguna respuesta
+          console.log('Error en llamado', error.request);
+        } else {
+          // Algo sucedió en la configuración de la solicitud que provocó un error
+          console.log('Error', error.message);
+        }
+        console.log('Error configuracion', error.config);
+      });
+  } catch (error) {
+    console.error('Error al llamar riesgos:', error);
   }
 };

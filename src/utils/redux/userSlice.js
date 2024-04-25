@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  id: '',
   nombre: '',
   foto: '',
   isAdmin: false,
+  isInversor: false,
 };
 
 export const userSlice = createSlice({
@@ -11,10 +13,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-      const { nombre, foto, isAdmin } = action.payload;
+      const { id, nombre, foto, isAdmin, isInversor } = action.payload;
+      state.id = id;
       state.nombre = nombre;
       state.foto = foto;
       state.isAdmin = isAdmin;
+      state.isInversor = isInversor;
     }
   }
 });

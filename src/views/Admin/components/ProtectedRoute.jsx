@@ -15,14 +15,15 @@ export const ProtectedRoute = ({ children, redirectTo = '/' }) => {
   const user = useSelector(state => state.user);
 
   useEffect(() => {
-    if (!user.isAdmin) {
+    if (!user.isAdmin && !user.isInversor) {
       handleAlert('No tienes permisos para acceder a esta página', 'warning');
     }
   }, [user, handleAlert]);
 
-  if (!user.isAdmin) {
+  if (!user.isAdmin && !user.isInversor) {
     return <Navigate to={redirectTo} />;
   }
 
   return children ? children : <Outlet />;
 };
+

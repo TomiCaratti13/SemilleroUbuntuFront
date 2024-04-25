@@ -490,185 +490,185 @@
 //             },
 //           }}
 //         />
-//         <TextField
-//           fullWidth
-//           id='cuotasFaltantes'
-//           name='cuotasFaltantes'
-//           label='Tasa de Retorno'
-//           variant='outlined'
-//           value={formik.values.cuotasFaltantes}
-//           onChange={formik.handleChange}
-//           onBlur={formik.handleBlur}
-//           disabled={formik.isSubmitting}
-//           error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-//           helperText={
-//             formik.touched.telefono && formik.errors.telefono
-//               ? formik.errors.telefono
-//               : null
-//           }
-//           sx={{
-//             '& .MuiOutlinedInput-input': {
-//               fontWeight: '400',
-//             },
-//             '& .MuiOutlinedInput-notchedOutline': {
-//               borderColor: '#090909',
-//             },
+        // <TextField
+        //   fullWidth
+        //   id='cuotasFaltantes'
+        //   name='cuotasFaltantes'
+        //   label='Tasa de Retorno'
+        //   variant='outlined'
+        //   value={formik.values.cuotasFaltantes}
+        //   onChange={formik.handleChange}
+        //   onBlur={formik.handleBlur}
+        //   disabled={formik.isSubmitting}
+        //   error={formik.touched.telefono && Boolean(formik.errors.telefono)}
+        //   helperText={
+        //     formik.touched.telefono && formik.errors.telefono
+        //       ? formik.errors.telefono
+        //       : null
+        //   }
+        //   sx={{
+        //     '& .MuiOutlinedInput-input': {
+        //       fontWeight: '400',
+        //     },
+        //     '& .MuiOutlinedInput-notchedOutline': {
+        //       borderColor: '#090909',
+        //     },
 
-//             '& .MuiFormLabel-root': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : '#090909 !important',
-//               fontWeight: '400',
-//             },
+        //     '& .MuiFormLabel-root': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : '#090909 !important',
+        //       fontWeight: '400',
+        //     },
 
-//             '& .MuiInputLabel-root.Mui-focused': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : `${theme.palette.primary.main} !important`,
-//             },
+        //     '& .MuiInputLabel-root.Mui-focused': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : `${theme.palette.primary.main} !important`,
+        //     },
 
-//             '& .MuiFormHelperText-root': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : '#090909 !important',
-//               fontWeight: '400',
-//             },
+        //     '& .MuiFormHelperText-root': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : '#090909 !important',
+        //       fontWeight: '400',
+        //     },
 
-//             '& .Mui-disabled': {
-//               color: theme => `${theme.palette.primary.main} !important`,
-//             },
-//           }}
-//           InputProps={{
-//             sx: {
-//               '& .Mui-disabled': {
-//                 WebkitTextFillColor: '#090909 !important',
-//               },
-//             },
-//           }}
-//         />
-//         <TextField
-//           // #region RETORNO
-//           fullWidth
-//           id='retorno'
-//           name='retorno'
-//           label='Retorno Esperado'
-//           variant='outlined'
-//           value={formik.values.retorno}
-//           onChange={formik.handleChange}
-//           onBlur={formik.handleBlur}
-//           disabled={formik.isSubmitting}
-//           error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-//           helperText={
-//             formik.touched.telefono && formik.errors.telefono
-//               ? formik.errors.telefono
-//               : null
-//           }
-//           sx={{
-//             '& .MuiOutlinedInput-input': {
-//               fontWeight: '400',
-//             },
-//             '& .MuiOutlinedInput-notchedOutline': {
-//               borderColor: '#090909',
-//             },
+        //     '& .Mui-disabled': {
+        //       color: theme => `${theme.palette.primary.main} !important`,
+        //     },
+        //   }}
+        //   InputProps={{
+        //     sx: {
+        //       '& .Mui-disabled': {
+        //         WebkitTextFillColor: '#090909 !important',
+        //       },
+        //     },
+        //   }}
+        // />
+        // <TextField
+        //   // #region RETORNO
+        //   fullWidth
+        //   id='retorno'
+        //   name='retorno'
+        //   label='Retorno Esperado'
+        //   variant='outlined'
+        //   value={formik.values.retorno}
+        //   onChange={formik.handleChange}
+        //   onBlur={formik.handleBlur}
+        //   disabled={formik.isSubmitting}
+        //   error={formik.touched.telefono && Boolean(formik.errors.telefono)}
+        //   helperText={
+        //     formik.touched.telefono && formik.errors.telefono
+        //       ? formik.errors.telefono
+        //       : null
+        //   }
+        //   sx={{
+        //     '& .MuiOutlinedInput-input': {
+        //       fontWeight: '400',
+        //     },
+        //     '& .MuiOutlinedInput-notchedOutline': {
+        //       borderColor: '#090909',
+        //     },
 
-//             '& .MuiFormLabel-root': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : '#090909 !important',
-//               fontWeight: '400',
-//             },
+        //     '& .MuiFormLabel-root': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : '#090909 !important',
+        //       fontWeight: '400',
+        //     },
 
-//             '& .MuiInputLabel-root.Mui-focused': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : `${theme.palette.primary.main} !important`,
-//             },
+        //     '& .MuiInputLabel-root.Mui-focused': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : `${theme.palette.primary.main} !important`,
+        //     },
 
-//             '& .MuiFormHelperText-root': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : '#090909 !important',
-//               fontWeight: '400',
-//             },
+        //     '& .MuiFormHelperText-root': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : '#090909 !important',
+        //       fontWeight: '400',
+        //     },
 
-//             '& .Mui-disabled': {
-//               color: theme => `${theme.palette.primary.main} !important`,
-//             },
-//           }}
-//           InputProps={{
-//             sx: {
-//               '& .Mui-disabled': {
-//                 WebkitTextFillColor: '#090909 !important',
-//               },
-//             },
-//           }}
-//         />
-//         <TextField
-//           // #region GANANCIAS
-//           fullWidth
-//           id='ganancias'
-//           name='ganancias'
-//           label='Ganancias Totales'
-//           variant='outlined'
-//           value={formik.values.ganancias}
-//           onChange={formik.handleChange}
-//           onBlur={formik.handleBlur}
-//           disabled={formik.isSubmitting}
-//           error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-//           helperText={
-//             formik.touched.telefono && formik.errors.telefono
-//               ? formik.errors.telefono
-//               : null
-//           }
-//           sx={{
-//             '& .MuiOutlinedInput-input': {
-//               fontWeight: '400',
-//             },
-//             '& .MuiOutlinedInput-notchedOutline': {
-//               borderColor: '#090909',
-//             },
+        //     '& .Mui-disabled': {
+        //       color: theme => `${theme.palette.primary.main} !important`,
+        //     },
+        //   }}
+        //   InputProps={{
+        //     sx: {
+        //       '& .Mui-disabled': {
+        //         WebkitTextFillColor: '#090909 !important',
+        //       },
+        //     },
+        //   }}
+        // />
+        // <TextField
+        //   // #region GANANCIAS
+        //   fullWidth
+        //   id='ganancias'
+        //   name='ganancias'
+        //   label='Ganancias Totales'
+        //   variant='outlined'
+        //   value={formik.values.ganancias}
+        //   onChange={formik.handleChange}
+        //   onBlur={formik.handleBlur}
+        //   disabled={formik.isSubmitting}
+        //   error={formik.touched.telefono && Boolean(formik.errors.telefono)}
+        //   helperText={
+        //     formik.touched.telefono && formik.errors.telefono
+        //       ? formik.errors.telefono
+        //       : null
+        //   }
+        //   sx={{
+        //     '& .MuiOutlinedInput-input': {
+        //       fontWeight: '400',
+        //     },
+        //     '& .MuiOutlinedInput-notchedOutline': {
+        //       borderColor: '#090909',
+        //     },
 
-//             '& .MuiFormLabel-root': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : '#090909 !important',
-//               fontWeight: '400',
-//             },
+        //     '& .MuiFormLabel-root': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : '#090909 !important',
+        //       fontWeight: '400',
+        //     },
 
-//             '& .MuiInputLabel-root.Mui-focused': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : `${theme.palette.primary.main} !important`,
-//             },
+        //     '& .MuiInputLabel-root.Mui-focused': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : `${theme.palette.primary.main} !important`,
+        //     },
 
-//             '& .MuiFormHelperText-root': {
-//               color: theme =>
-//                 formik.touched.telefono && formik.errors.telefono
-//                   ? theme.palette.gestion.error
-//                   : '#090909 !important',
-//               fontWeight: '400',
-//             },
+        //     '& .MuiFormHelperText-root': {
+        //       color: theme =>
+        //         formik.touched.telefono && formik.errors.telefono
+        //           ? theme.palette.gestion.error
+        //           : '#090909 !important',
+        //       fontWeight: '400',
+        //     },
 
-//             '& .Mui-disabled': {
-//               color: theme => `${theme.palette.primary.main} !important`,
-//             },
-//           }}
-//           InputProps={{
-//             sx: {
-//               '& .Mui-disabled': {
-//                 WebkitTextFillColor: '#090909 !important',
-//               },
-//             },
-//           }}
-//         />
+        //     '& .Mui-disabled': {
+        //       color: theme => `${theme.palette.primary.main} !important`,
+        //     },
+        //   }}
+        //   InputProps={{
+        //     sx: {
+        //       '& .Mui-disabled': {
+        //         WebkitTextFillColor: '#090909 !important',
+        //       },
+        //     },
+        //   }}
+        // />
 //         <Box>
 //           <TextField
 //             // #region DESCRIPCION

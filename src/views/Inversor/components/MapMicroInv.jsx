@@ -3,7 +3,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
 
-
 export const MapMicroInv = ({ microemprendimiento, onClick }) => {
   const microMap = {
     nombre: microemprendimiento.nombre,

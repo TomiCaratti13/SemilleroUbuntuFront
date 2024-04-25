@@ -14,9 +14,10 @@ import {
 import { AlertModal } from '../../../components/AlertModal';
 import { useAlertModal } from '../../../utils/hooks/useAlertModal';
 import { useFormik } from 'formik';
-import { getCalculo, putFormulario } from '../../../utils/services/axiosConfig';
+import { getCalculo, postInversion } from '../../../utils/services/axiosConfig';
 import { useEffect, useState } from 'react';
 import formInversion from '../../../utils/schemas/schemaFormInversion';
+import { useSelector } from 'react-redux';
 
 const ButtonInversion = ({ onClick, text }) => {
   return (
@@ -47,13 +48,16 @@ const ButtonInversion = ({ onClick, text }) => {
 // #region COMPONENTE
 export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) => {
 
+  const user = useSelector(state => state.user);
+  const idUser = user.isAdmin ? user.id : 1;
+
   const cardMap = {
-    idCard: card?.id,
+    idMicro: card?.id,
     nombre: card?.nombre,
   };
 
   const [calculo, setCalculo] = useState();
-  const [idCalculo, setIdCalculo] = useState();
+  const [idRiesgo, setIdRiesgo] = useState();
   const [montoCalculo, setMontoCalculo] = useState();
 
   const handleChangeMonto = (event) => {
@@ -63,40 +67,39 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
   };
   const handleChangeRiesgo = (event) => {
     const { value } = event.target;
-    setIdCalculo(value);
+    setIdRiesgo(value);
   };
 
   const calcular = () => {
-    getCalculo(idCalculo, montoCalculo).then(response => {
+    getCalculo(idRiesgo, montoCalculo).then(response => {
       const calculo = response;
+      console.log(calculo);
       setCalculo(calculo);
     });
   }
 
   useEffect(() => {
     if (
-      idCalculo !== '0' && idCalculo !== undefined
-      && montoCalculo > 200 && montoCalculo < 100000
+      idRiesgo !== '0' && idRiesgo !== undefined
+      && montoCalculo > 200 && montoCalculo < 1000000
     ) {
       calcular();
     } else if (
-      idCalculo === 0
+      idRiesgo === 0
     ) {
       setCalculo(null)
     }
-  }, [idCalculo, montoCalculo]);
+  }, [idRiesgo, montoCalculo]);
 
   useEffect(() => {
     formik.setValues({
       ...formik.values,
-      costosGestion: calculo?.costo || '',
-      totalAportar: calculo?.total || '',
-      cuotas: calculo?.cuotas || '',
+      costo: calculo?.costo || '',
+      total: calculo?.total || '',
       tasa: calculo?.tasa || '',
       retorno: calculo?.retorno || '',
       ganancias: calculo?.ganancias || '',
-      min_inv: calculo?.min_inv || '',
-      max_inv: calculo?.max_inv || '',
+      cuotas: calculo?.cuotas || '',
       mensaje: calculo
         ? `Si decides optar por esta inversión, podrás empezar a cobrar a partir del próximo mes, durante ${calculo.cuotas} meses el monto de $${(calculo.ganancias / calculo.cuotas).toFixed(2)}`
         : '',
@@ -106,14 +109,13 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
   const formik = useFormik({
     initialValues: {
       monto: '$ ',
-      costosGestion: '',
-      totalAportar: '',
+      // riesgo: 0,
+      costo: '',
+      total: '',
       cuotas: '',
       tasa: '',
       retorno: '',
       ganancias: '',
-      min_inv: '',
-      max_inv: '',
       mensaje: '',
     },
     validationSchema: formInversion,
@@ -121,20 +123,17 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
       try {
         formik.setSubmitting(true);
         const formEnviar = {
-          monto: formData.monto,
-          costosGestion: formData.costosGestion,
-          totalAportar: formData.totalAportar,
-          cuotas: formData.cuotas,
+          costo: formData.costo,
+          total: formData.total,
           tasa: formData.tasa,
           retorno: formData.retorno,
           ganancias: formData.ganancias,
-          min_inv: formData.min_inv,
-          max_inv: formData.max_inv,
+          cuotas: formData.cuotas,
         };
-        putFormulario(formEnviar, card.id)
+        postInversion(formEnviar, idUser, cardMap.idMicro, idRiesgo)
           .then(response => {
             // console.log('RESPUESTA COMPONENETE', response);
-            if (response && response.status === 200) {
+            if (response && response.status === 200 || response.status === 201) {
               openAlert(
                 true,
                 'Inversión creada con éxito');
@@ -156,6 +155,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           });
         formik.setSubmitting(false);
       } catch (error) {
+        console.log('ingresooooooo');
         formik.setSubmitting(false);
         console.log(error);
       }
@@ -209,11 +209,11 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
             <CircleIcon
               fontSize='s'
               sx={{
-                color: idCalculo === 3 ?
+                color: idRiesgo === 3 ?
                   'nivel.alto'
-                  : (idCalculo === 2 ?
+                  : (idRiesgo === 2 ?
                     'nivel.medio'
-                    : (idCalculo === 1 ?
+                    : (idRiesgo === 1 ?
                       'nivel.bajo'
                       : 'gris.medio')),
               }}
@@ -255,11 +255,56 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           }}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
+          // error={formik.touched.monto && Boolean(formik.errors.monto)}
+          // helperText={formik.touched.monto && formik.errors.monto}
+          // sx={{
+          //   '& .MuiOutlinedInput-input': {
+          //     fontWeight: '400',
+          //   },
+          //   '& .MuiOutlinedInput-notchedOutline': {
+          //     borderColor: '#090909',
+          //   },
+
+          //   '& .MuiFormLabel-root': {
+          //     color: theme =>
+          //       formik.touched.monto
+          //         ? theme.palette.gestion.error
+          //         : '#090909 !important',
+          //     fontWeight: '400',
+          //   },
+
+          //   '& .MuiInputLabel-root.Mui-focused': {
+          //     color: theme =>
+          //       formik.touched.monto && formik.errors.monto
+          //         ? theme.palette.gestion.error
+          //         : `${theme.palette.primary.main} !important`,
+          //   },
+
+          //   '& .MuiFormHelperText-root': {
+          //     color: theme =>
+          //       formik.touched.monto && formik.errors.monto
+          //         ? theme.palette.gestion.error
+          //         : '#090909 !important',
+          //     fontWeight: '400',
+          //   },
+
+          //   '& .Mui-disabled': {
+          //     color: theme => `${theme.palette.primary.main} !important`,
+          //   },
+          // }}
+          // InputProps={{
+          //   sx: {
+          //     '& .Mui-disabled': {
+          //       WebkitTextFillColor: '#090909 !important',
+          //     },
+          //   },
+          // }}
         />
         <FormControl>
           <InputLabel id='select-label' sx={{ fontWeight: '400' }}>Riesgo Inversión</InputLabel>
           <Select
             // #region RIESGO
+            id='riesgo'
             label='Riesgo Inversión'
             labelId='select-label'
             displayEmpty
@@ -309,42 +354,187 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
         <TextField
           // #region COSTOS
           fullWidth
-          id='costosGestion'
-          name='costosGestion'
+          id='costo'
+          name='costo'
           label='Costos de Gestión'
           variant='outlined'
-          value={formik.values.costosGestion}
+          value={formik.values.costo}
+          onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
+          error={formik.touched.costo && Boolean(formik.errors.costo)}
+          helperText={
+            formik.touched.costo && formik.errors.costo
+              ? formik.errors.costo
+              : null
+          }
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#090909',
+            },
+
+            '& .MuiFormLabel-root': {
+              color: theme =>
+                formik.touched.costo && formik.errors.costo
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: theme =>
+                formik.touched.costo && formik.errors.costo
+                  ? theme.palette.gestion.error
+                  : `${theme.palette.primary.main} !important`,
+            },
+
+            '& .MuiFormHelperText-root': {
+              color: theme =>
+                formik.touched.costo && formik.errors.costo
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+            },
+          }}
+          InputProps={{
+            sx: {
+              '& .Mui-disabled': {
+                WebkitTextFillColor: '#090909 !important',
+              },
+            },
+          }}
         />
         <TextField
           // #region APORTAR
           fullWidth
-          id='totalAportar'
-          name='totalAportar'
+          id='total'
+          name='total'
           label='Total a Aportar'
           variant='outlined'
-          value={formik.values.totalAportar}
+          value={formik.values.total}
+          onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
+          error={formik.touched.total && Boolean(formik.errors.total)}
+          helperText={
+            formik.touched.total && formik.errors.total
+              ? formik.errors.total
+              : null
+          }
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#090909',
+            },
+
+            '& .MuiFormLabel-root': {
+              color: theme =>
+                formik.touched.total && formik.errors.total
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: theme =>
+                formik.touched.total && formik.errors.total
+                  ? theme.palette.gestion.error
+                  : `${theme.palette.primary.main} !important`,
+            },
+
+            '& .MuiFormHelperText-root': {
+              color: theme =>
+                formik.touched.total && formik.errors.total
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+            },
+          }}
+          InputProps={{
+            sx: {
+              '& .Mui-disabled': {
+                WebkitTextFillColor: '#090909 !important',
+              },
+            },
+          }}
         />
         <Box
-          // #region CUOTAS
           sx={{
             width: '100%',
             display: 'flex',
             gap: '12px',
             alignItems: 'center',
             justifyContent: 'space-evenly',
-          }}
-        >
+          }}>
           <TextField
             // #region TASA 
             fullWidth
             id='tasa'
             name='tasa'
-            label='Tasa de Retorno'
+            label='Tasa Retorno'
             variant='outlined'
             value={formik.values.tasa}
+            onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}
+            error={formik.touched.tasa && Boolean(formik.errors.tasa)}
+            helperText={
+              formik.touched.tasa && formik.errors.tasa
+                ? formik.errors.cuotas
+                : null
+            }
+            sx={{
+              '& .MuiOutlinedInput-input': {
+                fontWeight: '400',
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#090909',
+              },
+
+              '& .MuiFormLabel-root': {
+                color: theme =>
+                  formik.touched.tasa && formik.errors.tasa
+                    ? theme.palette.gestion.error
+                    : '#090909 !important',
+                fontWeight: '400',
+              },
+
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: theme =>
+                  formik.touched.tasa && formik.errors.tasa
+                    ? theme.palette.gestion.error
+                    : `${theme.palette.primary.main} !important`,
+              },
+
+              '& .MuiFormHelperText-root': {
+                color: theme =>
+                  formik.touched.tasa && formik.errors.tasa
+                    ? theme.palette.gestion.error
+                    : '#090909 !important',
+                fontWeight: '400',
+              },
+
+              '& .Mui-disabled': {
+                color: theme => `${theme.palette.primary.main} !important`,
+              },
+            }}
+            InputProps={{
+              sx: {
+                '& .Mui-disabled': {
+                  WebkitTextFillColor: '#090909 !important',
+                },
+              },
+            }}
           />
           <TextField
             // #region CUOTAS
@@ -354,7 +544,56 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
             label='Cuotas'
             variant='outlined'
             value={formik.values.cuotas}
+            onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}
+            error={formik.touched.cuotas && Boolean(formik.errors.cuotas)}
+            helperText={
+              formik.touched.cuotas && formik.errors.cuotas
+                ? formik.errors.cuotas
+                : null
+            }
+            sx={{
+              '& .MuiOutlinedInput-input': {
+                fontWeight: '400',
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#090909',
+              },
+
+              '& .MuiFormLabel-root': {
+                color: theme =>
+                  formik.touched.cuotas && formik.errors.cuotas
+                    ? theme.palette.gestion.error
+                    : '#090909 !important',
+                fontWeight: '400',
+              },
+
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: theme =>
+                  formik.touched.cuotas && formik.errors.cuotas
+                    ? theme.palette.gestion.error
+                    : `${theme.palette.primary.main} !important`,
+              },
+
+              '& .MuiFormHelperText-root': {
+                color: theme =>
+                  formik.touched.cuotas && formik.errors.cuotas
+                    ? theme.palette.gestion.error
+                    : '#090909 !important',
+                fontWeight: '400',
+              },
+
+              '& .Mui-disabled': {
+                color: theme => `${theme.palette.primary.main} !important`,
+              },
+            }}
+            InputProps={{
+              sx: {
+                '& .Mui-disabled': {
+                  WebkitTextFillColor: '#090909 !important',
+                },
+              },
+            }}
           />
         </Box>
         <TextField
@@ -365,7 +604,56 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           label='Retorno Esperado'
           variant='outlined'
           value={formik.values.retorno}
+          onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
+          error={formik.touched.retorno && Boolean(formik.errors.retorno)}
+          helperText={
+            formik.touched.retorno && formik.errors.retorno
+              ? formik.errors.retorno
+              : null
+          }
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#090909',
+            },
+
+            '& .MuiFormLabel-root': {
+              color: theme =>
+                formik.touched.retorno && formik.errors.retorno
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: theme =>
+                formik.touched.retorno && formik.errors.retorno
+                  ? theme.palette.gestion.error
+                  : `${theme.palette.primary.main} !important`,
+            },
+
+            '& .MuiFormHelperText-root': {
+              color: theme =>
+                formik.touched.retorno && formik.errors.retorno
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+            },
+          }}
+          InputProps={{
+            sx: {
+              '& .Mui-disabled': {
+                WebkitTextFillColor: '#090909 !important',
+              },
+            },
+          }}
         />
         <TextField
           // #region GANANCIAS
@@ -375,7 +663,56 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           label='Ganancias Totales'
           variant='outlined'
           value={formik.values.ganancias}
+          onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
+          error={formik.touched.ganancias && Boolean(formik.errors.ganancias)}
+          helperText={
+            formik.touched.ganancias && formik.errors.ganancias
+              ? formik.errors.ganancias
+              : null
+          }
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#090909',
+            },
+
+            '& .MuiFormLabel-root': {
+              color: theme =>
+                formik.touched.ganancias && formik.errors.ganancias
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: theme =>
+                formik.touched.ganancias && formik.errors.ganancias
+                  ? theme.palette.gestion.error
+                  : `${theme.palette.primary.main} !important`,
+            },
+
+            '& .MuiFormHelperText-root': {
+              color: theme =>
+                formik.touched.ganancias && formik.errors.ganancias
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
+
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+            },
+          }}
+          InputProps={{
+            sx: {
+              '& .Mui-disabled': {
+                WebkitTextFillColor: '#090909 !important',
+              },
+            },
+          }}
         />
         <Box>
           <TextField
@@ -388,7 +725,52 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
             multiline
             rows={4}
             value={formik.values.mensaje}
+            onBlur={formik.handleBlur}
             disabled={formik.isSubmitting}
+            error={formik.touched.mensaje && Boolean(formik.errors.mensaje)}
+            helperText={formik.touched.mensaje && formik.errors.mensaje}
+            sx={{
+              '& .MuiOutlinedInput-input': {
+                fontWeight: '400',
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#090909',
+              },
+
+              '& .MuiFormLabel-root': {
+                color: theme =>
+                  formik.touched.mensaje && formik.errors.mensaje
+                    ? theme.palette.gestion.error
+                    : '#090909 !important',
+                fontWeight: '400',
+              },
+
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: theme =>
+                  formik.touched.mensaje && formik.errors.mensaje
+                    ? theme.palette.gestion.error
+                    : `${theme.palette.primary.main} !important`,
+              },
+
+              '& .MuiFormHelperText-root': {
+                color: theme =>
+                  formik.touched.mensaje && formik.errors.mensaje
+                    ? theme.palette.gestion.error
+                    : '#090909 !important',
+                fontWeight: '400',
+              },
+
+              '& .Mui-disabled': {
+                color: '#090909 !important',
+              },
+            }}
+            InputProps={{
+              sx: {
+                '& .Mui-disabled': {
+                  WebkitTextFillColor: '#090909 !important',
+                },
+              },
+            }}
           />
         </Box>
         <Box

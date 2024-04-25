@@ -69,11 +69,11 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
               mt: '2px',
               color: nombreRiesgo === 'ALTO'
                 ? 'nivel.alto'
-                : (nombreRiesgo === 'MEDIO' 
-                ? 'nivel.medio' 
-                : (nombreRiesgo === 'BAJO' 
-                ? 'nivel.bajo' 
-                : null)),
+                : (nombreRiesgo === 'MEDIO'
+                  ? 'nivel.medio'
+                  : (nombreRiesgo === 'BAJO'
+                    ? 'nivel.bajo'
+                    : null)),
             }}
           />
           {nombreMicroemp}
@@ -94,7 +94,9 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
             padding: '16px 0',
           }}>
           {inversionMap.aportado}
-          <span style={{fontWeight: 400}}>{`Cuotas: ${parseInt(inversionMap.cuotas) - parseInt(inversionMap.cuotasFaltantes)}/${inversionMap.cuotas}`}</span>
+          <span style={{ fontWeight: 400 }}>
+            {`Cuotas: ${parseInt(inversionMap.cuotas) - parseInt(inversionMap.cuotasFaltantes)}/${inversionMap.cuotas}`}
+          </span>
         </Typography>
       </Box>
       <Button

@@ -6,26 +6,24 @@ export const MapRiesgo = ({ riesgos }) => {
   return (
     <Box
       sx={{
-        width: 'fit-content',
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         gap: '8px',
-        m: '30px auto',
-        p: '10px 32px',
-        borderRadius: '100px',
+        m: '14px 0',
+        p: '10px',
+        borderRadius: '8px',
         bgcolor: 'gris.claro',
       }}
     >
       <Typography
         sx={{
-          // color: "white",
           fontSize: '14px',
           fontWeight: '600',
-          ml: '4px'
         }}
       >
-        Riesgo
+        Riesgo:
       </Typography>
       {riesgos?.map((riesgo, index) => (
         <Typography
@@ -36,7 +34,6 @@ export const MapRiesgo = ({ riesgos }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '3px',
-            // color: "white",
           }}
         >
           <CircleIcon
@@ -44,16 +41,16 @@ export const MapRiesgo = ({ riesgos }) => {
             sx={{
               p: 0,
               m: 0,
-              color: riesgo.nombre === 'ALTO'
+              color: riesgo?.nombre === 'ALTO'
                 ? 'nivel.alto'
-                : (riesgo.nombre === 'MEDIO'
+                : (riesgo?.nombre === 'MEDIO'
                   ? 'nivel.medio'
-                  : (riesgo.nombre === 'BAJO'
+                  : (riesgo?.nombre === 'BAJO'
                     ? 'nivel.bajo'
                     : null)),
             }}
           />
-          {capitalizeTrim(riesgo.nombre)}
+          {capitalizeTrim(riesgo?.nombre)}
         </Typography>
       ))}
     </Box>
