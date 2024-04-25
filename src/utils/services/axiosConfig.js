@@ -157,18 +157,18 @@ export const buscarMicroemprendimientos = async nombre => {
       .catch(error => {
         if (error.response) {
           // El servidor respondió con un estado de error
-          console.log('Error en respuesta', error.response);
+          console.log('No se encontro un microemprendmiento', error.response.status);
         } else if (error.request) {
           // La solicitud fue hecha pero no se recibió ninguna respuesta
-          console.log('Error en llamado', error.request);
+          // console.log('Error en llamado', error.request);
         } else {
           // Algo sucedió en la configuración de la solicitud que provocó un error
-          console.log('Error', error.message);
+          // console.log('Error', error.message);
         }
-        console.log('Error configuracion', error.config);
+        // console.log('Error configuracion', error.config);
       });
   } catch (error) {
-    console.error('Error al buscar microemprendimientos en componente:', error);
+    // console.error('Error al buscar microemprendimientos en componente:', error);
   }
 };
 

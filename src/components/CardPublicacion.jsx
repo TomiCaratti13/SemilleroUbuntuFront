@@ -26,6 +26,7 @@ const ExpandMoreInfo = styled(props => {
   return <Button {...other} />;
 })(({ theme }) => ({
   margin: 'auto',
+  // transform: expand ? 'scaleY(1)' : 'scaleY(0)',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
   }),
@@ -50,40 +51,6 @@ export default function CardPublicacion({
   const handleAgregarVisualizacion = () => {
     agregarVisualizacion(publicacion.id);
   };
-
-  //Cortar Parrafo si tiene mas de 100 caracteres
-  let [descriptionSplit, setDescriptionSplit] = useState('');
-
-  useEffect(() => {
-    let descriptionTrim = publicacion.description.trim();
-
-    // Buscar un salto de línea después de las 60 letras
-    let index = descriptionTrim.indexOf('\n', 60);
-
-    // Si no se encuentra un salto de línea, buscar un punto después de las 60 letras
-    if (index === -1) {
-      index = descriptionTrim.indexOf('.', 60);
-    }
-
-    // Si se encuentra un salto de línea o un punto después de las 60 letras, se corta allí
-    if (index !== -1) {
-      setDescriptionSplit([
-        descriptionTrim.substring(0, index),
-        descriptionTrim.substring(index + 1),
-      ]);
-    }
-    // Si no se encuentra un salto de línea ni un punto, se corta a las 100 letras
-    else if (descriptionTrim.length > 100) {
-      setDescriptionSplit([
-        descriptionTrim.substring(0, 100),
-        descriptionTrim.substring(100),
-      ]);
-    }
-    // Si el texto es más corto que 100 letras, no se corta
-    else {
-      setDescriptionSplit(descriptionTrim);
-    }
-  }, []);
 
   //Popper
   const [open, setOpen] = useState(false);
@@ -150,7 +117,6 @@ export default function CardPublicacion({
       <Card
         onClick={() => {
           if (!hasSee && !isAdmin) {
-            console.log('Agregando visualizacion', publicacion.id);
             handleAgregarVisualizacion(publicacion.id);
             setHasSee(true);
           }
@@ -270,13 +236,12 @@ export default function CardPublicacion({
           )}
         </Box>
         <SliderSwipper imgs={publicacion.imagenes} />
-        <CardContent style={{ paddingBottom: 0 }}>
-          <Typography
-            variant="body2"
-            color="negro"
-            sx={{ fontSize: '14px', fontFamily: 'Lato', fontWeight: 600 }}>
-            {publicacion.date}
-          </Typography>
+        <CardContent
+          sx={{
+            transition: 'max-height 1.5s ease-in-out',
+            maxHeight: expanded ? '1500px' : '95px', // Ajusta estos valores según tus necesidades
+            overflow: 'hidden',
+          }}>
           <Typography
             paragraph
             sx={{
@@ -286,51 +251,34 @@ export default function CardPublicacion({
               lineHeight: '20px',
               color: 'negro',
               mb: '0',
+              display: '-webkit-box',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              WebkitLineClamp: expanded ? 'none' : '3', // Cambia '3' al número de líneas que quieres mostrar
+              WebkitBoxOrient: 'vertical',
             }}>
-            {expanded || !descriptionSplit[1]
-              ? descriptionSplit[0]
-              : descriptionSplit[0] + ' ...'}
+            {publicacion.description}
           </Typography>
         </CardContent>
-        <Collapse
-          in={expanded}
-          timeout="auto"
-          unmountOnExit>
-          <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <Typography
-              paragraph
-              sx={{
-                fontSize: '16px',
-                fontFamily: 'Lato',
-                fontWeight: 400,
-                lineHeight: '20px',
-                color: 'negro',
-              }}>
-              {descriptionSplit[1]}
-            </Typography>
-          </CardContent>
-        </Collapse>
-        {descriptionSplit.length > 1 && (
-          <CardActions
-            disableSpacing
-            sx={{ padding: '0px 0 0 0' }}>
-            <ExpandMoreInfo
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-              color="azul"
-              sx={{
-                textTransform: 'none',
-                fontFamily: 'Lato',
-                fontWeight: 500,
-                lineHeight: '20px',
-                width: '152px',
-                height: '40px',
-              }}>
-              {expanded ? 'Ver menos' : 'Ver más'}
-            </ExpandMoreInfo>
-          </CardActions>
-        )}
+        <CardActions
+          disableSpacing
+          sx={{ padding: '0px 0 0 0' }}>
+          <ExpandMoreInfo
+            onClick={handleExpandClick}
+            // aria-expanded={expanded}
+            aria-label="show more"
+            color="azul"
+            sx={{
+              textTransform: 'none',
+              fontFamily: 'Lato',
+              fontWeight: 500,
+              lineHeight: '20px',
+              width: '152px',
+              height: '40px',
+            }}>
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </ExpandMoreInfo>
+        </CardActions>
       </Card>
     </>
   );

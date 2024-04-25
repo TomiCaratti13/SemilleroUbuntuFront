@@ -8,11 +8,11 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
   const { search } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchInput, setSearchInput] = useState(search);
+  const [searchInput, setSearchInput] = useState(search || '');
 
   const handleSearch = () => {
     // if (searchInput?.trim() !== '') {
-      navigate(`/buscar/${searchInput?.trim()}`);
+    navigate(`/buscar/${searchInput?.trim()}`);
     // }
   };
   useEffect(() => {
@@ -74,7 +74,7 @@ export const SearchBar = ({ color = 'blanco.main' }) => {
             backgroundColor: 'transparent',
           }}
           onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === "Delete") {
+            if ((e.key === 'Enter' || e.key === 'Delete')&& searchInput?.trim() !== '') {
               handleSearch();
             }
           }}
