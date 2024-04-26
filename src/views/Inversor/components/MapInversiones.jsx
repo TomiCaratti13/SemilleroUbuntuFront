@@ -1,35 +1,18 @@
 import { Typography, Box, Container, Button } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useMicro } from '../../../utils/hooks/useMicro'
 import CircleIcon from '@mui/icons-material/Circle';
 
 
-export const MapInversiones = ({ inversion, riesgo, onClick }) => {
+export const MapInversiones = ({ inversion, onClick }) => {
 
-  const microemprendimiento = useMicro();
-
-  const inversionMap = {
-    id: inversion.id,
-    riesgo: inversion.riesgoId,
-    micro: inversion.microId,
-    monto: inversion.monto,
-    aportado: inversion.aportar,
-    cuotas: inversion.cuotas,
-    cuotasFaltantes: inversion.cuotasFaltantes,
+  const invMap = {
+    monto: inversion?.monto,
+    cuotas: inversion?.cuotas,
+    cuotasFaltantes: inversion?.cuotasFaltantes,
+    fechaCreacion: inversion?.fechaCreacion,
+    riesgo: inversion?.riesgo,
+    microemp: inversion?.microEmprendimiento,
   };
-
-  const obtenerNombreRiesgo = (id) => {
-    const riesgoEncontrado = riesgo?.find(r => r.id === id);
-    return riesgoEncontrado ? riesgoEncontrado.nombre : null;
-  };
-
-  const obtenerNombreMicro = (id) => {
-    const microEncontrado = microemprendimiento?.find(micro => micro.id === id);
-    return microEncontrado ? microEncontrado.title : 'Microemprendimiento';
-  };
-
-  const nombreRiesgo = obtenerNombreRiesgo(inversionMap.riesgo);
-  const nombreMicroemp = obtenerNombreMicro(inversionMap.micro);
 
   return (
     <Container
@@ -67,16 +50,16 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
             fontSize='small'
             sx={{
               mt: '2px',
-              color: nombreRiesgo === 'ALTO'
+              color: invMap?.riesgo === 'ALTO'
                 ? 'nivel.alto'
-                : (nombreRiesgo === 'MEDIO'
+                : (invMap?.riesgo === 'MEDIO'
                   ? 'nivel.medio'
-                  : (nombreRiesgo === 'BAJO'
+                  : (invMap?.riesgo === 'BAJO'
                     ? 'nivel.bajo'
                     : null)),
             }}
           />
-          {nombreMicroemp}
+          {invMap?.microemp}
         </Typography>
         <Typography
           style={{
@@ -93,9 +76,9 @@ export const MapInversiones = ({ inversion, riesgo, onClick }) => {
             justifyContent: 'space-between',
             padding: '16px 0',
           }}>
-          {inversionMap.aportado}
+          {invMap?.monto.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           <span style={{ fontWeight: 400 }}>
-            {`Cuotas: ${parseInt(inversionMap.cuotas) - parseInt(inversionMap.cuotasFaltantes)}/${inversionMap.cuotas}`}
+            {`Cuotas: ${parseInt(invMap?.cuotas) - parseInt(invMap?.cuotasFaltantes)}/${invMap?.cuotas}`}
           </span>
         </Typography>
       </Box>

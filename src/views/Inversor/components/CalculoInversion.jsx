@@ -17,7 +17,6 @@ import { useFormik } from 'formik';
 import { getCalculo, postInversion } from '../../../utils/services/axiosConfig';
 import { useEffect, useState } from 'react';
 import formInversion from '../../../utils/schemas/schemaFormInversion';
-import { useSelector } from 'react-redux';
 
 const ButtonInversion = ({ onClick, text }) => {
   return (
@@ -45,16 +44,15 @@ const ButtonInversion = ({ onClick, text }) => {
     </Button>
   )
 }
+
 // #region COMPONENTE
-export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) => {
+export const CalculoInversion = ({ idMicro, tituloMic, setSelectedCard, setValue, riesgo, idUser }) => {
 
-  const user = useSelector(state => state.user);
-  const idUser = user.isAdmin ? user.id : 1;
-
-  const cardMap = {
-    idMicro: card?.id,
-    nombre: card?.nombre,
-  };
+  // export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo, idUser }) => {
+  // const cardMap = {
+  //   idMicro: card?.id,
+  //   nombre: card?.nombre,
+  // };
 
   const [calculo, setCalculo] = useState();
   const [idRiesgo, setIdRiesgo] = useState();
@@ -65,6 +63,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
     const numberValue = parseInt(value.replace(/\D/g, ''), 10);
     setMontoCalculo(numberValue);
   };
+
   const handleChangeRiesgo = (event) => {
     const { value } = event.target;
     setIdRiesgo(value);
@@ -73,7 +72,6 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
   const calcular = () => {
     getCalculo(idRiesgo, montoCalculo).then(response => {
       const calculo = response;
-      console.log(calculo);
       setCalculo(calculo);
     });
   }
@@ -81,7 +79,8 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
   useEffect(() => {
     if (
       idRiesgo !== '0' && idRiesgo !== undefined
-      && montoCalculo > 200 && montoCalculo < 1000000
+      && montoCalculo > riesgo[idRiesgo - 1]?.invMinima
+      && montoCalculo < riesgo[idRiesgo - 1]?.invMaxima
     ) {
       calcular();
     } else if (
@@ -101,15 +100,16 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
       ganancias: calculo?.ganancias || '',
       cuotas: calculo?.cuotas || '',
       mensaje: calculo
-        ? `Si decides optar por esta inversión, podrás empezar a cobrar a partir del próximo mes, durante ${calculo.cuotas} meses el monto de $${(calculo.ganancias / calculo.cuotas).toFixed(2)}`
+        ? `Si decides optar por esta inversión, podrás empezar a cobrar a partir del próximo mes, durante ${calculo.cuotas} meses, el monto de ${(calculo.ganancias / calculo.cuotas).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`
         : '',
     });
   }, [calculo]);
 
+  const inicial = 0;
+
   const formik = useFormik({
     initialValues: {
-      monto: '$ ',
-      // riesgo: 0,
+      monto: '',
       costo: '',
       total: '',
       cuotas: '',
@@ -130,9 +130,9 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           ganancias: formData.ganancias,
           cuotas: formData.cuotas,
         };
-        postInversion(formEnviar, idUser, cardMap.idMicro, idRiesgo)
+        // postInversion(formEnviar, idUser, cardMap.idMicro, idRiesgo)
+        postInversion(formEnviar, idUser, idMicro, idRiesgo)
           .then(response => {
-            // console.log('RESPUESTA COMPONENETE', response);
             if (response && response.status === 200 || response.status === 201) {
               openAlert(
                 true,
@@ -155,7 +155,6 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           });
         formik.setSubmitting(false);
       } catch (error) {
-        console.log('ingresooooooo');
         formik.setSubmitting(false);
         console.log(error);
       }
@@ -218,7 +217,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
                       : 'gris.medio')),
               }}
             />
-            {cardMap.nombre}
+            {tituloMic}
           </Typography>
           <Typography
             sx={{
@@ -237,7 +236,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
               py: '6px',
               color: 'azul.main',
             }}>
-            Ingrese el monto a invertir en {cardMap.nombre} y luego seleccione un nivel de Riesgo de Inversión
+            Ingrese el monto a invertir en {tituloMic} y luego seleccione un nivel de Riesgo de Inversión
             para realizar lo cálculos. Si está de acuerdo, dé a Invertir.
           </Typography>
         </Box>
@@ -255,51 +254,54 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           }}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
-          // error={formik.touched.monto && Boolean(formik.errors.monto)}
-          // helperText={formik.touched.monto && formik.errors.monto}
-          // sx={{
-          //   '& .MuiOutlinedInput-input': {
-          //     fontWeight: '400',
-          //   },
-          //   '& .MuiOutlinedInput-notchedOutline': {
-          //     borderColor: '#090909',
-          //   },
+          error={formik.touched.monto && Boolean(formik.errors.monto)}
+          helperText={
+            formik.touched.monto && formik.errors.monto
+              ? formik.errors.monto
+              : null
+          }
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              fontWeight: '400',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#090909',
+            },
 
-          //   '& .MuiFormLabel-root': {
-          //     color: theme =>
-          //       formik.touched.monto
-          //         ? theme.palette.gestion.error
-          //         : '#090909 !important',
-          //     fontWeight: '400',
-          //   },
+            '& .MuiFormLabel-root': {
+              color: theme =>
+                formik.touched.monto && formik.errors.monto
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
 
-          //   '& .MuiInputLabel-root.Mui-focused': {
-          //     color: theme =>
-          //       formik.touched.monto && formik.errors.monto
-          //         ? theme.palette.gestion.error
-          //         : `${theme.palette.primary.main} !important`,
-          //   },
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: theme =>
+                formik.touched.monto && formik.errors.monto
+                  ? theme.palette.gestion.error
+                  : `${theme.palette.primary.main} !important`,
+            },
 
-          //   '& .MuiFormHelperText-root': {
-          //     color: theme =>
-          //       formik.touched.monto && formik.errors.monto
-          //         ? theme.palette.gestion.error
-          //         : '#090909 !important',
-          //     fontWeight: '400',
-          //   },
+            '& .MuiFormHelperText-root': {
+              color: theme =>
+                formik.touched.monto && formik.errors.monto
+                  ? theme.palette.gestion.error
+                  : '#090909 !important',
+              fontWeight: '400',
+            },
 
-          //   '& .Mui-disabled': {
-          //     color: theme => `${theme.palette.primary.main} !important`,
-          //   },
-          // }}
-          // InputProps={{
-          //   sx: {
-          //     '& .Mui-disabled': {
-          //       WebkitTextFillColor: '#090909 !important',
-          //     },
-          //   },
-          // }}
-        />
+            '& .Mui-disabled': {
+              color: theme => `${theme.palette.primary.main} !important`,
+            },
+          }}
+          InputProps={{
+            sx: {
+              '& .Mui-disabled': {
+                WebkitTextFillColor: '#090909 !important',
+              },
+            },
+          }}        />
         <FormControl>
           <InputLabel id='select-label' sx={{ fontWeight: '400' }}>Riesgo Inversión</InputLabel>
           <Select
@@ -358,7 +360,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           name='costo'
           label='Costos de Gestión'
           variant='outlined'
-          value={formik.values.costo}
+          value={formik.values.costo.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
           error={formik.touched.costo && Boolean(formik.errors.costo)}
@@ -417,7 +419,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           name='total'
           label='Total a Aportar'
           variant='outlined'
-          value={formik.values.total}
+          value={formik.values.total.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
           error={formik.touched.total && Boolean(formik.errors.total)}
@@ -603,7 +605,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           name='retorno'
           label='Retorno Esperado'
           variant='outlined'
-          value={formik.values.retorno}
+          value={formik.values.retorno.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
           error={formik.touched.retorno && Boolean(formik.errors.retorno)}
@@ -662,7 +664,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
           name='ganancias'
           label='Ganancias Totales'
           variant='outlined'
-          value={formik.values.ganancias}
+          value={formik.values.ganancias.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           onBlur={formik.handleBlur}
           disabled={formik.isSubmitting}
           error={formik.touched.ganancias && Boolean(formik.errors.ganancias)}
@@ -781,8 +783,7 @@ export const CalculoInversion = ({ card, setSelectedCard, setValue, riesgo }) =>
             alignItems: 'center',
             justifyContent: 'center',
             gap: '12px'
-          }}
-        >
+          }}>
           <ButtonInversion
             text={'Volver'}
             onClick={() => { setSelectedCard(null) }}

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 
-export const ProtectedRoute = ({ children, redirectTo = '/' }) => {
+export const ProtectedRouteAdmin = ({ children, redirectTo = '/' }) => {
   //Manejar alertasSnackbar
   const { enqueueSnackbar } = useSnackbar();
   const handleAlert = (mensaje, color) => {
@@ -15,15 +15,14 @@ export const ProtectedRoute = ({ children, redirectTo = '/' }) => {
   const user = useSelector(state => state.user);
 
   useEffect(() => {
-    if (!user.isAdmin && !user.isInversor) {
+    if (!user.isAdmin) {
       handleAlert('No tienes permisos para acceder a esta página', 'warning');
     }
   }, [user, handleAlert]);
 
-  if (!user.isAdmin && !user.isInversor) {
+  if (!user.isAdmin) {
     return <Navigate to={redirectTo} />;
   }
 
   return children ? children : <Outlet />;
 };
-

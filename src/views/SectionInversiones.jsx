@@ -96,7 +96,7 @@ const SectionInversiones = () => {
         </Paper>
       </Box>
       <ButtonBlue
-        link={user.isAdmin ? '/Admin' : (user.isInversor ? '/Inversor' : '/login/Inversiones')}
+        link={user.isAdmin ? '/Admin' : (user.isInversor ? '/Inversor' : '/login/inversiones')}
         text={'Ingresar'}
         width='90%'
       />

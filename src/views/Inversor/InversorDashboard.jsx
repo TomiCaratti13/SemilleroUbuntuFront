@@ -1,4 +1,3 @@
-
 import { Typography, Box, Tab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import TabContext from '@mui/lab/TabContext';
@@ -8,9 +7,9 @@ import { DetalleInversion } from './components/DetalleInversion';
 import { MapMicroInv } from './components/MapMicroInv';
 import { getInversiones, getMicroemprendimientos, getRiesgos } from '../../utils/services/axiosConfig';
 import { MapInversiones } from './components/MapInversiones';
-// import Inversion from '../../utils/mocks/Inversion.json'
 import { MapRiesgo } from './components/MapRiesgo';
 import { CalculoInversion } from './components/CalculoInversion';
+import { useSelector } from 'react-redux';
 
 export const InversorDashboard = () => {
   const [value, setValue] = useState('1');
@@ -18,28 +17,28 @@ export const InversorDashboard = () => {
   const [inversion, setInversion] = useState([]);
   const [riesgo, setRiesgo] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-  
+  const user = useSelector(state => state.user);
+
   useEffect(() => {
 
     getMicroemprendimientos().then(response => {
+      // esto es si solo puede hacerse una inversion por microemprendimiento
       // const microemprendimientosFiltrados = response.filter(micro => !inversiones.some(inv => inv.microId === micro.id));
       // setMicroemp(microemprendimientosFiltrados);
       const microemprendimientos = response;
       setMicroemp(microemprendimientos);
     });
-    
+
     getRiesgos().then(response => {
       const riesgos = response;
       setRiesgo(riesgos);
     });
 
-    getInversiones(1).then(response => {
-      console.log(response);
+    getInversiones(user?.id).then(response => {
       const inversiones = response;
       setInversion(inversiones);
     })
 
-  // }, [value, selectedCard, inversion]);
   }, [value, selectedCard]);
 
   const handleChange = (e, newValue) => {
@@ -113,25 +112,24 @@ export const InversorDashboard = () => {
                 />
               </TabList>
             </Box>
-            <TabPanel value={value} 
-              sx={{ 
-                pt: value === '1' ? '39px' : 0 , 
+            <TabPanel value={value}
+              sx={{
+                pt: value === '1' ? '39px' : 0,
               }}>
               {selectedCard === null
                 ? ((value === '1' ?
-                  (microemp.map((micro, index) => (
+                  (microemp?.map((micro, index) => (
                     <MapMicroInv
                       key={index}
                       microemprendimiento={micro}
                       onClick={() => setSelectedCard(micro)} />
                   ))) :
                   (<>
-                    <MapRiesgo riesgos={riesgo} />
-                    {inversion.map((inv, index) => (
+                    <MapRiesgo riesgos={riesgo}/>
+                    {inversion?.map((inv, index) => (
                       <MapInversiones
                         key={index}
                         inversion={inv}
-                        riesgo={riesgo}
                         onClick={() => setSelectedCard(inv)} />
                     ))}
                   </>)
@@ -140,13 +138,15 @@ export const InversorDashboard = () => {
                   (<CalculoInversion
                     setSelectedCard={setSelectedCard}
                     setValue={setValue}
-                    card={selectedCard}
+                    idMicro={selectedCard?.id}
+                    tituloMic={selectedCard?.nombre}
+                    // card={selectedCard}
                     riesgo={riesgo}
+                    idUser={user?.id}
                   />) :
                   (<DetalleInversion
                     setSelectedCard={setSelectedCard}
-                    card={selectedCard}
-                    riesgo={riesgo}
+                    inversion={selectedCard}
                   />)
                 ))
               }

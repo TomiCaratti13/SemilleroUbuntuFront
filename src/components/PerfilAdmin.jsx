@@ -1,4 +1,4 @@
-import { Avatar, Button, Popper, Fade } from '@mui/material';
+import { Avatar, Button, Popper, Fade, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { useLogout } from '../utils/hooks/useLogout';
@@ -66,7 +66,9 @@ export default function PerfilAdmin() {
   const closeSesion = useLogout();
 
   return (
-    <div>
+    <Box
+      sx={{marginLeft: 'auto'}}
+    >
       <Avatar
         {...(!user.foto
           ? stringAvatar(user.nombre)
@@ -114,6 +116,6 @@ export default function PerfilAdmin() {
           </Fade>
         )}
       </Popper>
-    </div>
+    </Box>
   );
 }

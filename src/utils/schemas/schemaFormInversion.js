@@ -1,11 +1,11 @@
 import * as yup from 'yup';
 
 const formInversion = yup.object().shape({
-  // monto: yup
-  //   .number()
-    // .min(200, 'Debe ser mayor a $200')
+  monto: yup
+    .number()
+    // .min(200, 'Debe ser mayor a $100')
     // .max(100000, 'Debe ser menor a $100000')
-    // .required('Debes ingresar el monto a invertir'),
+    .required('Debes ingresar el monto a invertir'),
   // riesgo: yup
   //   .number()
   //   .positive('Debes seleccionar un nivel de riesgo'),

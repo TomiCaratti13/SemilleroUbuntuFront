@@ -1,35 +1,42 @@
 import CircleIcon from '@mui/icons-material/Circle';
 import { Typography, Box, Container, TextField, Button } from '@mui/material';
-import { useMicro } from '../../../utils/hooks/useMicro';
 
 // #region EXPORT
-export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
+export const DetalleInversion = ({ inversion, setSelectedCard }) => {
 
-  const microemprendimiento = useMicro();
+  const invMap = {
+    // monto: inversion?.monto,
+    // costosGestion: inversion?.costo,
+    // totalAportado: inversion?.aportar,
+    // riesgo: inversion?.riesgo,
+    // cuotas: inversion?.cuotas,
+    // cuotasFaltantes: inversion?.cuotasFaltantes,
+    // retorno: inversion?.retorno,
+    // ganancias: inversion?.ganancias,
+    // porMes: inversion?.montoPorMes,
 
-  const obtenerNombreMicro = (id) => {
-    const microEncontrado = microemprendimiento?.find(micro => micro.id === id);
-    return microEncontrado ? microEncontrado.title : 'Microemprendimiento';
-  };
-  const obtenerNivelRiesgo = (id) => {
-    const riesgoEncontrado = riesgo?.find(r => r.id === id);
-    return riesgoEncontrado ? riesgoEncontrado.nombre : null;
-  };
-
-  const nombreMicroemp = obtenerNombreMicro(card?.microId);
-  const nombreRiesgo = obtenerNivelRiesgo(card?.riesgoId);
-
-  const inversionMap = {
-    monto: card?.monto,
-    costosGestion: card?.costo,
-    totalAportado: card?.aportar,
-    riesgo: card?.riesgo,
-    cuotas: card?.cuotas,
-    cuotasFaltantes: card?.cuotasFaltantes,
-    retorno: card?.retorno,
-    ganancias: card?.ganancias,
-    porMes: card?.montoPorMes,
+    // id_inver: inversion?.id_inver,
+    monto: inversion?.monto,
+    cuotas: inversion?.cuotas,
+    costo: inversion?.costo,
+    retorno: inversion?.retorno,
+    ganancias: inversion?.ganancias,
+    montomensual: inversion?.montomensual,
+    cuotasFaltantes: inversion?.cuotasFaltantes,
+    fechaCreacion: inversion?.fechaCreacion,
+    riesgo: inversion?.riesgo,
+    microemp: inversion?.microEmprendimiento,
+    estado: inversion?.estado
   }
+
+  const formatearFecha = (fecha) => {
+    if (!fecha) return '';
+    const [año, mes, dia] = fecha;
+    const mesFormateado = mes < 10 ? '0' + mes : mes;
+    const diaFormateado = dia < 10 ? '0' + dia : dia;
+    return `${diaFormateado}/${mesFormateado}/${año}`;
+  };
+
   // #region RETURN
   return (
     <>
@@ -66,32 +73,40 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
             <CircleIcon
               fontSize='small'
               sx={{
-                color: nombreRiesgo === 'ALTO'
+                color: invMap?.riesgo === 'ALTO'
                   ? 'nivel.alto'
-                  : (nombreRiesgo === 'MEDIO'
+                  : (invMap?.riesgo === 'MEDIO'
                     ? 'nivel.medio'
-                    : (nombreRiesgo === 'BAJO'
+                    : (invMap?.riesgo === 'BAJO'
                       ? 'nivel.bajo'
                       : null)),
               }}
             />
-            {nombreMicroemp}
+            {invMap?.microemp}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: '16px',
+              fontWeight: 700,
+              textAlign: 'center',
+              p: '10px 0 6px 0',
+            }}>
+            Detalles de la Inversión
           </Typography>
           <Typography
             sx={{
               fontSize: '16px',
               fontWeight: 500,
               textAlign: 'center',
-              pb: '18px',
             }}>
-            Detalles de la Inversión
+            Fecha: {formatearFecha(invMap?.fechaCreacion)}
           </Typography>
         </Box>
         <TextField
-          // #region APORTAR
+          // #region APORTADO
           label='Total Aportado'
           variant='outlined'
-          value={inversionMap.totalAportado}
+          value={(invMap?.monto + invMap?.costo).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
@@ -117,7 +132,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           // #region COSTOS
           label='Costos de Gestión'
           variant='outlined'
-          value={inversionMap.costosGestion}
+          value={invMap?.costo.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
@@ -143,7 +158,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           // #region MONTO
           label='Monto Invertido'
           variant='outlined'
-          value={inversionMap.monto}
+          value={invMap?.monto.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
@@ -178,7 +193,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           <TextField
             label='Cuotas'
             variant='outlined'
-            value={inversionMap.cuotas}
+            value={invMap?.cuotas}
             disabled={true}
             fullWidth
             sx={{
@@ -204,7 +219,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           <TextField
             label='Faltantes'
             variant='outlined'
-            value={inversionMap.cuotasFaltantes}
+            value={invMap?.cuotasFaltantes}
             disabled={true}
             fullWidth
             sx={{
@@ -232,7 +247,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           // #region POR MES
           label='Retorno Mensual'
           variant='outlined'
-          value={inversionMap.porMes}
+          value={invMap?.montomensual.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
@@ -258,7 +273,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           // #region RETORNO
           label='Retorno Esperado'
           variant='outlined'
-          value={inversionMap.retorno}
+          value={invMap?.retorno.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {
@@ -284,7 +299,7 @@ export const DetalleInversion = ({ card, setSelectedCard, riesgo }) => {
           // #region GANANCIAS
           label='Ganancia Neta'
           variant='outlined'
-          value={inversionMap.ganancias}
+          value={invMap?.ganancias.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}
           disabled={true}
           sx={{
             '& .MuiOutlinedInput-input': {

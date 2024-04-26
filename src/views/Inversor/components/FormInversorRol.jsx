@@ -38,7 +38,7 @@ export const FormInversorRol = () => {
           },
         };
 
-        enviarFormulario(formEnviar, 1)
+        enviarFormulario(formEnviar, 1) //este mensaje se manda a un microemp oculto preparado con nombre 'solicitud'
           .then(response => {
             //MANEJO DE ALERTAS
             if (response && response.status === 200) {
@@ -112,7 +112,7 @@ export const FormInversorRol = () => {
         closeAlert={closeAlert}
         resendAlert={resendAlert}
         alert={alertModal}
-        returnTo={'/microemprendimientos/categorias'}
+        returnTo={'/inversiones'}
       />
       <Container
         component="form"

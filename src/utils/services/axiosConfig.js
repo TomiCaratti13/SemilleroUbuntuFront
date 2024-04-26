@@ -675,7 +675,7 @@ export const putImagenesMicro = async (imagenes, id, token) => {
       }
     )
       .then(response => {
-        console.log('Respuesta del servidor imagenes', response);
+        // console.log('Respuesta del servidor imagenes', response);
         return response;
       })
       .catch(error => {

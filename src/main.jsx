@@ -20,7 +20,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { RutaAdmin } from './views/Admin/components/RutaAdmin.jsx';
 import SectionInversiones from './views/SectionInversiones.jsx';
 import { InversorDashboard } from './views/Inversor/InversorDashboard.jsx';
-import { ProtectedRoute } from './views/Admin/components/ProtectedRoute.jsx';
+import { ProtectedRouteAdmin } from './views/Admin/components/ProtectedRouteAdmin.jsx';
+import { ProtectedRouteInver } from './views/Inversor/components/ProtectedRouteInver.jsx';
 
 // import { AdminMicro } from './views/Admin/AdminMicro.jsx';
 // import { MapAdminMicros } from './views/Admin/Microemprendimientos/MapAdminMicros.jsx';
@@ -72,7 +73,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 path="Admin/:token"
                 element={<RutaAdmin />}
               />
-              <Route element={<ProtectedRoute redirectTo='/' />}>
+              <Route element={<ProtectedRouteAdmin redirectTo='/' />}>
                 <Route
                   path="Admin"
                   element={<AdminDashboard />}
@@ -89,6 +90,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   path="Admin/publicaciones"
                   element={<AdminPublicaciones />}
                 />
+              </Route>
+              <Route element={<ProtectedRouteInver redirectTo='/' />}>
                 <Route
                   path="Inversor"
                   element={<InversorDashboard />}

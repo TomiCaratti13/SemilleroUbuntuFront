@@ -18,9 +18,15 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AdminHeader from './Admin/AdminHeader';
 import { useSelector } from 'react-redux';
 import { HEADER_HEIGHT } from '../utils/services/constants';
+import PerfilAdmin from '../components/PerfilAdmin';
 
 const drawerWidth = 256;
-const navItems = ['Inicio', 'Microemprendimientos', 'Publicaciones', 'Inversiones'];
+const navItems = [
+  'Inicio',
+  'Microemprendimientos',
+  'Publicaciones',
+  'Inversiones'
+];
 
 function Header(props) {
   const { window } = props;
@@ -226,7 +232,7 @@ function Header(props) {
                 </Link>
               ))}
               <Link
-                to={user.isAdmin ? '/Admin' : (user.isIversor ? '/Inversor' : '/login')}
+                to={user.isAdmin ? '/Admin' : (user.isIversor ? '/Inversor' : '/login/administrador')}
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',
@@ -234,22 +240,29 @@ function Header(props) {
                   display: 'flex',
                   flexGrow: 1,
                 }}>
-                <Button
-                  variant="text"
-                  sx={{
-                    color: 'azul.main',
-                    justifyContent: 'center',
-                    margin: '5px',
-                    fontFamily: 'Lato',
-                    fontWeight: 700,
-                    fontSize: '14px',
-                    alignItems: 'flex-start',
-                  }}>
-                  Administrador
-                </Button>
+                {location.pathname !== '/Inversor'
+                  ? (<Button
+                    variant="text"
+                    sx={{
+                      color: 'azul.main',
+                      justifyContent: 'center',
+                      margin: '5px',
+                      fontFamily: 'Lato',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      alignItems: 'flex-start',
+                    }}>
+                    Administrador
+                  </Button>)
+                  : null
+                }
               </Link>
             </Box>
           )}
+          {location.pathname === '/Inversor'
+            ? <PerfilAdmin />
+            : null
+          }
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'block', height: HEADER_HEIGHT }} />
