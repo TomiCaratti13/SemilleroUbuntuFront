@@ -5,6 +5,8 @@ import { Container } from '@mui/material';
 export const MapMicroemprendimientos = ({ microemprendimientos }) => {
   const microemprendimientosMutable = [...microemprendimientos];
 
+  const shuffledMicroemprendimientos = microemprendimientosMutable.sort(() => Math.random() - 0.5);
+
   return (
     <Container
       component="section"
@@ -17,7 +19,7 @@ export const MapMicroemprendimientos = ({ microemprendimientos }) => {
         padding: '0',
         width: '100%',
       }}>
-      {microemprendimientosMutable?.reverse().map((microemprendimiento, index) => (
+      {shuffledMicroemprendimientos?.map((microemprendimiento, index) => (
         <CardMicroemprendimiento
           key={index}
           microemprendimiento={microemprendimiento}
