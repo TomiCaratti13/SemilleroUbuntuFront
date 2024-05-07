@@ -91,7 +91,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                   element={<AdminPublicaciones />}
                 />
               </Route>
-              <Route element={<ProtectedRouteInver redirectTo='/' />}>
+              <Route element={<ProtectedRouteInver redirectTo='/inversiones' />}>
                 <Route
                   path="Inversor"
                   element={<InversorDashboard />}

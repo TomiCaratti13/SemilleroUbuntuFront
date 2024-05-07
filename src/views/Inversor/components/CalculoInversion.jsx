@@ -232,9 +232,10 @@ export const CalculoInversion = ({ idMicro, tituloMic, setSelectedCard, setValue
               width: '100%',
               fontSize: '13px',
               // fontWeight: 400,
-              lineHeight: '14px',
+              lineHeight: '16px',
               py: '6px',
-              color: 'azul.main',
+              color: 'negro.main',
+              textWrap: 'pretty',
             }}>
             Ingrese el monto a invertir en {tituloMic} y luego seleccione un nivel de Riesgo de Inversión
             para realizar lo cálculos. Si está de acuerdo, dé a Invertir.
