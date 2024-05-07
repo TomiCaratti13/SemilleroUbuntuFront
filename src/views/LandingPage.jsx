@@ -36,7 +36,7 @@ export const LandingPage = () => {
   //   // window.location.href = `http://localhost:8080/logout`;
   // }, []);
 
-  const publicaciones = usePublicaciones();
+  const publicaciones = usePublicaciones().sort(() => Math.random() - 0.5);
   const Categorias = useCategorias();
 
   return (

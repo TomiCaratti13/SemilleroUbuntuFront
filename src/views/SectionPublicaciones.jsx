@@ -14,7 +14,7 @@ const heroPublicaciones = {
 
 export const SectionPublicaciones = () => {
   //Llamar a publicaciones
-  const publicaciones = usePublicaciones();
+  const publicaciones = usePublicaciones().sort(() => Math.random() - 0.5);
 
   return (
     <Box
